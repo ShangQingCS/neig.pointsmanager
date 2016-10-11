@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<!-- JNDI方式配置数据源 -->
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+		<property name="jndiName" value="${jndiName}"></property> </bean> -->
+
+	<!-- 配置数据源 -->
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="initialSize" value="${jdbc.initialSize}" />	<!-- 初始化时建立物理连接的个数 -->
+		<property name="maxActive" value="${jdbc.maxActive}" />	<!-- 最大连接池数量 -->
+		<property name="minIdle" value="0" />	<!-- 已经不再使用，配置了也没效果 -->
+		<property name="maxWait" value="60000" />
+
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句。 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用 -->
+		<property name="validationQuery" value="select 1 from dual" />
+		<property name="testOnBorrow" value="false" />	<!-- 申请连接时执行validationQuery检测连接是否有效,做了这个配置会降低性能 -->
+		<property name="testOnReturn" value="false" />	<!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+		<property name="testWhileIdle" value="true" />	<!-- 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效 -->
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="25200000" />
+
+		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+		<property name="poolPreparedStatements" value="true" />
+		<property name="maxOpenPreparedStatements" value="100"></property>
+
+		<!-- 关闭长时间不使用的连接 -->
+		<property name="removeAbandoned" value="true" />	<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandonedTimeout" value="1800" />	<!-- 1800秒，也就是30分钟 -->
+		<property name="logAbandoned" value="true" />	<!-- 关闭abanded连接时输出错误日志 -->
+		
+		 <!-- 配置监控统计拦截的filters -->
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter" />
+                <ref bean="log4j-filter" />
+                <ref bean="wall-filter" />
+            </list>
+        </property>
+	</bean>
+	
+	<!-- druid 日志 filter -->
+	<bean id="log4j-filter" class="com.alibaba.druid.filter.logging.Log4j2Filter" />
+	
+	<!-- druid sql防火墙 -->
+	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+		<property name="dbType" value="oracle" />
+	</bean>
+	
+	<!-- druid 监控filter -->
+	<bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+		<!--慢SQL统计，如果SQL执行时间超过一定时间则记录为慢SQL -->
+		<property name="slowSqlMillis" value="3000" />
+		<!--慢SQL统计日志输出 -->
+		<property name="logSlowSql" value="true" />
+		<!--合并SQL统计 例如select * from table t where t.id =1，会被变为select * from table 
+			t where t.id =？来统计 -->
+		<property name="mergeSql" value="true" />
+	</bean>
+	
+	<!-- 配置druid监控spring jdbc -->
+	<bean id="druid-stat-interceptor"
+		class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+	</bean>
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"
+		scope="prototype">
+		<property name="patterns">
+			<list>
+				<value>cn.aresoft.framework.service.*</value>
+			</list>
+		</property>
+	</bean>
+	<aop:config>
+		<aop:advisor advice-ref="druid-stat-interceptor"
+			pointcut-ref="druid-stat-pointcut" />
+	</aop:config>
+	
+
+	<!-- myBatis文件 SqlSessionFactoryBean dataSource属性是必须指定的，它表示用于连接数据库的数据源. 
+		mapperLocations: 它表示我们的Mapper文件存放的位置,Mapper文件跟对应的Mapper接口处于同一位置的时候可以不用指定该属性的值 
+		configLocation: 用于指定Mybatis的配置文件位置。如果指定了该属性，那么会以该配置文件的内容作为配置信息构建对应的SqlSessionFactoryBuilder，但是后续属性指定的内容会覆盖该配置文件里面指定的对应内容。 
+		typeAliasesPackage: 实体类所在的包,多个package之间可以用逗号或者分号等来进行分隔 typeAliases:数组类型，用来指定别名的。指定了这个属性后，Mybatis会把这个类型的短名称作为这个类型的别名，前提是该类上没有标注@Alias注解，否则将使用该注解对应的值作为此种类型的别名。 -->
+	<!-- myBatis 插件分页拦截器 -->
+	<bean id="mySqlDialect" class="cn.sqhl.neig.pointsmanager.core.MySqlDialect"></bean>
+	<bean id="paginationInterceptor" class="cn.sqhl.neig.pointsmanager.core.PaginationInterceptor">
+		<property name="dialect" ref="mySqlDialect"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="plugins">
+			<ref bean="paginationInterceptor" />
+		</property>
+		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="mapperLocations" value="classpath:mybatis/*.xml" />
+		<property name="typeAliasesPackage" value="cn.sqhl.neig.pointsmanager.vo"></property>
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="cn.sqhl.neig.pointsmanager.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 注解方式配置事物 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" /> -->
+
+	<!-- 拦截器方式配置事物 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="append*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="edit*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="remove*" propagation="REQUIRED" />
+			<tx:method name="repair" propagation="REQUIRED" />
+			<tx:method name="delAndRepair" propagation="REQUIRED" />
+
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="query*" propagation="SUPPORTS" />
+			<tx:method name="load*" propagation="SUPPORTS" />
+			<tx:method name="search*" propagation="SUPPORTS" />
+			<tx:method name="datagrid*" propagation="SUPPORTS" />
+
+			<tx:method name="*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="transactionPointcut"
+			expression="execution(* cn.sqhl.neig.pointsmanager.services..*impl.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut"
+			advice-ref="transactionAdvice" />
+	</aop:config>
+
+</beans>
