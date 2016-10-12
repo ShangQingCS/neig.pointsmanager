@@ -2,7 +2,7 @@ package cn.sqhl.neig.pointsmanager.vo;
 
 import java.util.Date;
 
-public class operator {
+public class Operator {
     private Long id;
 
     private String loginName;

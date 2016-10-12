@@ -12,10 +12,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<link rel="stylesheet" type="text/css" href="css/cloud-admin.css" >
-	<link rel="stylesheet" type="text/css"  href="css/themes/night.css" id="skin-switcher" >
+	<link rel="stylesheet" type="text/css" href="../css/cloud-admin.css" >
+	<link rel="stylesheet" type="text/css"  href="../css/themes/night.css" id="skin-switcher" >
 	<!-- STYLESHEETS --><!--[if lt IE 9]><script src="js/flot/excanvas.min.js"></script><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script><![endif]-->
-	<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+	<link href="../font-awesome/css/font-awesome.css" rel="stylesheet">
 </head>
 <body>
 	<!-- HEADER -->
@@ -146,11 +146,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- JAVASCRIPTS -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<!-- JQUERY -->
-	<script src="js/jquery/jquery-2.0.3.min.js"></script>
+	<script src="../js/jquery/jquery-2.0.3.min.js"></script>
 	<!-- BOOTSTRAP -->
-	<script src="bootstrap/js/bootstrap.js"></script>
+	<script src="../bootstrap/js/bootstrap.js"></script>
 	<!-- CUSTOM SCRIPT -->
-	<script src="js/script.js"></script>
+	<script src="../js/script.js"></script>
 	<script>
 		$(document).ready(function() {	
 			App.setPage("index");  //Set current page

@@ -11,20 +11,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
     <!-- bootstrap -->
-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
-    <link href="bootstrap/css/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="../bootstrap/css/bootstrap-overrides.css" type="text/css" rel="stylesheet" />
 
     <!-- global styles -->
-    <link rel="stylesheet" type="text/css" href="css/layout.css" />
-    <link rel="stylesheet" type="text/css" href="css/elements.css" />
-    <link rel="stylesheet" type="text/css" href="css/icons.css" />
+    <link rel="stylesheet" type="text/css" href="../css/layout.css" />
+    <link rel="stylesheet" type="text/css" href="../css/elements.css" />
+    <link rel="stylesheet" type="text/css" href="../css/icons.css" />
 
     <!-- libraries -->
-    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="../font-awesome/css/font-awesome.css" />
     
     <!-- this page specific styles -->
-    <link rel="stylesheet" href="css/signin.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/signin.css" type="text/css" media="screen" />
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
