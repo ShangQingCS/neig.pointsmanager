@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsGoodsMapper">
+  <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gname" jdbcType="VARCHAR" property="gname" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="category" jdbcType="BIGINT" property="category" />
+    <result column="kind" jdbcType="BIGINT" property="kind" />
+    <result column="brand" jdbcType="BIGINT" property="brand" />
+    <result column="goodimglist" jdbcType="VARCHAR" property="goodimglist" />
+    <result column="isuser" jdbcType="INTEGER" property="isuser" />
+    <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
+    <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
+    <result column="goodimg" jdbcType="VARCHAR" property="goodimg" />
+    <result column="freazes" jdbcType="INTEGER" property="freazes" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, gname, price, category, kind, brand, goodimglist, isuser, Gfullname, storenumb, 
+    goodimg, freazes
+  </sql>
+  <sql id="Blob_Column_List">
+    detail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ns_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ns_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    insert into ns_goods (id, gname, price, 
+      category, kind, brand, 
+      goodimglist, isuser, Gfullname, 
+      storenumb, goodimg, freazes, 
+      detail)
+    values (#{id,jdbcType=BIGINT}, #{gname,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{category,jdbcType=BIGINT}, #{kind,jdbcType=BIGINT}, #{brand,jdbcType=BIGINT}, 
+      #{goodimglist,jdbcType=VARCHAR}, #{isuser,jdbcType=INTEGER}, #{gfullname,jdbcType=VARCHAR}, 
+      #{storenumb,jdbcType=INTEGER}, #{goodimg,jdbcType=VARCHAR}, #{freazes,jdbcType=INTEGER}, 
+      #{detail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    insert into ns_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gname != null">
+        gname,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="category != null">
+        category,
+      </if>
+      <if test="kind != null">
+        kind,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="goodimglist != null">
+        goodimglist,
+      </if>
+      <if test="isuser != null">
+        isuser,
+      </if>
+      <if test="gfullname != null">
+        Gfullname,
+      </if>
+      <if test="storenumb != null">
+        storenumb,
+      </if>
+      <if test="goodimg != null">
+        goodimg,
+      </if>
+      <if test="freazes != null">
+        freazes,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gname != null">
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="category != null">
+        #{category,jdbcType=BIGINT},
+      </if>
+      <if test="kind != null">
+        #{kind,jdbcType=BIGINT},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=BIGINT},
+      </if>
+      <if test="goodimglist != null">
+        #{goodimglist,jdbcType=VARCHAR},
+      </if>
+      <if test="isuser != null">
+        #{isuser,jdbcType=INTEGER},
+      </if>
+      <if test="gfullname != null">
+        #{gfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="storenumb != null">
+        #{storenumb,jdbcType=INTEGER},
+      </if>
+      <if test="goodimg != null">
+        #{goodimg,jdbcType=VARCHAR},
+      </if>
+      <if test="freazes != null">
+        #{freazes,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    update ns_goods
+    <set>
+      <if test="gname != null">
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="category != null">
+        category = #{category,jdbcType=BIGINT},
+      </if>
+      <if test="kind != null">
+        kind = #{kind,jdbcType=BIGINT},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=BIGINT},
+      </if>
+      <if test="goodimglist != null">
+        goodimglist = #{goodimglist,jdbcType=VARCHAR},
+      </if>
+      <if test="isuser != null">
+        isuser = #{isuser,jdbcType=INTEGER},
+      </if>
+      <if test="gfullname != null">
+        Gfullname = #{gfullname,jdbcType=VARCHAR},
+      </if>
+      <if test="storenumb != null">
+        storenumb = #{storenumb,jdbcType=INTEGER},
+      </if>
+      <if test="goodimg != null">
+        goodimg = #{goodimg,jdbcType=VARCHAR},
+      </if>
+      <if test="freazes != null">
+        freazes = #{freazes,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null">
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    update ns_goods
+    set gname = #{gname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      category = #{category,jdbcType=BIGINT},
+      kind = #{kind,jdbcType=BIGINT},
+      brand = #{brand,jdbcType=BIGINT},
+      goodimglist = #{goodimglist,jdbcType=VARCHAR},
+      isuser = #{isuser,jdbcType=INTEGER},
+      Gfullname = #{gfullname,jdbcType=VARCHAR},
+      storenumb = #{storenumb,jdbcType=INTEGER},
+      goodimg = #{goodimg,jdbcType=VARCHAR},
+      freazes = #{freazes,jdbcType=INTEGER},
+      detail = #{detail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
+    update ns_goods
+    set gname = #{gname,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      category = #{category,jdbcType=BIGINT},
+      kind = #{kind,jdbcType=BIGINT},
+      brand = #{brand,jdbcType=BIGINT},
+      goodimglist = #{goodimglist,jdbcType=VARCHAR},
+      isuser = #{isuser,jdbcType=INTEGER},
+      Gfullname = #{gfullname,jdbcType=VARCHAR},
+      storenumb = #{storenumb,jdbcType=INTEGER},
+      goodimg = #{goodimg,jdbcType=VARCHAR},
+      freazes = #{freazes,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

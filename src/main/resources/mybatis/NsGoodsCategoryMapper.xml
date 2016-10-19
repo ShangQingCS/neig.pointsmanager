@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsGoodsCategoryMapper">
+  <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsGoodsCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cate_name" jdbcType="VARCHAR" property="cateName" />
+    <result column="desc_" jdbcType="VARCHAR" property="desc" />
+    <result column="cate_order" jdbcType="INTEGER" property="cateOrder" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="isuser" jdbcType="CHAR" property="isuser" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="flag" jdbcType="CHAR" property="flag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cate_name, desc_, cate_order, level, logo, url, isuser, parent_id, create_time, 
+    update_time, flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_goods_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ns_goods_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoodsCategory">
+    insert into ns_goods_category (id, cate_name, desc_, 
+      cate_order, level, logo, 
+      url, isuser, parent_id, 
+      create_time, update_time, flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{cateName,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+      #{cateOrder,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{logo,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{isuser,jdbcType=CHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{flag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoodsCategory">
+    insert into ns_goods_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cateName != null">
+        cate_name,
+      </if>
+      <if test="desc != null">
+        desc_,
+      </if>
+      <if test="cateOrder != null">
+        cate_order,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="isuser != null">
+        isuser,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cateName != null">
+        #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="cateOrder != null">
+        #{cateOrder,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isuser != null">
+        #{isuser,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoodsCategory">
+    update ns_goods_category
+    <set>
+      <if test="cateName != null">
+        cate_name = #{cateName,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        desc_ = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="cateOrder != null">
+        cate_order = #{cateOrder,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isuser != null">
+        isuser = #{isuser,jdbcType=CHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoodsCategory">
+    update ns_goods_category
+    set cate_name = #{cateName,jdbcType=VARCHAR},
+      desc_ = #{desc,jdbcType=VARCHAR},
+      cate_order = #{cateOrder,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      isuser = #{isuser,jdbcType=CHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

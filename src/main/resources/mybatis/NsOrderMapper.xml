@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsOrderMapper">
+  <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="total" jdbcType="DECIMAL" property="total" />
+    <result column="counts" jdbcType="INTEGER" property="counts" />
+    <result column="paytype" jdbcType="BIGINT" property="paytype" />
+    <result column="outway" jdbcType="VARCHAR" property="outway" />
+    <result column="orderstatus" jdbcType="BIGINT" property="orderstatus" />
+    <result column="delivery_numb" jdbcType="VARCHAR" property="deliveryNumb" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="paynumb" jdbcType="VARCHAR" property="paynumb" />
+    <result column="positionid" jdbcType="BIGINT" property="positionid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+    <result column="contactnumb" jdbcType="VARCHAR" property="contactnumb" />
+    <result column="invoice" jdbcType="INTEGER" property="invoice" />
+    <result column="companyname" jdbcType="VARCHAR" property="companyname" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userid, total, counts, paytype, outway, orderstatus, delivery_numb, create_time, 
+    delivery_time, paynumb, positionid, address, name, postcode, contactnumb, invoice, 
+    companyname, content, remark, username
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ns_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsOrder">
+    insert into ns_order (id, userid, total, 
+      counts, paytype, outway, 
+      orderstatus, delivery_numb, create_time, 
+      delivery_time, paynumb, positionid, 
+      address, name, postcode, 
+      contactnumb, invoice, companyname, 
+      content, remark, username
+      )
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{total,jdbcType=DECIMAL}, 
+      #{counts,jdbcType=INTEGER}, #{paytype,jdbcType=BIGINT}, #{outway,jdbcType=VARCHAR}, 
+      #{orderstatus,jdbcType=BIGINT}, #{deliveryNumb,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{deliveryTime,jdbcType=TIMESTAMP}, #{paynumb,jdbcType=VARCHAR}, #{positionid,jdbcType=BIGINT}, 
+      #{address,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
+      #{contactnumb,jdbcType=VARCHAR}, #{invoice,jdbcType=INTEGER}, #{companyname,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsOrder">
+    insert into ns_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="counts != null">
+        counts,
+      </if>
+      <if test="paytype != null">
+        paytype,
+      </if>
+      <if test="outway != null">
+        outway,
+      </if>
+      <if test="orderstatus != null">
+        orderstatus,
+      </if>
+      <if test="deliveryNumb != null">
+        delivery_numb,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
+      <if test="paynumb != null">
+        paynumb,
+      </if>
+      <if test="positionid != null">
+        positionid,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="postcode != null">
+        postcode,
+      </if>
+      <if test="contactnumb != null">
+        contactnumb,
+      </if>
+      <if test="invoice != null">
+        invoice,
+      </if>
+      <if test="companyname != null">
+        companyname,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="counts != null">
+        #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null">
+        #{paytype,jdbcType=BIGINT},
+      </if>
+      <if test="outway != null">
+        #{outway,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        #{orderstatus,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryNumb != null">
+        #{deliveryNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paynumb != null">
+        #{paynumb,jdbcType=VARCHAR},
+      </if>
+      <if test="positionid != null">
+        #{positionid,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactnumb != null">
+        #{contactnumb,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null">
+        #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="companyname != null">
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsOrder">
+    update ns_order
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="total != null">
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="counts != null">
+        counts = #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null">
+        paytype = #{paytype,jdbcType=BIGINT},
+      </if>
+      <if test="outway != null">
+        outway = #{outway,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        orderstatus = #{orderstatus,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryNumb != null">
+        delivery_numb = #{deliveryNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paynumb != null">
+        paynumb = #{paynumb,jdbcType=VARCHAR},
+      </if>
+      <if test="positionid != null">
+        positionid = #{positionid,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactnumb != null">
+        contactnumb = #{contactnumb,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null">
+        invoice = #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="companyname != null">
+        companyname = #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsOrder">
+    update ns_order
+    set userid = #{userid,jdbcType=BIGINT},
+      total = #{total,jdbcType=DECIMAL},
+      counts = #{counts,jdbcType=INTEGER},
+      paytype = #{paytype,jdbcType=BIGINT},
+      outway = #{outway,jdbcType=VARCHAR},
+      orderstatus = #{orderstatus,jdbcType=BIGINT},
+      delivery_numb = #{deliveryNumb,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      delivery_time = #{deliveryTime,jdbcType=TIMESTAMP},
+      paynumb = #{paynumb,jdbcType=VARCHAR},
+      positionid = #{positionid,jdbcType=BIGINT},
+      address = #{address,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      contactnumb = #{contactnumb,jdbcType=VARCHAR},
+      invoice = #{invoice,jdbcType=INTEGER},
+      companyname = #{companyname,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
