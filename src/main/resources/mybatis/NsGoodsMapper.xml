@@ -233,4 +233,11 @@
       sellnumb = #{sellnumb,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectListPageByParentID">
+  
+  </select>
+  <select id="selectListPageByLike">
+  
+  </select>
 </mapper>

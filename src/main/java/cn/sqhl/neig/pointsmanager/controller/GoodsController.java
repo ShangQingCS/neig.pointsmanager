@@ -3,7 +3,9 @@ package cn.sqhl.neig.pointsmanager.controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
 
 
@@ -98,9 +101,53 @@ public class GoodsController extends ContextInfo{
 		
 		InputStream requestjson = request.getInputStream();
 		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
-
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
+		if(StringUtils.isEmpty(parentid)){
+			if(requestString!=null){
+				parentid=requestString.get("parentid")+"";
+			}
+		}
+		if(StringUtils.isEmpty(searchcode)){
+			if(requestString!=null){
+				searchcode=requestString.get("searchcode")+"";
+			}
+		}
+		if(StringUtils.isEmpty(pagesize)){
+			if(requestString!=null){
+				pagesize=requestString.get("pagesize")+"";
+			}else{
+				pagesize="15";
+			}
+		}
+		if(StringUtils.isEmpty(nowpage)){
+			if(requestString!=null){
+				nowpage=requestString.get("nowpage")+"";
+			}else{
+				nowpage="1";
+			}
+		}
+		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		if(StringUtils.isEmpty(parentid) && StringUtils.isEmpty(searchcode)){
+			result="1";
+			message="parentid 与 searchcode  为空请确认无误后再行调用";
+			logger.log(INFO, message);
+			data="";
+		}else{
+			if(!StringUtils.isEmpty(parentid)){
+				Map map=new HashMap();
+				map.put("parentid",parentid);
+				goodsService.queryPageByParentID(page,map);
+			}
+			if(!StringUtils.isEmpty(searchcode)){
+				Map map=new HashMap();
+				map.put("searchcode",searchcode);
+				goodsService.queryPageByLike(page,map);
+			}
+		}
+		
+
+		
 		
 		
 		rsJson.put("result", result);

@@ -10,6 +10,7 @@ import cn.sqhl.neig.pointsmanager.mapper.NsGoodsMapper;
 import cn.sqhl.neig.pointsmanager.po.NsGoods;
 import cn.sqhl.neig.pointsmanager.service.BaseService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
 
 @Service("goodsService")
@@ -46,5 +47,14 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	public Goods queryObj(Long id) {
 		NsGoods nsgoods =nsGoodsMapper.selectByPrimaryKey(id);
 		return new Goods(nsgoods.getId(),nsgoods.getGname(),nsgoods.getPrice(),nsgoods.getBrand(), nsgoods.getGoodimglist(), nsgoods.getGfullname(), nsgoods.getSellnumb(), nsgoods.getGoodimg(), nsgoods.getDetail());
+	}
+
+	@Override
+	public List<Goods> queryPageByParentID(PageCond page, Object obj) {
+		return nsGoodsMapper.selectListPageByParentID(page, (String)obj);
+	}
+	@Override
+	public List<Goods> queryPageByLike(PageCond page, Object obj) {
+		return nsGoodsMapper.selectListPageByLike(page, (String)obj);
 	}
 }
