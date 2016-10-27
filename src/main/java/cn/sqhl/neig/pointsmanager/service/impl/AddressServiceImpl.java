@@ -18,7 +18,7 @@ public class AddressServiceImpl implements AddressService{
 	private NsAddressMapper nsAddressMapper;
 	
 	@Override
-	public List<Address> getaddress(Map<String, Object> map) {
+	public List<Address> queryObj(Map<String, Object> map) {
 		
 		List<Address> adds= nsAddressMapper.selectAddress(map);
 		

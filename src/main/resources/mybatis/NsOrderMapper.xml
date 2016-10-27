@@ -23,11 +23,14 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="commission_charge" jdbcType="DECIMAL" property="commissionCharge" />
+    <result column="cash" jdbcType="DECIMAL" property="cash" />
+    <result column="account_amount" jdbcType="DECIMAL" property="accountAmount" />
   </resultMap>
   <sql id="Base_Column_List">
     id, userid, total, counts, paytype, outway, orderstatus, delivery_numb, create_time, 
     delivery_time, paynumb, positionid, address, name, postcode, contactnumb, invoice, 
-    companyname, content, remark, username
+    companyname, content, remark, username, commission_charge, cash, account_amount
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -46,7 +49,8 @@
       delivery_time, paynumb, positionid, 
       address, name, postcode, 
       contactnumb, invoice, companyname, 
-      content, remark, username
+      content, remark, username, 
+      commission_charge, cash, account_amount
       )
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{total,jdbcType=DECIMAL}, 
       #{counts,jdbcType=INTEGER}, #{paytype,jdbcType=BIGINT}, #{outway,jdbcType=VARCHAR}, 
@@ -54,7 +58,8 @@
       #{deliveryTime,jdbcType=TIMESTAMP}, #{paynumb,jdbcType=VARCHAR}, #{positionid,jdbcType=BIGINT}, 
       #{address,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{postcode,jdbcType=VARCHAR}, 
       #{contactnumb,jdbcType=VARCHAR}, #{invoice,jdbcType=INTEGER}, #{companyname,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}
+      #{content,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{commissionCharge,jdbcType=DECIMAL}, #{cash,jdbcType=DECIMAL}, #{accountAmount,jdbcType=DECIMAL}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsOrder">
@@ -123,6 +128,15 @@
       <if test="username != null">
         username,
       </if>
+      <if test="commissionCharge != null">
+        commission_charge,
+      </if>
+      <if test="cash != null">
+        cash,
+      </if>
+      <if test="accountAmount != null">
+        account_amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -187,6 +201,15 @@
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="commissionCharge != null">
+        #{commissionCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null">
+        #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="accountAmount != null">
+        #{accountAmount,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -253,6 +276,15 @@
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
+      <if test="commissionCharge != null">
+        commission_charge = #{commissionCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null">
+        cash = #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="accountAmount != null">
+        account_amount = #{accountAmount,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -277,7 +309,10 @@
       companyname = #{companyname,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       remark = #{remark,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR}
+      username = #{username,jdbcType=VARCHAR},
+      commission_charge = #{commissionCharge,jdbcType=DECIMAL},
+      cash = #{cash,jdbcType=DECIMAL},
+      account_amount = #{accountAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

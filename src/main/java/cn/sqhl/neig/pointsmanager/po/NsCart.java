@@ -18,6 +18,12 @@ public class NsCart {
 
     private String username;
 
+    private BigDecimal commissionCharge;
+
+    private BigDecimal cash;
+
+    private BigDecimal accountAmount;
+
     public Long getId() {
         return id;
     }
@@ -72,5 +78,29 @@ public class NsCart {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public BigDecimal getCommissionCharge() {
+        return commissionCharge;
+    }
+
+    public void setCommissionCharge(BigDecimal commissionCharge) {
+        this.commissionCharge = commissionCharge;
+    }
+
+    public BigDecimal getCash() {
+        return cash;
+    }
+
+    public void setCash(BigDecimal cash) {
+        this.cash = cash;
+    }
+
+    public BigDecimal getAccountAmount() {
+        return accountAmount;
+    }
+
+    public void setAccountAmount(BigDecimal accountAmount) {
+        this.accountAmount = accountAmount;
     }
 }

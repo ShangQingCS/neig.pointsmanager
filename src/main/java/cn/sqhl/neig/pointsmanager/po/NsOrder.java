@@ -1,5 +1,6 @@
 package cn.sqhl.neig.pointsmanager.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class NsOrder {
@@ -7,7 +8,7 @@ public class NsOrder {
 
     private Long userid;
 
-    private Long total;
+    private BigDecimal total;
 
     private Integer counts;
 
@@ -45,6 +46,12 @@ public class NsOrder {
 
     private String username;
 
+    private BigDecimal commissionCharge;
+
+    private BigDecimal cash;
+
+    private BigDecimal accountAmount;
+
     public Long getId() {
         return id;
     }
@@ -61,11 +68,11 @@ public class NsOrder {
         this.userid = userid;
     }
 
-    public Long getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -211,5 +218,29 @@ public class NsOrder {
 
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
+    }
+
+    public BigDecimal getCommissionCharge() {
+        return commissionCharge;
+    }
+
+    public void setCommissionCharge(BigDecimal commissionCharge) {
+        this.commissionCharge = commissionCharge;
+    }
+
+    public BigDecimal getCash() {
+        return cash;
+    }
+
+    public void setCash(BigDecimal cash) {
+        this.cash = cash;
+    }
+
+    public BigDecimal getAccountAmount() {
+        return accountAmount;
+    }
+
+    public void setAccountAmount(BigDecimal accountAmount) {
+        this.accountAmount = accountAmount;
     }
 }

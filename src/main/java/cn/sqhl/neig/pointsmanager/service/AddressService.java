@@ -8,7 +8,7 @@ import cn.sqhl.neig.pointsmanager.vo.Address;
 
 public interface AddressService {
 
-	public List<Address> getaddress(Map<String, Object> map);
+	public List<Address> queryObj(Map<String, Object> map);
 	
 	public int addObj(NsAddress address);
 	

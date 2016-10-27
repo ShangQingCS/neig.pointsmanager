@@ -35,6 +35,7 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!--生成对应表及类名 -->
+		<!-- 
 		<table tableName="ns_address" domainObjectName="NsAddress"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
@@ -44,12 +45,18 @@
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-		
-		<table tableName="ns_cart" domainObjectName="NsCart"
+			
+		<table tableName="ns_order_detail" domainObjectName="NsOrderDetail"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 			
+		<table tableName="ns_goods_category" domainObjectName="NsGoodsCategory"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>	
+			
+		
 		<table tableName="ns_comment" domainObjectName="NsComment"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
@@ -65,25 +72,21 @@
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 			
+		 -->
 		<table tableName="ns_goods" domainObjectName="NsGoods"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 			
+		<table tableName="ns_cart" domainObjectName="NsCart"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+		
 		<table tableName="ns_order" domainObjectName="NsOrder"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-			
-		<table tableName="ns_order_detail" domainObjectName="NsOrderDetail"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false"></table>
-			
-		<table tableName="ns_goods_category" domainObjectName="NsGoodsCategory"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false"></table>	
-			
+		
 	</context>
 </generatorConfiguration>

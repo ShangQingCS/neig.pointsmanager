@@ -20,6 +20,18 @@ public class Goods {
     private String goodimg;
 
     private String detail;
+    
+    public Goods(Long id,String gname,BigDecimal price,Long brand,String goodimglist,String gfullname,Integer storenumb,String goodimg,String detail) {
+		this.id=id;
+		this.gname=gname;
+		this.price=price;
+		this.brand=brand;
+		this.goodimglist=goodimglist;
+		this.gfullname=gfullname;
+		this.storenumb=storenumb;
+		this.goodimg=goodimg;
+		this.detail=detail;
+	}
 
     public Long getId() {
         return id;

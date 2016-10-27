@@ -9,9 +9,13 @@
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="commission_charge" jdbcType="DECIMAL" property="commissionCharge" />
+    <result column="cash" jdbcType="DECIMAL" property="cash" />
+    <result column="account_Amount" jdbcType="DECIMAL" property="accountAmount" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userid, goodsid, count, price, create_time, username
+    id, userid, goodsid, count, price, create_time, username, commission_charge, cash, 
+    account_Amount
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,10 +30,12 @@
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsCart">
     insert into ns_cart (id, userid, goodsid, 
       count, price, create_time, 
-      username)
+      username, commission_charge, cash, 
+      account_Amount)
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, 
       #{count,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{username,jdbcType=VARCHAR})
+      #{username,jdbcType=VARCHAR}, #{commissionCharge,jdbcType=DECIMAL}, #{cash,jdbcType=DECIMAL}, 
+      #{accountAmount,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsCart">
     insert into ns_cart
@@ -55,6 +61,15 @@
       <if test="username != null">
         username,
       </if>
+      <if test="commissionCharge != null">
+        commission_charge,
+      </if>
+      <if test="cash != null">
+        cash,
+      </if>
+      <if test="accountAmount != null">
+        account_Amount,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -77,6 +92,15 @@
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="commissionCharge != null">
+        #{commissionCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null">
+        #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="accountAmount != null">
+        #{accountAmount,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -101,6 +125,15 @@
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
+      <if test="commissionCharge != null">
+        commission_charge = #{commissionCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null">
+        cash = #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="accountAmount != null">
+        account_Amount = #{accountAmount,jdbcType=DECIMAL},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -111,7 +144,10 @@
       count = #{count,jdbcType=INTEGER},
       price = #{price,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      username = #{username,jdbcType=VARCHAR}
+      username = #{username,jdbcType=VARCHAR},
+      commission_charge = #{commissionCharge,jdbcType=DECIMAL},
+      cash = #{cash,jdbcType=DECIMAL},
+      account_Amount = #{accountAmount,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

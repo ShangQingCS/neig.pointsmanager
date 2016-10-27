@@ -14,13 +14,15 @@
     <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
     <result column="goodimg" jdbcType="VARCHAR" property="goodimg" />
     <result column="freazes" jdbcType="INTEGER" property="freazes" />
+    <result column="costprice" jdbcType="DECIMAL" property="costprice" />
+    <result column="sellnumb" jdbcType="INTEGER" property="sellnumb" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.sqhl.neig.pointsmanager.po.NsGoods">
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Base_Column_List">
     id, gname, price, category, kind, brand, goodimglist, isuser, Gfullname, storenumb, 
-    goodimg, freazes
+    goodimg, freazes, costprice, sellnumb
   </sql>
   <sql id="Blob_Column_List">
     detail
@@ -42,12 +44,14 @@
       category, kind, brand, 
       goodimglist, isuser, Gfullname, 
       storenumb, goodimg, freazes, 
-      detail)
+      costprice, sellnumb, detail
+      )
     values (#{id,jdbcType=BIGINT}, #{gname,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
       #{category,jdbcType=BIGINT}, #{kind,jdbcType=BIGINT}, #{brand,jdbcType=BIGINT}, 
       #{goodimglist,jdbcType=VARCHAR}, #{isuser,jdbcType=INTEGER}, #{gfullname,jdbcType=VARCHAR}, 
       #{storenumb,jdbcType=INTEGER}, #{goodimg,jdbcType=VARCHAR}, #{freazes,jdbcType=INTEGER}, 
-      #{detail,jdbcType=LONGVARCHAR})
+      #{costprice,jdbcType=DECIMAL}, #{sellnumb,jdbcType=INTEGER}, #{detail,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
     insert into ns_goods
@@ -87,6 +91,12 @@
       </if>
       <if test="freazes != null">
         freazes,
+      </if>
+      <if test="costprice != null">
+        costprice,
+      </if>
+      <if test="sellnumb != null">
+        sellnumb,
       </if>
       <if test="detail != null">
         detail,
@@ -129,6 +139,12 @@
       <if test="freazes != null">
         #{freazes,jdbcType=INTEGER},
       </if>
+      <if test="costprice != null">
+        #{costprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellnumb != null">
+        #{sellnumb,jdbcType=INTEGER},
+      </if>
       <if test="detail != null">
         #{detail,jdbcType=LONGVARCHAR},
       </if>
@@ -170,6 +186,12 @@
       <if test="freazes != null">
         freazes = #{freazes,jdbcType=INTEGER},
       </if>
+      <if test="costprice != null">
+        costprice = #{costprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sellnumb != null">
+        sellnumb = #{sellnumb,jdbcType=INTEGER},
+      </if>
       <if test="detail != null">
         detail = #{detail,jdbcType=LONGVARCHAR},
       </if>
@@ -189,6 +211,8 @@
       storenumb = #{storenumb,jdbcType=INTEGER},
       goodimg = #{goodimg,jdbcType=VARCHAR},
       freazes = #{freazes,jdbcType=INTEGER},
+      costprice = #{costprice,jdbcType=DECIMAL},
+      sellnumb = #{sellnumb,jdbcType=INTEGER},
       detail = #{detail,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -204,7 +228,9 @@
       Gfullname = #{gfullname,jdbcType=VARCHAR},
       storenumb = #{storenumb,jdbcType=INTEGER},
       goodimg = #{goodimg,jdbcType=VARCHAR},
-      freazes = #{freazes,jdbcType=INTEGER}
+      freazes = #{freazes,jdbcType=INTEGER},
+      costprice = #{costprice,jdbcType=DECIMAL},
+      sellnumb = #{sellnumb,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

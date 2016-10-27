@@ -63,7 +63,7 @@ public class AddressController extends ContextInfo{
 				Map<String, Object> map = new HashMap<String, Object>();
 				map.put("userid", userid);	
 				map.put("isuse", isuse);
-				List<Address> ads=addressServices.getaddress(map);
+				List<Address> ads=addressServices.queryObj(map);
 				result="0";
 				data=ads;
 				message="执行成功";
@@ -88,7 +88,7 @@ public class AddressController extends ContextInfo{
 	
 	@ResponseBody
 	@RequestMapping(value="/manager")
-	public JSONObject managerAddress(HttpServletRequest request,NsAddress address,@Param(value="addressid") Long id,@Param("type") String type) throws IOException{
+	public JSONObject managerAddress(HttpServletRequest request,HttpServletResponse response,NsAddress address,@Param(value="addressid") Long id,@Param("type") String type) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		InputStream requestjson = request.getInputStream();

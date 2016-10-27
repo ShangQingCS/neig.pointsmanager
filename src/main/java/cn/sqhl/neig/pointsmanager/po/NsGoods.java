@@ -27,6 +27,10 @@ public class NsGoods {
 
     private Integer freazes;
 
+    private BigDecimal costprice;
+
+    private Integer sellnumb;
+
     private String detail;
 
     public Long getId() {
@@ -123,6 +127,22 @@ public class NsGoods {
 
     public void setFreazes(Integer freazes) {
         this.freazes = freazes;
+    }
+
+    public BigDecimal getCostprice() {
+        return costprice;
+    }
+
+    public void setCostprice(BigDecimal costprice) {
+        this.costprice = costprice;
+    }
+
+    public Integer getSellnumb() {
+        return sellnumb;
+    }
+
+    public void setSellnumb(Integer sellnumb) {
+        this.sellnumb = sellnumb;
     }
 
     public String getDetail() {

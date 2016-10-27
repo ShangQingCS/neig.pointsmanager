@@ -59,7 +59,7 @@
 	
 	<!-- druid sql防火墙 -->
 	<bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
-		<property name="dbType" value="oracle" />
+		<property name="dbType" value="mysql" />
 	</bean>
 	
 	<!-- druid 监控filter -->
@@ -81,7 +81,7 @@
 		scope="prototype">
 		<property name="patterns">
 			<list>
-				<value>cn.aresoft.framework.service.*</value>
+				<value>cn.sqlhl.neig.pointsmanager.service.*</value>
 			</list>
 		</property>
 	</bean>
@@ -107,8 +107,9 @@
 			<ref bean="paginationInterceptor" />
 		</property>
 		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+		<property name="configLocation" value="classpath:mybatis.xml"/>
 		<property name="mapperLocations" value="classpath:mybatis/*.xml" />
-		<property name="typeAliasesPackage" value="cn.sqhl.neig.pointsmanager.vo"></property>
+		<property name="typeAliasesPackage" value="cn.sqhl.neig.pointsmanager.vo;cn.sqhl.neig.pointsmanager.po"></property>
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
