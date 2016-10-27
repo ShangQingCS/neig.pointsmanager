@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.core;
 
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
+
 public interface Dialect {
 	/**
 	 * 生成得到总记录数SQL

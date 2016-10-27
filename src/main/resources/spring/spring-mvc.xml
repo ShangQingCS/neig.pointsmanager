@@ -21,6 +21,15 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
+			<!-- 
+				<bean class="org.springframework.http.MediaType">  
+	                <constructor-arg value="text" />  
+	                <constructor-arg value="plain" />  
+	                <constructor-arg value="UTF-8" />  
+	            </bean>  
+				<value>application/json;charset=UTF-8</value>
+				<value>text/plain;charset=UTF-8</value>
+	          -->
 				<value>text/html;charset=UTF-8</value>
 			</list>
 		</property>

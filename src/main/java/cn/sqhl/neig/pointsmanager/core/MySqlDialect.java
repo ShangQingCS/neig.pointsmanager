@@ -3,6 +3,8 @@ package cn.sqhl.neig.pointsmanager.core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
+
 public class MySqlDialect implements Dialect {
 	private static Logger log = LogManager.getLogger(MySqlDialect.class);
 
@@ -23,6 +25,7 @@ public class MySqlDialect implements Dialect {
 		int currentpage = page.getCurrentPage();
 		int pagesize = page.getLength();
 		
+		sql = "select * from ("+sql+") limit "+(currentpage-1)*pagesize+","+currentpage*pagesize;
 		
 		//sql = "select * from(SELECT row_.*,rownum rn FROM( " + sql +" ) row_ WHERE rownum <= " + end +") where rn > " + begin;
 		log.debug("构建出的分页sql：" + sql);

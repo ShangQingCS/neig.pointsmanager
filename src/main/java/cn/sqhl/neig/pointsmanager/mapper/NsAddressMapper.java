@@ -1,6 +1,12 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
+import cn.sqhl.neig.pointsmanager.vo.Address;
 
 public interface NsAddressMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +20,6 @@ public interface NsAddressMapper {
     int updateByPrimaryKeySelective(NsAddress record);
 
     int updateByPrimaryKey(NsAddress record);
+    
+    public List<Address> selectAddress(@Param("map") Map<String, Object> map);
 }

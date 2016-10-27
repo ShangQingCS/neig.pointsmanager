@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.sun.net.httpserver.Filter.Chain;
+
 public class Checkfilter extends OncePerRequestFilter {
 
 	protected ServletContext scontext;
@@ -23,11 +25,12 @@ public class Checkfilter extends OncePerRequestFilter {
 	};
 	
 	@Override
-	protected void doFilterInternal(HttpServletRequest arg0,
-			HttpServletResponse arg1, FilterChain arg2)
+	protected void doFilterInternal(HttpServletRequest request,
+			HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
+//		request.setCharacterEncoding("UTF-8");
+		chain.doFilter(request, response);
 	}
 
 }

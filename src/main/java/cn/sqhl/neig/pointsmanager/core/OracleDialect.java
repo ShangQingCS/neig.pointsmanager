@@ -3,6 +3,8 @@ package cn.sqhl.neig.pointsmanager.core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
+
 
 public class OracleDialect implements Dialect {
 

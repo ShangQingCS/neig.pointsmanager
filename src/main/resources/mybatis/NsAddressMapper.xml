@@ -138,4 +138,32 @@
       username = #{username,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+   <resultMap id="ResultMap" type="cn.sqhl.neig.pointsmanager.vo.Address">
+	   	<id column="id" jdbcType="BIGINT" property="id" />
+	    <result column="uerid" jdbcType="BIGINT" property="uerid" />
+	    <result column="address" jdbcType="VARCHAR" property="address" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="post" jdbcType="VARCHAR" property="post" />
+	    <result column="phonenumb" jdbcType="VARCHAR" property="phonenumb" />
+	    <result column="telnumb" jdbcType="VARCHAR" property="telnumb" />
+	    <result column="isuse" jdbcType="INTEGER" property="isuse" />
+	    <result column="username" jdbcType="VARCHAR" property="username" />
+   </resultMap>
+   <select id="selectAddress" resultMap="ResultMap" parameterType="java.util.Map">
+	   	select 
+	    <include refid="Base_Column_List" />
+	    from ns_address
+	    <if test="map!=null">
+	    <where>
+	    	1=1
+	    	<if test="map.userid!=''">
+	    		and uerid=${map.userid}
+	    	</if>
+	    	<if test="map.isuse!=''">
+	    		and isuse=${map.isuse}
+	    	</if>
+	    </where>	    
+	    </if>
+   </select>
 </mapper>

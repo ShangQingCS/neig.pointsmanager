@@ -22,6 +22,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
+
 /**
  * @author orh
  *         <p>
