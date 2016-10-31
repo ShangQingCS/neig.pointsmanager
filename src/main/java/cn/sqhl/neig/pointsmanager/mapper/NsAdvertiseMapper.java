@@ -1,6 +1,13 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import cn.sqhl.neig.pointsmanager.core.PaginationInterceptor;
 import cn.sqhl.neig.pointsmanager.po.NsAdvertise;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
+import cn.sqhl.neig.pointsmanager.vo.Advertise;
 
 public interface NsAdvertiseMapper {
     int deleteByPrimaryKey(Long id);
@@ -16,4 +23,6 @@ public interface NsAdvertiseMapper {
     int updateByPrimaryKeyWithBLOBs(NsAdvertise record);
 
     int updateByPrimaryKey(NsAdvertise record);
+    
+    List<Advertise> selectListPageByType(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("type") Integer id);
 }

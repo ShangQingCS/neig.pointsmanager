@@ -127,6 +127,7 @@ public class GoodsController extends ContextInfo{
 				nowpage="1";
 			}
 		}
+		List list=null;
 		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
 		if(StringUtils.isEmpty(parentid) && StringUtils.isEmpty(searchcode)){
 			result="1";
@@ -137,19 +138,17 @@ public class GoodsController extends ContextInfo{
 			if(!StringUtils.isEmpty(parentid)){
 				Map map=new HashMap();
 				map.put("parentid",parentid);
-				goodsService.queryPageByParentID(page,map);
+				list=goodsService.queryPageByParentID(page,map);
 			}
 			if(!StringUtils.isEmpty(searchcode)){
 				Map map=new HashMap();
 				map.put("searchcode",searchcode);
-				goodsService.queryPageByLike(page,map);
+				list=goodsService.queryPageByLike(page,map);
 			}
 		}
-		
-
-		
-		
-		
+		if(list!=null && list.size() > 0 ){
+			data=list;
+		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);
@@ -170,8 +169,43 @@ public class GoodsController extends ContextInfo{
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
-		
-		
+		if(StringUtils.isEmpty(parentid)){
+			if(requestString!=null){
+				parentid=requestString.get("parentid")+"";
+			}
+		}
+		if(StringUtils.isEmpty(pagesize)){
+			if(requestString!=null){
+				pagesize=requestString.get("pagesize")+"";
+			}else{
+				pagesize="15";
+			}
+		}
+		if(StringUtils.isEmpty(nowpage)){
+			if(requestString!=null){
+				nowpage=requestString.get("nowpage")+"";
+			}else{
+				nowpage="1";
+			}
+		}
+		List list=null;
+		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		if(!StringUtils.isEmpty(parentid)){
+			Map map=new HashMap();
+			map.put("parentid",parentid);
+			list=goodsService.queryGoodsCategory(page,map);
+		}else{
+			result="1";
+			message="parentid 为空请确认无误后再行调用";
+			logger.log(INFO, message);
+			data="";
+		}
+		if(list!=null && list.size() > 0 ){
+			result="0";
+			message="查询成功~";
+			logger.log(INFO, message);
+			data=list;
+		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);

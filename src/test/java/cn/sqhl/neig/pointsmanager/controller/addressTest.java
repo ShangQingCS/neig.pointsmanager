@@ -33,6 +33,10 @@ public class addressTest extends TestCase {
 //		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/address/search.do");
 //		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/address/manager.action");
 		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/goods/search.action");
+//		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/goods/searchlist.action");
+//		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/goods/searchcategory.action");
+//		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/adevent/searchad.action");
+//		   HttpPost httpost = new HttpPost("http://127.0.0.1:8080/pointsmanager/adevent/searchevent.action");
 		   httpost.setHeader("Content-Type", "application/json;charset=utf-8");
 		  // 下面加入代码
 		   Map map =new HashMap(); 

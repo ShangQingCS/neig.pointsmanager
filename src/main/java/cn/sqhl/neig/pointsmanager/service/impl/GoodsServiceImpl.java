@@ -6,18 +6,23 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.sqhl.neig.pointsmanager.mapper.NsGoodsCategoryMapper;
 import cn.sqhl.neig.pointsmanager.mapper.NsGoodsMapper;
 import cn.sqhl.neig.pointsmanager.po.NsGoods;
 import cn.sqhl.neig.pointsmanager.service.BaseService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
+import cn.sqhl.neig.pointsmanager.vo.GoodsCategory;
 
 @Service("goodsService")
 public class GoodsServiceImpl implements GoodsService,BaseService{
 
 	@Autowired
-	NsGoodsMapper nsGoodsMapper;
+	private NsGoodsMapper nsGoodsMapper;
+	
+	@Autowired
+	private NsGoodsCategoryMapper nsGoodsCategoryMapper;
 	
 	@Override
 	public List<Object> queryObj(Map<String, Object> map) {
@@ -56,5 +61,11 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	@Override
 	public List<Goods> queryPageByLike(PageCond page, Object obj) {
 		return nsGoodsMapper.selectListPageByLike(page, (String)obj);
+	}
+
+	@Override
+	public List<GoodsCategory> queryGoodsCategory(PageCond page, Object obj) {
+		nsGoodsCategoryMapper.selectByParentId(page,(String)obj);
+		return null;
 	}
 }
