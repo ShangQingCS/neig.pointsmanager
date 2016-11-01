@@ -171,8 +171,12 @@ public class ContextInfo {
 				}
 
 			} else {
-				obj = obj.getClass().newInstance();
-				status = true;
+				if(json != null && json.size() >0){
+					obj = obj.getClass().newInstance();
+					status = true;
+				}else{
+					obj=null;
+				}
 			}
 
 			if (status && json != null) {
@@ -206,6 +210,8 @@ public class ContextInfo {
 					}
 
 				}
+			}else{
+				obj=null;
 			}
 		} catch (Exception e) {
 			logger.log(ERROR, e.getMessage());

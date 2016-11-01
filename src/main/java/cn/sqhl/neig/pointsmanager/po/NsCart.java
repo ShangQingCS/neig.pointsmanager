@@ -1,6 +1,5 @@
 package cn.sqhl.neig.pointsmanager.po;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class NsCart {
@@ -12,18 +11,10 @@ public class NsCart {
 
     private Integer count;
 
-    private BigDecimal price;
-
     private Date createTime;
 
     private String username;
-
-    private BigDecimal commissionCharge;
-
-    private BigDecimal cash;
-
-    private BigDecimal accountAmount;
-
+    
     public Long getId() {
         return id;
     }
@@ -55,15 +46,7 @@ public class NsCart {
     public void setCount(Integer count) {
         this.count = count;
     }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
+    
     public Date getCreateTime() {
         return createTime;
     }
@@ -80,27 +63,4 @@ public class NsCart {
         this.username = username == null ? null : username.trim();
     }
 
-    public BigDecimal getCommissionCharge() {
-        return commissionCharge;
-    }
-
-    public void setCommissionCharge(BigDecimal commissionCharge) {
-        this.commissionCharge = commissionCharge;
-    }
-
-    public BigDecimal getCash() {
-        return cash;
-    }
-
-    public void setCash(BigDecimal cash) {
-        this.cash = cash;
-    }
-
-    public BigDecimal getAccountAmount() {
-        return accountAmount;
-    }
-
-    public void setAccountAmount(BigDecimal accountAmount) {
-        this.accountAmount = accountAmount;
-    }
 }
