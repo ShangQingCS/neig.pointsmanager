@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -47,7 +48,8 @@ public class AddressController extends ContextInfo{
 	@RequestMapping("/search")
 	public JSONObject queryAddress(HttpServletRequest request,@Param("isuse") String isuse,@Param("userid") String userid,HttpServletResponse response) throws Exception{
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttp(requestjson);
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 	    JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 	    logger.debug("/address/search param:"+requestString);
 	    if(StringUtils.isEmpty(userid)&&requestString!=null){
@@ -92,8 +94,8 @@ public class AddressController extends ContextInfo{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
-
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
 		try {

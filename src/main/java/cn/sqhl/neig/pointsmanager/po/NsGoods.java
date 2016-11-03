@@ -27,9 +27,19 @@ public class NsGoods {
 
     private Integer freazes;
 
-    private BigDecimal costprice;
+    private Long costprice;
 
     private Integer sellnumb;
+
+    private String img1;
+
+    private String img2;
+
+    private String img3;
+
+    private String img4;
+
+    private String img5;
 
     private String detail;
 
@@ -129,11 +139,11 @@ public class NsGoods {
         this.freazes = freazes;
     }
 
-    public BigDecimal getCostprice() {
+    public Long getCostprice() {
         return costprice;
     }
 
-    public void setCostprice(BigDecimal costprice) {
+    public void setCostprice(Long costprice) {
         this.costprice = costprice;
     }
 
@@ -143,6 +153,46 @@ public class NsGoods {
 
     public void setSellnumb(Integer sellnumb) {
         this.sellnumb = sellnumb;
+    }
+
+    public String getImg1() {
+        return img1;
+    }
+
+    public void setImg1(String img1) {
+        this.img1 = img1 == null ? null : img1.trim();
+    }
+
+    public String getImg2() {
+        return img2;
+    }
+
+    public void setImg2(String img2) {
+        this.img2 = img2 == null ? null : img2.trim();
+    }
+
+    public String getImg3() {
+        return img3;
+    }
+
+    public void setImg3(String img3) {
+        this.img3 = img3 == null ? null : img3.trim();
+    }
+
+    public String getImg4() {
+        return img4;
+    }
+
+    public void setImg4(String img4) {
+        this.img4 = img4 == null ? null : img4.trim();
+    }
+
+    public String getImg5() {
+        return img5;
+    }
+
+    public void setImg5(String img5) {
+        this.img5 = img5 == null ? null : img5.trim();
     }
 
     public String getDetail() {

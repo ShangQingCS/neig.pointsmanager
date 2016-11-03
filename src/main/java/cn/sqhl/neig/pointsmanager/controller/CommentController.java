@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -48,7 +49,8 @@ public class CommentController extends ContextInfo{
 		rsJson.put("ver", ver);
 		
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
@@ -133,7 +135,8 @@ public class CommentController extends ContextInfo{
 		rsJson.put("ver", ver);
 		
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);

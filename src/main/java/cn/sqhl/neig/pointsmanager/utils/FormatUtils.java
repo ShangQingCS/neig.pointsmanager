@@ -58,7 +58,6 @@ public class FormatUtils {
 //	         reader = new BufferedReader(new InputStreamReader(final_request.getInputStream(),"UTF-8"));
 	         // 将返回的数据读到buffer中
 	         String temp = null;
-	         
 	         while ((temp = reader.readLine()) != null) {
 	        	 buffer.append(temp);
 

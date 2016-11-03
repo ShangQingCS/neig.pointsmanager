@@ -51,16 +51,25 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	@Override
 	public Goods queryObj(Long id) {
 		NsGoods nsgoods =nsGoodsMapper.selectByPrimaryKey(id);
-		return new Goods(nsgoods.getId(),nsgoods.getGname(),nsgoods.getPrice(),nsgoods.getBrand(), nsgoods.getGoodimglist(), nsgoods.getGfullname(), nsgoods.getSellnumb(), nsgoods.getGoodimg(), nsgoods.getDetail());
+		if(nsgoods!=null){
+		return new Goods(nsgoods.getId(),nsgoods.getGname(),
+				nsgoods.getPrice(),nsgoods.getBrand(), 
+				nsgoods.getGoodimglist(), nsgoods.getGfullname(), 
+				nsgoods.getSellnumb(), nsgoods.getGoodimg(), 
+				nsgoods.getDetail(),nsgoods.getImg1(),nsgoods.getImg2(),
+				nsgoods.getImg3(),nsgoods.getImg4(),nsgoods.getImg5());
+		}else{
+			return null;
+		}
 	}
 
 	@Override
 	public List<Goods> queryPageByParentID(PageCond page, Object obj) {
-		return nsGoodsMapper.selectListPageByParentID(page, (String)obj);
+		return nsGoodsMapper.selectListPageByParentID(page, (Map<String, Object>)obj);
 	}
 	@Override
 	public List<Goods> queryPageByLike(PageCond page, Object obj) {
-		return nsGoodsMapper.selectListPageByLike(page, (String)obj);
+		return nsGoodsMapper.selectListPageByLike(page, (Map<String, Object>)obj);
 	}
 
 	@Override

@@ -1,13 +1,14 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.sqhl.neig.pointsmanager.core.PaginationInterceptor;
 import cn.sqhl.neig.pointsmanager.po.NsGoods;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
-import cn.sqhl.neig.pointsmanager.core.PaginationInterceptor;
 
 public interface NsGoodsMapper {
     int deleteByPrimaryKey(Long id);
@@ -24,7 +25,7 @@ public interface NsGoodsMapper {
 
     int updateByPrimaryKey(NsGoods record);
     
-    List<Goods> selectListPageByLike(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("searchcode") String searchcode);
+    List<Goods> selectListPageByParentID(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
     
-    List<Goods> selectListPageByParentID(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("parentid") String parentid);
+    List<Goods> selectListPageByLike(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
 }

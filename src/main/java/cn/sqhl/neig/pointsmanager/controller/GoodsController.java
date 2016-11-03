@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,12 +43,13 @@ public class GoodsController extends ContextInfo{
 		rsJson.put("ver", ver);
 		
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
 		
-		if(StringUtils.isEmpty(id.toString())){
+		if(StringUtils.isEmpty(id)){
 			if(requestString!=null){
 				String goodsid=requestString.get("goodsid")+"";
 				if(!StringUtils.isEmpty(goodsid)){
@@ -61,7 +63,7 @@ public class GoodsController extends ContextInfo{
 			}
 		}
 		Goods goods=null;
-		if(!StringUtils.isEmpty(id.toString())){
+		if(!StringUtils.isEmpty(id)){
 			goods=goodsService.queryObj(id);
 			List list=new ArrayList();
 			if(goods!=null){
@@ -100,7 +102,8 @@ public class GoodsController extends ContextInfo{
 		rsJson.put("ver", ver);
 		
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
 		if(StringUtils.isEmpty(parentid)){
@@ -165,7 +168,8 @@ public class GoodsController extends ContextInfo{
 		rsJson.put("ver", ver);
 		
 		InputStream requestjson = request.getInputStream();
-		String locationsJSONString=FormatUtils.getStringFromHttpforCN(requestjson);
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
