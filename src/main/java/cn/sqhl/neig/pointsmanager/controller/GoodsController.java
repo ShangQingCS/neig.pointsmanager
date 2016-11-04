@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.rmi.CORBA.Util;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -38,7 +40,7 @@ public class GoodsController extends ContextInfo{
 	
 	@ResponseBody
 	@RequestMapping("/search")
-	public JSONObject queryGoods(HttpServletRequest request,HttpServletResponse response,@Param(value="goodsid") Long id) throws IOException{
+	public JSONObject queryGoods(HttpServletRequest request,HttpServletResponse response,@RequestParam(value="goodsid",required=false) Long id) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		
@@ -94,10 +96,10 @@ public class GoodsController extends ContextInfo{
 	@ResponseBody
 	@RequestMapping("/searchlist")
 	public JSONObject queryGoodsList(HttpServletRequest request,HttpServletResponse response,
-			@Param(value="parentid") String parentid,
-			@Param(value="searchcode") String searchcode,
-			@Param(value="pagesize") String pagesize,
-			@Param(value="nowpage") String nowpage) throws IOException{
+			@RequestParam(value="parentid",required=false) String parentid,
+			@RequestParam(value="searchcode",required=false) String searchcode,
+			@RequestParam(value="pagesize",required=false) String pagesize,
+			@RequestParam(value="nowpage",required=false) String nowpage) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		
@@ -106,25 +108,25 @@ public class GoodsController extends ContextInfo{
 		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
-		if(StringUtils.isEmpty(parentid)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(parentid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("parentid"))){
 				parentid=requestString.get("parentid")+"";
 			}
 		}
-		if(StringUtils.isEmpty(searchcode)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(searchcode) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("searchcode"))){
 				searchcode=requestString.get("searchcode")+"";
 			}
 		}
-		if(StringUtils.isEmpty(pagesize)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(pagesize) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
 				pagesize=requestString.get("pagesize")+"";
 			}else{
 				pagesize="15";
 			}
 		}
-		if(StringUtils.isEmpty(nowpage)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(nowpage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
 				nowpage=requestString.get("nowpage")+"";
 			}else{
 				nowpage="1";
@@ -150,6 +152,9 @@ public class GoodsController extends ContextInfo{
 			}
 		}
 		if(list!=null && list.size() > 0 ){
+			result="0";
+			message="查询成功";
+			logger.log(INFO, message);
 			data=list;
 		}
 		rsJson.put("result", result);
@@ -161,9 +166,9 @@ public class GoodsController extends ContextInfo{
 	@ResponseBody
 	@RequestMapping("/searchcategory")
 	public JSONObject queryGoodsCategory(HttpServletRequest request,HttpServletResponse response,
-			@Param(value="parentid") String parentid,
-			@Param(value="pagesize") String pagesize,
-			@Param(value="nowpage") String nowpage) throws IOException{
+			@RequestParam(value="parentid",required=false) String parentid,
+			@RequestParam(value="pagesize",required=false) String pagesize,
+			@RequestParam(value="nowpage",required=false) String nowpage) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		
@@ -173,20 +178,20 @@ public class GoodsController extends ContextInfo{
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
-		if(StringUtils.isEmpty(parentid)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(parentid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("parentid"))){
 				parentid=requestString.get("parentid")+"";
 			}
 		}
-		if(StringUtils.isEmpty(pagesize)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(pagesize) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
 				pagesize=requestString.get("pagesize")+"";
 			}else{
 				pagesize="15";
 			}
 		}
-		if(StringUtils.isEmpty(nowpage)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(nowpage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
 				nowpage=requestString.get("nowpage")+"";
 			}else{
 				nowpage="1";

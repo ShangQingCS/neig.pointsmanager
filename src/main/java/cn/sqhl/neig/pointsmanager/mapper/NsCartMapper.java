@@ -23,7 +23,7 @@ public interface NsCartMapper {
 
     int updateByPrimaryKey(NsCart record);
     
-    List<Cart> selectMapList(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("userid") Long userid);
+    List<Cart> queryMapList(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("userid") Long userid);
     
     List<Object> selectMapListByUserid(@Param("map") Map<String, Object> map);
 }

@@ -295,4 +295,53 @@
       img5 = #{img5,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <resultMap id="GoodsResultMap" type="cn.sqhl.neig.pointsmanager.vo.Goods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="gname" jdbcType="VARCHAR" property="gname" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="brand" jdbcType="BIGINT" property="brand" />
+    <result column="goodimglist" jdbcType="VARCHAR" property="goodimglist" />
+    <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
+    <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
+    <result column="goodimg" jdbcType="VARCHAR" property="goodimg" />
+    <result column="img1" jdbcType="VARCHAR" property="img1" />
+    <result column="img2" jdbcType="VARCHAR" property="img2" />
+    <result column="img3" jdbcType="VARCHAR" property="img3" />
+    <result column="img4" jdbcType="VARCHAR" property="img4" />
+    <result column="img5" jdbcType="VARCHAR" property="img5" />
+  </resultMap>
+  <resultMap extends="GoodsResultMap" id="GoodsResultMapWithBLOBs" type="cn.sqhl.neig.pointsmanager.vo.Goods">
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+  <sql id="goods_Column_List">
+    id, gname, price, brand, goodimglist, Gfullname, storenumb, 
+    goodimg, img1, img2, img3, img4, img5
+  </sql>
+  <sql id="goods_Blob_Column_List">
+    detail
+  </sql>
+  <select id="queryListPageByParentID" parameterType="java.util.Map" resultMap="GoodsResultMap">
+  		select 
+  		<include refid="goods_Column_List" />
+  		from ns_goods
+  		<if test="map.parentid != '' ">
+	  		<where>
+	  			brand=#{map.parentid,jdbcType=BIGINT}
+	  		</where>
+  		</if>
+  </select>
+  
+  <select id="queryListPageByLike" parameterType="java.util.Map" resultMap="GoodsResultMap">
+  		select 
+  		<include refid="goods_Column_List" />
+  		from ns_goods
+  		<if test="map.searchcode != '' ">
+	  		<where>
+	  			category in (select id from ns_goods_category where level=1 and cate_name like '%${map.searchcode}%')
+	  		or	kind in (select id from ns_goods_category where level=2 and cate_name like '%${map.searchcode}%')
+	  		or	brand in (select id from ns_goods_category where level=3 and cate_name like '%${map.searchcode}%')
+	  		</where>
+  		</if>
+  </select>
 </mapper>

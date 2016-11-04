@@ -27,7 +27,7 @@ import cn.sqhl.neig.pointsmanager.utils.PageCond;
 /**
  * @author orh
  *         <p>
- *         分页插件类，功能：
+ *         分页插件类，功能： 必须使用query 开头的方法才能生效
  *         <ul>
  *         <li>自动求得总行数，不需另外的求和sql，通过参数引用的PageCond对象返回</li>
  *         <li>根据PageCond的条件分页，无需对命名sql写分页实现</li>

@@ -42,7 +42,7 @@ public class ShopCarServiceImpl implements ShopCarService{
 
 	@Override
 	public List<Object> queryObj(PageCond page, Long userid) {
-		nsCartMapper.selectMapList(page,userid);
+		nsCartMapper.queryMapList(page,userid);
 		return null;
 	}
 	

@@ -56,41 +56,31 @@ public class CommentController extends ContextInfo{
 		logger.log(DEBUG, requestString);
 		List list=null;
 		
-		if(StringUtils.isEmpty(userid.toString())){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(userid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("userid"))){
 				String usid=requestString.get("userid")+"";
 				if(!StringUtils.isEmpty(usid)){
 					userid=Long.parseLong(usid);
 				}
-			}else{
-				result="1";
-				message="userid 为空请确认无误后再行调用";
-				logger.log(INFO, message);
-				data="";
 			}
 		}
-		if(StringUtils.isEmpty(goodsid.toString())){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(goodsid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("goodsid"))){
 				String gdid=requestString.get("goodsid")+"";
 				if(!StringUtils.isEmpty(gdid)){
 					goodsid=Long.parseLong(gdid);
 				}
-			}else{
-				result="1";
-				message="goodsid 为空请确认无误后再行调用";
-				logger.log(INFO, message);
-				data="";
 			}
 		}
-		if(StringUtils.isEmpty(pagesize)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(pagesize) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
 				pagesize=requestString.get("pagesize")+"";
 			}else{
 				pagesize="15";
 			}
 		}
-		if(StringUtils.isEmpty(nowpage)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(nowpage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
 				nowpage=requestString.get("nowpage")+"";
 			}else{
 				nowpage="1";

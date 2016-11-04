@@ -1,6 +1,7 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -22,5 +23,5 @@ public interface NsGoodsCategoryMapper {
 
     int updateByPrimaryKey(NsGoodsCategory record);
     
-    List<GoodsCategory> selectByParentId(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("parentid") String parentid);
+    List<GoodsCategory> queryByParentId(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
 }

@@ -22,12 +22,12 @@ public class AdEventServiceImpl implements AdEventService{
 	
 	@Override
 	public Object queryEvent(PageCond page, Object obj) {
-		return nsEventsinfoMapper.selectListPageById(page, Long.parseLong(obj.toString()));
+		return nsEventsinfoMapper.queryListPageById(page, Long.parseLong(obj.toString()));
 	}
 
 	@Override
 	public List<Advertise> queryAD(PageCond page, Object obj) {
-		return nsAdvertiseMapper.selectListPageByType(page,Integer.parseInt(obj.toString()));
+		return nsAdvertiseMapper.queryListPageByType(page,Integer.parseInt(obj.toString()));
 	}
 
 }

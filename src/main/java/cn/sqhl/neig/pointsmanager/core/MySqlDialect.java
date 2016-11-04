@@ -25,7 +25,7 @@ public class MySqlDialect implements Dialect {
 		int currentpage = page.getCurrentPage();
 		int pagesize = page.getLength();
 		
-		sql = "select * from ("+sql+") limit "+(currentpage-1)*pagesize+","+currentpage*pagesize;
+		sql = "select * from ("+sql+") as t limit "+(currentpage-1)*pagesize+","+currentpage*pagesize;
 		
 		//sql = "select * from(SELECT row_.*,rownum rn FROM( " + sql +" ) row_ WHERE rownum <= " + end +") where rn > " + begin;
 		log.debug("构建出的分页sql：" + sql);

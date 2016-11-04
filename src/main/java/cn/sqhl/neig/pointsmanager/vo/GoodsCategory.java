@@ -12,14 +12,14 @@ public class GoodsCategory {
     
     private Integer parentId;
 
-    private List<Goods> goodslist; 
+    private Integer cateOrder; 
 
-    public List<Goods> getGoodslist() {
-		return goodslist;
+    public Integer getGoodslist() {
+		return cateOrder;
 	}
 
-	public void setGoodslist(List<Goods> goodslist) {
-		this.goodslist = goodslist;
+	public void setGoodslist(Integer cateOrder) {
+		this.cateOrder = cateOrder;
 	}
 
 	public Integer getId() {

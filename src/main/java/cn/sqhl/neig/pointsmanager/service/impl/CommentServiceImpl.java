@@ -20,7 +20,7 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Override
 	public List<Comment> queryObj(PageCond page, Map<String, Object> map) {
-		return nsCommentMapper.selectComment(page,map);
+		return nsCommentMapper.queryComment(page,map);
 	}
 
 	@Override

@@ -25,5 +25,5 @@ public interface NsEventsinfoMapper {
 
     int updateByPrimaryKey(NsEventsinfo record);
     
-    Eventsinfo selectListPageById(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("id") Long id);
+    Eventsinfo queryListPageById(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("id") Long id);
 }

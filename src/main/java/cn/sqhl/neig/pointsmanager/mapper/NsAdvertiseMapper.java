@@ -24,5 +24,5 @@ public interface NsAdvertiseMapper {
 
     int updateByPrimaryKey(NsAdvertise record);
     
-    List<Advertise> selectListPageByType(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("type") Integer id);
+    List<Advertise> queryListPageByType(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("type") Integer id);
 }

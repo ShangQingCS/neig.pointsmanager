@@ -174,4 +174,27 @@
       flag = #{flag,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  
+  <resultMap id="categoryResultMap" type="cn.sqhl.neig.pointsmanager.vo.GoodsCategory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="cate_name" jdbcType="VARCHAR" property="cateName" />
+    <result column="cate_order" jdbcType="INTEGER" property="cateOrder" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+  </resultMap>
+  <sql id="category_Column_List">
+    id, cate_name, cate_order, level, parent_id
+  </sql>
+  <select id="queryByParentId" resultMap="categoryResultMap" parameterType="java.util.Map">
+  	select 
+  	<include refid="category_Column_List" />
+  	from ns_goods_category
+  	<if test="map.parentid!=''">
+  		<where>
+  			parent_id=#{map.parentid,jdbcType=INTEGER}
+  		</where>
+  	</if>
+  	
+  </select>
 </mapper>

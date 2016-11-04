@@ -74,7 +74,17 @@ public class addressTest extends TestCase {
 		    * begin test
 		    * /goods/search.action
 		    */
-		   map.put("goodsid", "1");
+//		   map.put("goodsid", "1");
+		   /**
+		    * end test
+		    */
+		   
+		   
+		   /***
+		    * begin test
+		    * /goods/searchlist.action
+		    */
+		   map.put("parentid", "9");
 		   /**
 		    * end test
 		    */

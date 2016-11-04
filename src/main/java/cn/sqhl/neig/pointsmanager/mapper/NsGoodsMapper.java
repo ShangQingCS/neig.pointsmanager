@@ -25,7 +25,7 @@ public interface NsGoodsMapper {
 
     int updateByPrimaryKey(NsGoods record);
     
-    List<Goods> selectListPageByParentID(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
+    List<Goods> queryListPageByParentID(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
     
-    List<Goods> selectListPageByLike(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
+    List<Goods> queryListPageByLike(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
 }

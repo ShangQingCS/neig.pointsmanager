@@ -49,20 +49,20 @@ public class AdEventController extends ContextInfo{
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
-		if(StringUtils.isEmpty(type)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(type) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("type"))){
 				type=requestString.get("type")+"";
 			}
 		}
-		if(StringUtils.isEmpty(pagesize)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(pagesize) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
 				pagesize=requestString.get("pagesize")+"";
 			}else{
 				pagesize="15";
 			}
 		}
-		if(StringUtils.isEmpty(nowpage)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(nowpage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
 				nowpage=requestString.get("nowpage")+"";
 			}else{
 				nowpage="1";
@@ -109,20 +109,20 @@ public class AdEventController extends ContextInfo{
 
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
-		if(StringUtils.isEmpty(eventsid)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(eventsid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("eventsid"))){
 				eventsid=requestString.get("eventsid")+"";
 			}
 		}
-		if(StringUtils.isEmpty(pagesize)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(pagesize) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
 				pagesize=requestString.get("pagesize")+"";
 			}else{
 				pagesize="15";
 			}
 		}
-		if(StringUtils.isEmpty(nowpage)){
-			if(requestString!=null){
+		if(StringUtils.isEmpty(nowpage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
 				nowpage=requestString.get("nowpage")+"";
 			}else{
 				nowpage="1";

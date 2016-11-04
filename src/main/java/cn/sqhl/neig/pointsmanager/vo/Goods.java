@@ -31,6 +31,9 @@ public class Goods {
 
     private String img5;
 
+    public Goods(){
+    	
+    }
     
     public Goods(Long id,String gname,
     		BigDecimal price,Long brand,

@@ -65,16 +65,15 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 
 	@Override
 	public List<Goods> queryPageByParentID(PageCond page, Object obj) {
-		return nsGoodsMapper.selectListPageByParentID(page, (Map<String, Object>)obj);
+		return nsGoodsMapper.queryListPageByParentID(page, (Map<String, Object>)obj);
 	}
 	@Override
 	public List<Goods> queryPageByLike(PageCond page, Object obj) {
-		return nsGoodsMapper.selectListPageByLike(page, (Map<String, Object>)obj);
+		return nsGoodsMapper.queryListPageByLike(page, (Map<String, Object>)obj);
 	}
 
 	@Override
 	public List<GoodsCategory> queryGoodsCategory(PageCond page, Object obj) {
-		nsGoodsCategoryMapper.selectByParentId(page,(String)obj);
-		return null;
+		return nsGoodsCategoryMapper.queryByParentId(page,(Map<String, Object>)obj);
 	}
 }

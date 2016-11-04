@@ -52,11 +52,15 @@ public class AddressController extends ContextInfo{
 		String locationsJSONString=IOUtils.toString(requestjson,encoding);
 	    JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 	    logger.debug("/address/search param:"+requestString);
-	    if(StringUtils.isEmpty(userid)&&requestString!=null){
-	    	userid=requestString.getString("userid");
+	    if(StringUtils.isEmpty(userid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("userid"))){
+				userid=requestString.getString("userid");
+			}
 	    }
-	    if(StringUtils.isEmpty(isuse)&&requestString.getString("isuse")!=null){
+	    if(StringUtils.isEmpty(isuse) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("isuse"))){
 	    	isuse=requestString.getString("isuse");
+			}
 	    }
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
