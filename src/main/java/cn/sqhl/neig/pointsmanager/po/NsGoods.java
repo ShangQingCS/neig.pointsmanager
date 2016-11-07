@@ -17,7 +17,7 @@ public class NsGoods {
 
     private String goodimglist;
 
-    private Integer isuser;
+    private String isuse;
 
     private String gfullname;
 
@@ -99,12 +99,12 @@ public class NsGoods {
         this.goodimglist = goodimglist == null ? null : goodimglist.trim();
     }
 
-    public Integer getIsuser() {
-        return isuser;
+    public String getIsuse() {
+        return isuse;
     }
 
-    public void setIsuser(Integer isuser) {
-        this.isuser = isuser;
+    public void setIsuse(String isuse) {
+        this.isuse = isuse;
     }
 
     public String getGfullname() {

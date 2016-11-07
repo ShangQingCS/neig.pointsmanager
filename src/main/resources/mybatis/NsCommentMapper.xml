@@ -8,7 +8,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="userid" jdbcType="BIGINT" property="userid" />
-    <result column="ishidden" jdbcType="INTEGER" property="ishidden" />
+    <result column="ishidden" jdbcType="CHAR" property="ishidden" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
@@ -30,7 +30,7 @@
       ishidden, username)
     values (#{id,jdbcType=BIGINT}, #{goodid,jdbcType=BIGINT}, #{comment,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}, #{userid,jdbcType=BIGINT}, 
-      #{ishidden,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR})
+      #{ishidden,jdbcType=CHAR}, #{username,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsComment">
     insert into ns_comment
@@ -80,7 +80,7 @@
         #{userid,jdbcType=BIGINT},
       </if>
       <if test="ishidden != null">
-        #{ishidden,jdbcType=INTEGER},
+        #{ishidden,jdbcType=CHAR},
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
@@ -106,7 +106,7 @@
         userid = #{userid,jdbcType=BIGINT},
       </if>
       <if test="ishidden != null">
-        ishidden = #{ishidden,jdbcType=INTEGER},
+        ishidden = #{ishidden,jdbcType=CHAR},
       </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
@@ -121,8 +121,33 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       score = #{score,jdbcType=INTEGER},
       userid = #{userid,jdbcType=BIGINT},
-      ishidden = #{ishidden,jdbcType=INTEGER},
+      ishidden = #{ishidden,jdbcType=CHAR},
       username = #{username,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+   <resultMap id="commentResultMap" type="cn.sqhl.neig.pointsmanager.vo.Comment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodid" jdbcType="BIGINT" property="goodid" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="ishidden" jdbcType="INTEGER" property="ishidden" />
+    <result column="avgscore" jdbcType="DOUBLE" property="avgscore" />
+  </resultMap>
+  <sql id="comment_Column_List">
+    id, goodid, comment, create_time, score, userid, ishidden 
+  </sql>
+  <select id="queryComment" parameterType="java.util.Map" resultMap="commentResultMap">
+    select 
+    <include refid="comment_Column_List" />
+    from ns_comment where ishidden = 1
+	    	<if test="map.goodsid != null">
+	    	 	and goodid=${map.goodsid}
+	    	</if>
+	    	
+	    	<if test="map.user_id !=null">
+	    		and userid=${map.user_id}
+	    	</if>
+  </select>
 </mapper>

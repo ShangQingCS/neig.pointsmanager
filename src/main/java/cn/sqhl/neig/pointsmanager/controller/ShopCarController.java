@@ -76,6 +76,8 @@ public class ShopCarController extends ContextInfo{
 			}else{
 				pagesize="15";
 			}
+		}else{
+			pagesize="15";
 		}
 		if(StringUtils.isEmpty(nowpage) && requestString!=null){
 			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
@@ -83,10 +85,12 @@ public class ShopCarController extends ContextInfo{
 			}else{
 				nowpage="1";
 			}
+		}else{
+			nowpage="1";
 		}
 		List list=null;
 		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
-		if(!StringUtils.isEmpty(userid.toString())){
+		if(!StringUtils.isEmpty(userid)){
 			Map map=new HashMap();
 			map.put("userid",userid);
 			list=shopCarService.queryObj(page,userid);

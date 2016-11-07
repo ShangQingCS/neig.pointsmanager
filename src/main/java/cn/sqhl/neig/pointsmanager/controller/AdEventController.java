@@ -60,6 +60,8 @@ public class AdEventController extends ContextInfo{
 			}else{
 				pagesize="15";
 			}
+		}else{
+			pagesize="15";
 		}
 		if(StringUtils.isEmpty(nowpage) && requestString!=null){
 			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
@@ -67,6 +69,8 @@ public class AdEventController extends ContextInfo{
 			}else{
 				nowpage="1";
 			}
+		}else{
+			nowpage="1";
 		}
 		List list=null;
 		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));

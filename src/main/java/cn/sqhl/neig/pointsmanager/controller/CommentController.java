@@ -78,6 +78,8 @@ public class CommentController extends ContextInfo{
 			}else{
 				pagesize="15";
 			}
+		}else{
+			pagesize="15";
 		}
 		if(StringUtils.isEmpty(nowpage) && requestString!=null){
 			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
@@ -85,16 +87,18 @@ public class CommentController extends ContextInfo{
 			}else{
 				nowpage="1";
 			}
+		}else{
+			nowpage="1";
 		}
 		
 		
 		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
-		if(!StringUtils.isEmpty(userid.toString()) || !StringUtils.isEmpty(goodsid.toString())){
+		if(!StringUtils.isEmpty(userid) || !StringUtils.isEmpty(goodsid)){
 			Map map=new HashMap();
-			if(!StringUtils.isEmpty(userid.toString())){
+			if(!StringUtils.isEmpty(userid)){
 				map.put("userid",userid);
 			}
-			if(!StringUtils.isEmpty(goodsid.toString())){
+			if(!StringUtils.isEmpty(goodsid)){
 				map.put("goodsid",goodsid);
 			}
 			list=commentService.queryObj(page,map);

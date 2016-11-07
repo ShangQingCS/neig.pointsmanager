@@ -15,17 +15,9 @@ public class Comment {
 
     private Long userid;
     
-    private String username;
+    private Integer avgscore;
 
-    public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	private Integer ishidden;
+	private String ishidden;
 
     public Long getId() {
         return id;
@@ -75,11 +67,19 @@ public class Comment {
         this.userid = userid;
     }
 
-    public Integer getIshidden() {
+    public String getIshidden() {
         return ishidden;
     }
 
-    public void setIshidden(Integer ishidden) {
+    public void setIshidden(String ishidden) {
         this.ishidden = ishidden;
     }
+
+	public Integer getAvgscore() {
+		return avgscore;
+	}
+
+	public void setAvgscore(Integer avgscore) {
+		this.avgscore = avgscore;
+	}
 }

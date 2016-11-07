@@ -17,7 +17,7 @@ public class NsGoodsCategory {
 
     private String url;
 
-    private String isuser;
+    private String isuse;
 
     private Integer parentId;
 
@@ -83,12 +83,12 @@ public class NsGoodsCategory {
         this.url = url == null ? null : url.trim();
     }
 
-    public String getIsuser() {
-        return isuser;
+    public String getIsuse() {
+        return isuse;
     }
 
-    public void setIsuser(String isuser) {
-        this.isuser = isuser == null ? null : isuser.trim();
+    public void setIsuse(String isuse) {
+        this.isuse = isuse == null ? null : isuse.trim();
     }
 
     public Integer getParentId() {

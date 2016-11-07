@@ -9,7 +9,7 @@
     <result column="kind" jdbcType="BIGINT" property="kind" />
     <result column="brand" jdbcType="BIGINT" property="brand" />
     <result column="goodimglist" jdbcType="VARCHAR" property="goodimglist" />
-    <result column="isuser" jdbcType="INTEGER" property="isuser" />
+    <result column="isuse" jdbcType="CHAR" property="isuse" />
     <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
     <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
     <result column="goodimg" jdbcType="VARCHAR" property="goodimg" />
@@ -26,7 +26,7 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, gname, price, category, kind, brand, goodimglist, isuser, Gfullname, storenumb, 
+    id, gname, price, category, kind, brand, goodimglist, isuse, Gfullname, storenumb, 
     goodimg, freazes, costprice, sellnumb, img1, img2, img3, img4, img5
   </sql>
   <sql id="Blob_Column_List">
@@ -47,14 +47,14 @@
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
     insert into ns_goods (id, gname, price, 
       category, kind, brand, 
-      goodimglist, isuser, Gfullname, 
+      goodimglist, isuse, Gfullname, 
       storenumb, goodimg, freazes, 
       costprice, sellnumb, img1, 
       img2, img3, img4, img5, 
       detail)
     values (#{id,jdbcType=BIGINT}, #{gname,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
       #{category,jdbcType=BIGINT}, #{kind,jdbcType=BIGINT}, #{brand,jdbcType=BIGINT}, 
-      #{goodimglist,jdbcType=VARCHAR}, #{isuser,jdbcType=INTEGER}, #{gfullname,jdbcType=VARCHAR}, 
+      #{goodimglist,jdbcType=VARCHAR}, #{isuse,jdbcType=CHAR}, #{gfullname,jdbcType=VARCHAR}, 
       #{storenumb,jdbcType=INTEGER}, #{goodimg,jdbcType=VARCHAR}, #{freazes,jdbcType=INTEGER}, 
       #{costprice,jdbcType=DECIMAL}, #{sellnumb,jdbcType=INTEGER}, #{img1,jdbcType=VARCHAR}, 
       #{img2,jdbcType=VARCHAR}, #{img3,jdbcType=VARCHAR}, #{img4,jdbcType=VARCHAR}, #{img5,jdbcType=VARCHAR}, 
@@ -84,8 +84,8 @@
       <if test="goodimglist != null">
         goodimglist,
       </if>
-      <if test="isuser != null">
-        isuser,
+      <if test="isuse != null">
+        isuse,
       </if>
       <if test="gfullname != null">
         Gfullname,
@@ -146,8 +146,8 @@
       <if test="goodimglist != null">
         #{goodimglist,jdbcType=VARCHAR},
       </if>
-      <if test="isuser != null">
-        #{isuser,jdbcType=INTEGER},
+      <if test="isuse != null">
+        #{isuse,jdbcType=CHAR},
       </if>
       <if test="gfullname != null">
         #{gfullname,jdbcType=VARCHAR},
@@ -208,8 +208,8 @@
       <if test="goodimglist != null">
         goodimglist = #{goodimglist,jdbcType=VARCHAR},
       </if>
-      <if test="isuser != null">
-        isuser = #{isuser,jdbcType=INTEGER},
+      <if test="isuse != null">
+        isuse = #{isuse,jdbcType=CHAR},
       </if>
       <if test="gfullname != null">
         Gfullname = #{gfullname,jdbcType=VARCHAR},
@@ -258,7 +258,7 @@
       kind = #{kind,jdbcType=BIGINT},
       brand = #{brand,jdbcType=BIGINT},
       goodimglist = #{goodimglist,jdbcType=VARCHAR},
-      isuser = #{isuser,jdbcType=INTEGER},
+      isuse = #{isuse,jdbcType=CHAR},
       Gfullname = #{gfullname,jdbcType=VARCHAR},
       storenumb = #{storenumb,jdbcType=INTEGER},
       goodimg = #{goodimg,jdbcType=VARCHAR},
@@ -281,7 +281,7 @@
       kind = #{kind,jdbcType=BIGINT},
       brand = #{brand,jdbcType=BIGINT},
       goodimglist = #{goodimglist,jdbcType=VARCHAR},
-      isuser = #{isuser,jdbcType=INTEGER},
+      isuse = #{isuse,jdbcType=CHAR},
       Gfullname = #{gfullname,jdbcType=VARCHAR},
       storenumb = #{storenumb,jdbcType=INTEGER},
       goodimg = #{goodimg,jdbcType=VARCHAR},
@@ -325,23 +325,26 @@
   		select 
   		<include refid="goods_Column_List" />
   		from ns_goods
-  		<if test="map.parentid != '' ">
 	  		<where>
-	  			brand=#{map.parentid,jdbcType=BIGINT}
-	  		</where>
+	  			isuse = '0'
+  		<if test="map.parentid != '' ">
+	  			and brand=#{map.parentid,jdbcType=BIGINT}
   		</if>
+	  		</where>
   </select>
   
   <select id="queryListPageByLike" parameterType="java.util.Map" resultMap="GoodsResultMap">
   		select 
   		<include refid="goods_Column_List" />
   		from ns_goods
-  		<if test="map.searchcode != '' ">
 	  		<where>
-	  			category in (select id from ns_goods_category where level=1 and cate_name like '%${map.searchcode}%')
+	  		 isuse = '0'
+  		<if test="map.searchcode != '' ">
+	  		and(	category in (select id from ns_goods_category where level=1 and cate_name like '%${map.searchcode}%')
 	  		or	kind in (select id from ns_goods_category where level=2 and cate_name like '%${map.searchcode}%')
 	  		or	brand in (select id from ns_goods_category where level=3 and cate_name like '%${map.searchcode}%')
-	  		</where>
+	  		)
   		</if>
+	  		</where>
   </select>
 </mapper>

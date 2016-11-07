@@ -15,7 +15,7 @@ public class NsComment {
 
     private Long userid;
 
-    private Integer ishidden;
+    private String ishidden;
 
     private String username;
 
@@ -67,11 +67,11 @@ public class NsComment {
         this.userid = userid;
     }
 
-    public Integer getIshidden() {
+    public String getIshidden() {
         return ishidden;
     }
 
-    public void setIshidden(Integer ishidden) {
+    public void setIshidden(String ishidden) {
         this.ishidden = ishidden;
     }
 
