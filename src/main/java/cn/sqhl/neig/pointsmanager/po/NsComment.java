@@ -5,9 +5,21 @@ import java.util.Date;
 public class NsComment {
     private Long id;
 
-    private Long goodid;
+    private Long goodsid;
 
-    private String comment;
+    public Long getGoodsid() {
+		return goodsid;
+	}
+
+	public void setGoodsid(Long goodsid) {
+		this.goodsid = goodsid;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	private String comment;
 
     private Date createTime;
 
@@ -23,16 +35,8 @@ public class NsComment {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getGoodid() {
-        return goodid;
-    }
-
     public void setGoodid(Long goodid) {
-        this.goodid = goodid;
+        this.goodsid = goodsid;
     }
 
     public String getComment() {

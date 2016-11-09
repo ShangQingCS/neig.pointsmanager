@@ -24,4 +24,6 @@ public interface NsGoodsCategoryMapper {
     int updateByPrimaryKey(NsGoodsCategory record);
     
     List<GoodsCategory> queryByParentId(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
+    
+    List<GoodsCategory> queryAll();
 }

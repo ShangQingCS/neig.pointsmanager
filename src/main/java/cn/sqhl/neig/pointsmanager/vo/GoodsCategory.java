@@ -10,15 +10,17 @@ public class GoodsCategory {
 
     private Integer level;
     
+    private String url;
+    
     private Integer parentId;
 
     private Integer cateOrder; 
 
-    public Integer getGoodslist() {
+    public Integer getCateOrder() {
 		return cateOrder;
 	}
 
-	public void setGoodslist(Integer cateOrder) {
+	public void setCateOrder(Integer cateOrder) {
 		this.cateOrder = cateOrder;
 	}
 
@@ -53,5 +55,13 @@ public class GoodsCategory {
     public void setParentId(Integer parentId) {
         this.parentId = parentId;
     }
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
     
 }

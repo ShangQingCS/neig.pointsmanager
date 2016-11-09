@@ -180,22 +180,30 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="cate_name" jdbcType="VARCHAR" property="cateName" />
     <result column="cate_order" jdbcType="INTEGER" property="cateOrder" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
   </resultMap>
   <sql id="category_Column_List">
-    id, cate_name, cate_order, level, parent_id
+    id, cate_name, cate_order, level, parent_id,url
   </sql>
   <select id="queryByParentId" resultMap="categoryResultMap" parameterType="java.util.Map">
   	select 
   	<include refid="category_Column_List" />
   	from ns_goods_category
   		<where> 
-  			and isuse = '0'
+  			 isuse = '0'
   	<if test="map.parentid!=''">
   			and parent_id=#{map.parentid,jdbcType=INTEGER}
   	</if>
   		</where>
   	
+  </select>
+  
+   <select id="queryAll" resultMap="categoryResultMap" >
+  	select 
+  	<include refid="category_Column_List" />
+  	from ns_goods_category
+  	where isuse = '0'
   </select>
 </mapper>

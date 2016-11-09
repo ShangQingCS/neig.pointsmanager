@@ -230,4 +230,35 @@ public class GoodsController extends ContextInfo{
 		return rsJson;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/searchcategoryall")
+	public JSONObject queryGoodsCategory(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("ver", ver);
+		
+		InputStream requestjson = request.getInputStream();
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
+
+		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
+		logger.log(DEBUG, requestString);
+		
+		List list=null;
+		
+		Map map=new HashMap();
+		list=goodsService.queryAllCategory();
+		if(list!=null && list.size() > 0 ){
+			result="0";
+			message="查询成功~";
+			logger.log(INFO, message);
+			data=list;
+		}
+		rsJson.put("result", result);
+		rsJson.put("message", message);
+		rsJson.put("data", data);
+		response.setContentType("charset=utf-8");
+		return rsJson;
+	}
+	
 }

@@ -3,7 +3,7 @@
 <mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsCommentMapper">
   <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsComment">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="goodid" jdbcType="BIGINT" property="goodid" />
+    <result column="goodsid" jdbcType="BIGINT" property="goodsid" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="score" jdbcType="INTEGER" property="score" />
@@ -12,7 +12,7 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goodid, comment, create_time, score, userid, ishidden, username
+    id, goodsid, comment, create_time, score, userid, ishidden, username
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -25,10 +25,10 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsComment">
-    insert into ns_comment (id, goodid, comment, 
+    insert into ns_comment (id, goodsid, comment, 
       create_time, score, userid, 
       ishidden, username)
-    values (#{id,jdbcType=BIGINT}, #{goodid,jdbcType=BIGINT}, #{comment,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{comment,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}, #{userid,jdbcType=BIGINT}, 
       #{ishidden,jdbcType=CHAR}, #{username,jdbcType=VARCHAR})
   </insert>
@@ -38,8 +38,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="goodid != null">
-        goodid,
+      <if test="goodsid != null">
+        goodsid,
       </if>
       <if test="comment != null">
         comment,
@@ -64,8 +64,8 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="goodid != null">
-        #{goodid,jdbcType=BIGINT},
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
       </if>
       <if test="comment != null">
         #{comment,jdbcType=VARCHAR},
@@ -90,8 +90,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsComment">
     update ns_comment
     <set>
-      <if test="goodid != null">
-        goodid = #{goodid,jdbcType=BIGINT},
+      <if test="goodsid != null">
+        goodsid = #{goodsid,jdbcType=BIGINT},
       </if>
       <if test="comment != null">
         comment = #{comment,jdbcType=VARCHAR},
@@ -116,7 +116,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsComment">
     update ns_comment
-    set goodid = #{goodid,jdbcType=BIGINT},
+    set goodsid = #{goodsid,jdbcType=BIGINT},
       comment = #{comment,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       score = #{score,jdbcType=INTEGER},
@@ -127,7 +127,7 @@
   </update>
    <resultMap id="commentResultMap" type="cn.sqhl.neig.pointsmanager.vo.Comment">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="goodid" jdbcType="BIGINT" property="goodid" />
+    <result column="goodsid" jdbcType="BIGINT" property="goodsid" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="score" jdbcType="INTEGER" property="score" />
@@ -136,14 +136,14 @@
     <result column="avgscore" jdbcType="DOUBLE" property="avgscore" />
   </resultMap>
   <sql id="comment_Column_List">
-    id, goodid, comment, create_time, score, userid, ishidden 
+    id, goodsid, comment, create_time, score, userid, ishidden 
   </sql>
   <select id="queryComment" parameterType="java.util.Map" resultMap="commentResultMap">
     select 
     <include refid="comment_Column_List" />
     from ns_comment where ishidden = 1
 	    	<if test="map.goodsid != null">
-	    	 	and goodid=${map.goodsid}
+	    	 	and goodsid=${map.goodsid}
 	    	</if>
 	    	
 	    	<if test="map.user_id !=null">

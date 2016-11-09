@@ -135,11 +135,11 @@ public class CommentController extends ContextInfo{
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
 		
-		comment=(NsComment)autoLoad(comment,"uerid",requestString);
+		comment=(NsComment)autoLoad(comment,"userid",requestString);
 		comment=(NsComment)autoLoad(comment,"goodsid",requestString);
-		comment=(NsComment)autoLoad(comment,"content",requestString);
+		comment=(NsComment)autoLoad(comment,"comment",requestString);
 		comment=(NsComment)autoLoad(comment,"score",requestString);
-		comment=(NsComment)autoLoad(comment,"ishow",requestString);
+		comment=(NsComment)autoLoad(comment,"ishidden",requestString);
 		
 		if(comment!=null){
 			int i=commentService.addObj(comment);

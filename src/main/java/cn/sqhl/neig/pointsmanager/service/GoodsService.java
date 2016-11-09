@@ -12,4 +12,5 @@ public interface GoodsService {
 	public List<Goods> queryPageByParentID(PageCond page,Object obj);
 	public List<Goods> queryPageByLike(PageCond page,Object obj);
 	public List<GoodsCategory> queryGoodsCategory(PageCond page,Object obj);
+	public List<GoodsCategory> queryAllCategory();
 }

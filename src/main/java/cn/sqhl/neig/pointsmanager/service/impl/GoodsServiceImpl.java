@@ -76,4 +76,11 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	public List<GoodsCategory> queryGoodsCategory(PageCond page, Object obj) {
 		return nsGoodsCategoryMapper.queryByParentId(page,(Map<String, Object>)obj);
 	}
+
+	@Override
+	public List<GoodsCategory> queryAllCategory() {
+		return nsGoodsCategoryMapper.queryAll();
+	}
+	
+	
 }
