@@ -20,25 +20,22 @@ public class ShopCarServiceImpl implements ShopCarService{
 	
 	@Override
 	public List<Object> queryObj(Map<String, Object> map) {
-		return nsCartMapper.selectMapListByUserid(map);
+		return nsCartMapper.selectMapList(map);
 	}
 
 	@Override
 	public int addObj(Object obj) {
-		nsCartMapper.insertSelective((NsCart)obj);
-		return 0;
+		return nsCartMapper.insertSelective((NsCart)obj);
 	}
 
 	@Override
 	public int removeObj(Object obj) {
-		nsCartMapper.deleteByPrimaryKey(Long.parseLong(obj.toString()));
-		return 0;
+		return nsCartMapper.deleteByPrimaryKey(Long.parseLong(obj.toString()));
 	}
 
 	@Override
 	public int updateObj(Object obj) {
-		nsCartMapper.updateByPrimaryKeySelective((NsCart)obj);
-		return 0;
+		return nsCartMapper.updateByPrimaryKeySelective((NsCart)obj);
 	}
 
 	@Override

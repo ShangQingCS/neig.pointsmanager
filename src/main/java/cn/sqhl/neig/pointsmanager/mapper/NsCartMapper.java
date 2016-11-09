@@ -25,5 +25,7 @@ public interface NsCartMapper {
     
     List<Cart> queryMapList(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("userid") Long userid);
     
-    List<Object> selectMapListByUserid(@Param("map") Map<String, Object> map);
+    List<Object> selectMapList(@Param("map") Map<String, Object> map);
+    
+    
 }
