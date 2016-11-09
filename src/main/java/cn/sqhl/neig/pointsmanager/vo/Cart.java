@@ -1,7 +1,6 @@
 package cn.sqhl.neig.pointsmanager.vo;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class Cart {
     private Long id;
@@ -12,12 +11,40 @@ public class Cart {
     
     private Long goodsid;
 
-    private Integer count;
+    private String goodsname;
+
+	private Integer count;
 
     private BigDecimal price;
     
-    private Goods goodsinfo;
+    private Integer storenumb;
 
+    private String goodsuse;
+
+    public String getGoodsuse() {
+		return goodsuse;
+	}
+
+	public void setGoodsuse(String goodsuse) {
+		this.goodsuse = goodsuse;
+	}
+
+	public Integer getStorenumb() {
+		return storenumb;
+	}
+
+	public void setStorenumb(Integer storenumb) {
+		this.storenumb = storenumb;
+	}
+
+	public String getGoodsname() {
+		return goodsname;
+	}
+
+	public void setGoodsname(String goodsname) {
+		this.goodsname = goodsname;
+	}
+    
     public Long getId() {
         return id;
     }
@@ -57,14 +84,6 @@ public class Cart {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
-	public Goods getGoodsinfo() {
-		return goodsinfo;
-	}
-
-	public void setGoodsinfo(Goods goodsinfo) {
-		this.goodsinfo = goodsinfo;
-	}
 
 	public String getUsername() {
 		return username;

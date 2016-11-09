@@ -8,14 +8,9 @@
     <result column="count" jdbcType="INTEGER" property="count" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
-    <result column="commission_charge" jdbcType="DECIMAL" property="commissionCharge" />
-    <result column="cash" jdbcType="DECIMAL" property="cash" />
-    <result column="account_Amount" jdbcType="DECIMAL" property="accountAmount" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, userid, goodsid, count, price, create_time, username, commission_charge, cash, 
-    account_Amount
+    id, userid, goodsid, count, price, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -33,9 +28,7 @@
       username, commission_charge, cash, 
       account_Amount)
     values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, 
-      #{count,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{username,jdbcType=VARCHAR}, #{commissionCharge,jdbcType=DECIMAL}, #{cash,jdbcType=DECIMAL}, 
-      #{accountAmount,jdbcType=DECIMAL})
+      #{count,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsCart">
     insert into ns_cart
@@ -56,19 +49,7 @@
         price,
       </if>
       <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="username != null">
-        username,
-      </if>
-      <if test="commissionCharge != null">
-        commission_charge,
-      </if>
-      <if test="cash != null">
-        cash,
-      </if>
-      <if test="accountAmount != null">
-        account_Amount,
+        create_time
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -88,19 +69,7 @@
         #{price,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="commissionCharge != null">
-        #{commissionCharge,jdbcType=DECIMAL},
-      </if>
-      <if test="cash != null">
-        #{cash,jdbcType=DECIMAL},
-      </if>
-      <if test="accountAmount != null">
-        #{accountAmount,jdbcType=DECIMAL},
+        #{createTime,jdbcType=TIMESTAMP}
       </if>
     </trim>
   </insert>
@@ -120,19 +89,7 @@
         price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="commissionCharge != null">
-        commission_charge = #{commissionCharge,jdbcType=DECIMAL},
-      </if>
-      <if test="cash != null">
-        cash = #{cash,jdbcType=DECIMAL},
-      </if>
-      <if test="accountAmount != null">
-        account_Amount = #{accountAmount,jdbcType=DECIMAL},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -143,11 +100,45 @@
       goodsid = #{goodsid,jdbcType=BIGINT},
       count = #{count,jdbcType=INTEGER},
       price = #{price,jdbcType=DECIMAL},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      username = #{username,jdbcType=VARCHAR},
-      commission_charge = #{commissionCharge,jdbcType=DECIMAL},
-      cash = #{cash,jdbcType=DECIMAL},
-      account_Amount = #{accountAmount,jdbcType=DECIMAL}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  
+  <resultMap id="CartResultMap" type="cn.sqhl.neig.pointsmanager.vo.Cart">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="goodsid" jdbcType="BIGINT" property="goodsid" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsuse" jdbcType="CHAR" property="goodsuse" />
+  </resultMap>
+  <sql id="Cart_Column_List">
+    id, userid, goodsid, count, price, goodsname,storenumb,goodsuse
+  </sql>
+  <select id="queryMapList" parameterType="java.lang.Long" resultMap="CartResultMap">
+    select 
+    <include refid="Cart_Column_List" />
+	from (
+	    select 
+		a.count,
+	    a.id,
+	    a.userid,
+	    b.id as goodsid,
+	    b.price,
+	    b.gname as goodsname,
+	    b.storenumb as storenumb,
+	    b.isuse as goodsuse,
+	    a.create_time
+	from
+	ns_cart a left join ns_goods b on a.goodsid=b.id
+	<if test="userid != null">
+		<where>
+			a. userid=#{userid,jdbcType=BIGINT}
+		</where>
+	</if>
+    ) as carttmp order by create_time desc
+  </select>
 </mapper>

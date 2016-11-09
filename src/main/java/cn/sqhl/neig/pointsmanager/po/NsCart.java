@@ -12,8 +12,6 @@ public class NsCart {
     private Integer count;
 
     private Date createTime;
-
-    private String username;
     
     public Long getId() {
         return id;
@@ -53,14 +51,6 @@ public class NsCart {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
     }
 
 }

@@ -91,20 +91,23 @@ public class ShopCarController extends ContextInfo{
 		List list=null;
 		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
 		if(!StringUtils.isEmpty(userid)){
-			Map map=new HashMap();
-			map.put("userid",userid);
 			list=shopCarService.queryObj(page,userid);
+			if(list!=null && list.size() > 0 ){
+				result="0";
+				message="查询成功~";
+				logger.log(INFO, message);
+				data=list;
+			}else{
+				result="1";
+				message="查询失败~";
+				logger.log(INFO, message);
+				data="";
+			}
 		}else{
 			result="1";
 			message="parentid 为空请确认无误后再行调用";
 			logger.log(INFO, message);
 			data="";
-		}
-		if(list!=null && list.size() > 0 ){
-			result="0";
-			message="查询成功~";
-			logger.log(INFO, message);
-			data=list;
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);

@@ -10,6 +10,7 @@ import cn.sqhl.neig.pointsmanager.mapper.NsCartMapper;
 import cn.sqhl.neig.pointsmanager.po.NsCart;
 import cn.sqhl.neig.pointsmanager.service.ShopCarService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
+import cn.sqhl.neig.pointsmanager.vo.Cart;
 
 @Service("shopCarService")
 public class ShopCarServiceImpl implements ShopCarService{
@@ -41,9 +42,8 @@ public class ShopCarServiceImpl implements ShopCarService{
 	}
 
 	@Override
-	public List<Object> queryObj(PageCond page, Long userid) {
-		nsCartMapper.queryMapList(page,userid);
-		return null;
+	public List<Cart> queryObj(PageCond page, Long userid) {
+		return nsCartMapper.queryMapList(page,userid);
 	}
 	
 }
