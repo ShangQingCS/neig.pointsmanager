@@ -8,7 +8,7 @@ public class NsOrder {
 
     private Long userid;
 
-    private BigDecimal total;
+    private Long total;
 
     private Integer counts;
 
@@ -44,9 +44,7 @@ public class NsOrder {
 
     private String remark;
 
-    private String username;
-
-    private BigDecimal commissionCharge;
+    private BigDecimal commisionCharge;
 
     private BigDecimal cash;
 
@@ -68,11 +66,11 @@ public class NsOrder {
         this.userid = userid;
     }
 
-    public BigDecimal getTotal() {
+    public Long getTotal() {
         return total;
     }
 
-    public void setTotal(BigDecimal total) {
+    public void setTotal(Long total) {
         this.total = total;
     }
 
@@ -212,20 +210,12 @@ public class NsOrder {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public String getUsername() {
-        return username;
+    public BigDecimal getCommisionCharge() {
+        return commisionCharge;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public BigDecimal getCommissionCharge() {
-        return commissionCharge;
-    }
-
-    public void setCommissionCharge(BigDecimal commissionCharge) {
-        this.commissionCharge = commissionCharge;
+    public void setCommisionCharge(BigDecimal commisionCharge) {
+        this.commisionCharge = commisionCharge;
     }
 
     public BigDecimal getCash() {

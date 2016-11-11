@@ -90,4 +90,38 @@
       price = #{price,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  
+  <resultMap id="odtailResultMap" type="cn.sqhl.neig.pointsmanager.vo.OrderDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderid" jdbcType="BIGINT" property="orderid" />
+    <result column="goodsid" jdbcType="BIGINT" property="goodsid" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsimg" jdbcType="VARCHAR" property="goodsimg" />
+  </resultMap>
+  <sql id="OrderDetail_Column_List">
+    id, orderid, goodsid, count, price, goodsname, goodsimg
+  </sql>
+  <select id="selectOrderDetail" parameterType="int" resultMap="odtailResultMap">
+    select 
+    <include refid="OrderDetail_Column_List" />
+    from
+   (
+		select 
+	    a.id,
+	    a.orderid,
+	    a.goodsid,
+	    a.count,
+	    a.price,
+	    b.gname as goodsname,
+	    b.goodimg as goodsimg
+	    from
+		ns_order_detail a left join ns_goods b on a.goodsid=b.id
+		<where>
+			a.orderid=#{id,jdbcType=BIGINT}
+		</where>
+	) odtail
+  </select>
 </mapper>

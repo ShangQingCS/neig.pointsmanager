@@ -10,10 +10,9 @@
     <result column="phonenumb" jdbcType="VARCHAR" property="phonenumb" />
     <result column="telnumb" jdbcType="VARCHAR" property="telnumb" />
     <result column="isuse" jdbcType="INTEGER" property="isuse" />
-    <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, uerid, address, name, post, phonenumb, telnumb, isuse, username
+    id, uerid, address, name, post, phonenumb, telnumb, isuse
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -28,11 +27,11 @@
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsAddress">
     insert into ns_address (id, uerid, address, 
       name, post, phonenumb, 
-      telnumb, isuse, username
+      telnumb, isuse
       )
     values (#{id,jdbcType=BIGINT}, #{uerid,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{post,jdbcType=VARCHAR}, #{phonenumb,jdbcType=VARCHAR}, 
-      #{telnumb,jdbcType=VARCHAR}, #{isuse,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}
+      #{telnumb,jdbcType=VARCHAR}, #{isuse,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsAddress">
@@ -62,9 +61,6 @@
       <if test="isuse != null">
         isuse,
       </if>
-      <if test="username != null">
-        username,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -90,9 +86,6 @@
       </if>
       <if test="isuse != null">
         #{isuse,jdbcType=INTEGER},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -120,9 +113,6 @@
       <if test="isuse != null">
         isuse = #{isuse,jdbcType=INTEGER},
       </if>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -134,8 +124,7 @@
       post = #{post,jdbcType=VARCHAR},
       phonenumb = #{phonenumb,jdbcType=VARCHAR},
       telnumb = #{telnumb,jdbcType=VARCHAR},
-      isuse = #{isuse,jdbcType=INTEGER},
-      username = #{username,jdbcType=VARCHAR}
+      isuse = #{isuse,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
   
@@ -148,7 +137,6 @@
 	    <result column="phonenumb" jdbcType="VARCHAR" property="phonenumb" />
 	    <result column="telnumb" jdbcType="VARCHAR" property="telnumb" />
 	    <result column="isuse" jdbcType="INTEGER" property="isuse" />
-	    <result column="username" jdbcType="VARCHAR" property="username" />
    </resultMap>
    <select id="selectAddress" resultMap="ResultMap" parameterType="java.util.Map">
 	   	select 
@@ -157,10 +145,10 @@
 	    <if test="map!=null">
 	    <where>
 	    	1=1
-	    	<if test="map.userid!=''">
+	    	<if test="map.userid != null">
 	    		and uerid=${map.userid}
 	    	</if>
-	    	<if test="map.isuse!=''">
+	    	<if test="map.isuse != null">
 	    		and isuse=${map.isuse}
 	    	</if>
 	    </where>	    

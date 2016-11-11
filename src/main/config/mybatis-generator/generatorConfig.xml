@@ -77,17 +77,18 @@
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 		
-		<table tableName="ns_order" domainObjectName="NsOrder"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false"></table>
-		 -->
 		<table tableName="ns_goods" domainObjectName="NsGoods"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-			
 		
+		 -->
+		
+			
+		<table tableName="ns_order" domainObjectName="NsOrder"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
 		
 	</context>
 </generatorConfiguration>

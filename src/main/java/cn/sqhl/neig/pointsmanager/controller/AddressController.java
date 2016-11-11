@@ -103,11 +103,11 @@ public class AddressController extends ContextInfo{
 		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
 		logger.log(DEBUG, requestString);
 		try {
-			if(StringUtils.isEmpty(type)&&requestString!=null){				
+			if(StringUtils.isEmpty(type)&&!StringUtils.isEmpty(requestString)){				
 				type=requestString.get("type")+"";
 			}
-			if(StringUtils.isEmpty(id)){				
-				if(requestString!=null){
+			if(StringUtils.isEmpty(id)&&!StringUtils.isEmpty(requestString)){				
+				if(!StringUtils.isEmpty(requestString.get("addressid"))){
 					String addressid=requestString.get("addressid")+"";
 					if(!StringUtils.isEmpty(addressid)){
 						id=Long.parseLong(addressid);

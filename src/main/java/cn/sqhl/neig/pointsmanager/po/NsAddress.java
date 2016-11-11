@@ -17,8 +17,6 @@ public class NsAddress {
 
     private Integer isuse;
 
-    private String username;
-
     public Long getId() {
         return id;
     }
@@ -81,13 +79,5 @@ public class NsAddress {
 
     public void setIsuse(Integer isuse) {
         this.isuse = isuse;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
     }
 }

@@ -1,14 +1,15 @@
 package cn.sqhl.neig.pointsmanager.vo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import cn.sqhl.neig.pointsmanager.vo.OrderDetail;
+
 public class Order {
-    private Long id;
+	private Long id;
 
     private Long userid;
-    
-    private String username;
 
     private Long total;
 
@@ -25,6 +26,8 @@ public class Order {
     private Date createTime;
 
     private Date deliveryTime;
+
+    private String paynumb;
 
     private Long positionid;
 
@@ -43,10 +46,24 @@ public class Order {
     private String content;
 
     private String remark;
-    
-    private List<OrderDetail> orderdetail; 
 
-    public Long getId() {
+    private BigDecimal commisionCharge;
+
+    private BigDecimal cash;
+
+    private BigDecimal accountAmount;
+    
+    private List<OrderDetail> orderdetail;
+
+    public List<OrderDetail> getOrderdetail() {
+		return orderdetail;
+	}
+
+	public void setOrderdetail(List<OrderDetail> orderdetail) {
+		this.orderdetail = orderdetail;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -126,6 +143,14 @@ public class Order {
         this.deliveryTime = deliveryTime;
     }
 
+    public String getPaynumb() {
+        return paynumb;
+    }
+
+    public void setPaynumb(String paynumb) {
+        this.paynumb = paynumb == null ? null : paynumb.trim();
+    }
+
     public Long getPositionid() {
         return positionid;
     }
@@ -198,19 +223,27 @@ public class Order {
         this.remark = remark == null ? null : remark.trim();
     }
 
-	public List<OrderDetail> getOrderdetail() {
-		return orderdetail;
-	}
+    public BigDecimal getCommisionCharge() {
+        return commisionCharge;
+    }
 
-	public void setOrderdetail(List<OrderDetail> orderdetail) {
-		this.orderdetail = orderdetail;
-	}
+    public void setCommisionCharge(BigDecimal commisionCharge) {
+        this.commisionCharge = commisionCharge;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public BigDecimal getCash() {
+        return cash;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setCash(BigDecimal cash) {
+        this.cash = cash;
+    }
+
+    public BigDecimal getAccountAmount() {
+        return accountAmount;
+    }
+
+    public void setAccountAmount(BigDecimal accountAmount) {
+        this.accountAmount = accountAmount;
+    }
 }

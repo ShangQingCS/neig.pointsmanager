@@ -99,7 +99,7 @@ public class ShopCarController extends ContextInfo{
 			}
 		}else{
 			result="1";
-			message="parentid 为空请确认无误后再行调用";
+			message="userid 为空请确认无误后再行调用";
 			logger.log(INFO, message);
 			data="";
 		}
