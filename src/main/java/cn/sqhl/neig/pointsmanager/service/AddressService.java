@@ -15,4 +15,6 @@ public interface AddressService {
 	public int removeObj(NsAddress address);
 	
 	public int updateObj(NsAddress address);
+	
+	public NsAddress queryByPrimaryKey(Long id);
 }

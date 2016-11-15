@@ -8,15 +8,15 @@ public class NsOrder {
 
     private Long userid;
 
-    private Long total;
+    private BigDecimal total;
 
     private Integer counts;
 
-    private Long paytype;
+    private String paytype;
 
     private String outway;
 
-    private Long orderstatus;
+    private String orderstatus;
 
     private String deliveryNumb;
 
@@ -36,7 +36,7 @@ public class NsOrder {
 
     private String contactnumb;
 
-    private Integer invoice;
+    private String invoice;
 
     private String companyname;
 
@@ -66,11 +66,11 @@ public class NsOrder {
         this.userid = userid;
     }
 
-    public Long getTotal() {
+    public BigDecimal getTotal() {
         return total;
     }
 
-    public void setTotal(Long total) {
+    public void setTotal(BigDecimal total) {
         this.total = total;
     }
 
@@ -82,11 +82,11 @@ public class NsOrder {
         this.counts = counts;
     }
 
-    public Long getPaytype() {
+    public String getPaytype() {
         return paytype;
     }
 
-    public void setPaytype(Long paytype) {
+    public void setPaytype(String paytype) {
         this.paytype = paytype;
     }
 
@@ -98,11 +98,11 @@ public class NsOrder {
         this.outway = outway == null ? null : outway.trim();
     }
 
-    public Long getOrderstatus() {
+    public String getOrderstatus() {
         return orderstatus;
     }
 
-    public void setOrderstatus(Long orderstatus) {
+    public void setOrderstatus(String orderstatus) {
         this.orderstatus = orderstatus;
     }
 
@@ -178,11 +178,11 @@ public class NsOrder {
         this.contactnumb = contactnumb == null ? null : contactnumb.trim();
     }
 
-    public Integer getInvoice() {
+    public String getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Integer invoice) {
+    public void setInvoice(String invoice) {
         this.invoice = invoice;
     }
 

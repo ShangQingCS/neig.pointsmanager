@@ -1,11 +1,6 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
 import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
-import cn.sqhl.neig.pointsmanager.vo.OrderDetail;
 
 public interface NsOrderDetailMapper {
     int deleteByPrimaryKey(Long id);
@@ -20,5 +15,4 @@ public interface NsOrderDetailMapper {
 
     int updateByPrimaryKey(NsOrderDetail record);
     
-//    List<OrderDetail> selectOrderDetail(Integer id);
 }

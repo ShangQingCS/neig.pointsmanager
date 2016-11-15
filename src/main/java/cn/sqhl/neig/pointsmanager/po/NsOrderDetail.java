@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.po;
 
+import java.math.BigDecimal;
+
 public class NsOrderDetail {
     private Long id;
 
@@ -9,7 +11,7 @@ public class NsOrderDetail {
 
     private Integer count;
 
-    private Long price;
+    private BigDecimal price;
 
     public Long getId() {
         return id;
@@ -43,11 +45,11 @@ public class NsOrderDetail {
         this.count = count;
     }
 
-    public Long getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

@@ -348,4 +348,152 @@
     	</if>
     </where>
   </select>
+  
+  
+  
+  <insert id="insertOrder" parameterType="cn.sqhl.neig.pointsmanager.po.NsOrder" keyProperty="id" useGeneratedKeys="true">
+    insert into ns_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="total != null">
+        total,
+      </if>
+      <if test="counts != null">
+        counts,
+      </if>
+      <if test="paytype != null">
+        paytype,
+      </if>
+      <if test="outway != null">
+        outway,
+      </if>
+      <if test="orderstatus != null">
+        orderstatus,
+      </if>
+      <if test="deliveryNumb != null">
+        delivery_numb,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="deliveryTime != null">
+        delivery_time,
+      </if>
+      <if test="paynumb != null">
+        paynumb,
+      </if>
+      <if test="positionid != null">
+        positionid,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="postcode != null">
+        postcode,
+      </if>
+      <if test="contactnumb != null">
+        contactnumb,
+      </if>
+      <if test="invoice != null">
+        invoice,
+      </if>
+      <if test="companyname != null">
+        companyname,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="commisionCharge != null">
+        commision_charge,
+      </if>
+      <if test="cash != null">
+        cash,
+      </if>
+      <if test="accountAmount != null">
+        account_amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="total != null">
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="counts != null">
+        #{counts,jdbcType=INTEGER},
+      </if>
+      <if test="paytype != null">
+        #{paytype,jdbcType=BIGINT},
+      </if>
+      <if test="outway != null">
+        #{outway,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        #{orderstatus,jdbcType=BIGINT},
+      </if>
+      <if test="deliveryNumb != null">
+        #{deliveryNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryTime != null">
+        #{deliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paynumb != null">
+        #{paynumb,jdbcType=VARCHAR},
+      </if>
+      <if test="positionid != null">
+        #{positionid,jdbcType=BIGINT},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactnumb != null">
+        #{contactnumb,jdbcType=VARCHAR},
+      </if>
+      <if test="invoice != null">
+        #{invoice,jdbcType=INTEGER},
+      </if>
+      <if test="companyname != null">
+        #{companyname,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="commisionCharge != null">
+        #{commisionCharge,jdbcType=DECIMAL},
+      </if>
+      <if test="cash != null">
+        #{cash,jdbcType=DECIMAL},
+      </if>
+      <if test="accountAmount != null">
+        #{accountAmount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
 </mapper>

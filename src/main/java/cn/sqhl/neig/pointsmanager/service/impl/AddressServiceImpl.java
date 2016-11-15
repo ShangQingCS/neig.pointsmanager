@@ -41,4 +41,9 @@ public class AddressServiceImpl implements AddressService{
 		return nsAddressMapper.updateByPrimaryKey(address);
 	}
 
+	@Override
+	public NsAddress queryByPrimaryKey(Long id) {
+		return  nsAddressMapper.selectByPrimaryKey(id);
+	}
+
 }
