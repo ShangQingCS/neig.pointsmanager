@@ -89,11 +89,12 @@ public class AdEventController extends ContextInfo{
 			message="查询成功~";
 			logger.log(INFO, message);
 			data=list;
+			rsJson.put("page", page);
 		}else{
 			result="1";
 			message="查询失败~";
 			logger.log(INFO, message);
-			data=list;
+			data=null;
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
