@@ -129,4 +129,51 @@
       picture = #{picture,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  
+  <resultMap id="eventsResultMap" type="cn.sqhl.neig.pointsmanager.vo.Eventsinfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="memo" jdbcType="VARCHAR" property="memo" />
+    <result column="minpicture" jdbcType="VARCHAR" property="minpicture" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <collection property="goodslist" column="id" 
+    select="cn.sqhl.neig.pointsmanager.mapper.NsEventsinfoMapper.selectList" 
+    javaType="java.util.ArrayList" 
+    ofType="cn.sqhl.neig.pointsmanager.vo.EventGoods">
+    </collection>
+  </resultMap>
+  <sql id="events_Column_List">
+    id, name, memo, minpicture, picture
+  </sql>
+   <select id="selectById" parameterType="java.lang.Long" resultMap="eventsResultMap">
+    select 
+    <include refid="events_Column_List" />
+    from ns_eventsinfo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <resultMap type="cn.sqhl.neig.pointsmanager.vo.EventGoods" id="selectListMap">
+  	<result column="goodsid" jdbcType="BIGINT" property="goodsid" />
+  	<result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+  	<result column="goodsimg" jdbcType="VARCHAR" property="goodsimg" />
+  </resultMap>
+   <sql id="content_Column_List">
+    goodsid,goodsname,goodsimg
+  </sql>
+  <select id="selectList" resultMap="selectListMap" parameterType="int">
+  	select 
+  	<include refid="content_Column_List" />
+  	from (
+  		select 
+  			a.goods_id as goodsid,
+  			b.gname as goodsname,
+  			b.goodimg as goodsimg
+  		from 
+  		ns_events_goods a left join (select * from ns_goods where isuse=0 ) b on a.goods_id=b.id
+  		where
+  		a.events_id=#{id,jdbcType=BIGINT}
+  	) tmp
+  	
+  </select>
 </mapper>

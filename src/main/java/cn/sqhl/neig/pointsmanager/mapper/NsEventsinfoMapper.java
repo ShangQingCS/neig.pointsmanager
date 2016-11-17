@@ -1,13 +1,7 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
-
-import cn.sqhl.neig.pointsmanager.core.PaginationInterceptor;
 import cn.sqhl.neig.pointsmanager.po.NsEventsinfo;
 import cn.sqhl.neig.pointsmanager.po.NsEventsinfoWithBLOBs;
-import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Eventsinfo;
 
 public interface NsEventsinfoMapper {
@@ -25,5 +19,5 @@ public interface NsEventsinfoMapper {
 
     int updateByPrimaryKey(NsEventsinfo record);
     
-    Eventsinfo queryListPageById(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("id") Long id);
+    Eventsinfo selectById(Long id);
 }

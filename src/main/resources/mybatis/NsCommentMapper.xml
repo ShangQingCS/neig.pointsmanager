@@ -141,7 +141,7 @@
   <select id="queryComment" parameterType="java.util.Map" resultMap="commentResultMap">
     select 
     <include refid="comment_Column_List" />
-    from ns_comment where ishidden = 1
+    from ns_comment where flag = 1
 	    	<if test="map.goodsid != null">
 	    	 	and goodsid=${map.goodsid}
 	    	</if>

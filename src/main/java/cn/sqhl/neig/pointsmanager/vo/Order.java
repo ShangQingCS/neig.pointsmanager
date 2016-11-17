@@ -23,9 +23,9 @@ public class Order {
 
     private String deliveryNumb;
 
-    private Date createTime;
+    private String createTime;
 
-    private Date deliveryTime;
+    private String deliveryTime;
 
     private String paynumb;
 
@@ -127,19 +127,19 @@ public class Order {
         this.deliveryNumb = deliveryNumb == null ? null : deliveryNumb.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
-    public Date getDeliveryTime() {
+    public String getDeliveryTime() {
         return deliveryTime;
     }
 
-    public void setDeliveryTime(Date deliveryTime) {
+    public void setDeliveryTime(String deliveryTime) {
         this.deliveryTime = deliveryTime;
     }
 

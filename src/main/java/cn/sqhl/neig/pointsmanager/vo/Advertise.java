@@ -1,7 +1,5 @@
 package cn.sqhl.neig.pointsmanager.vo;
 
-import java.util.List;
-
 public class Advertise {
     private Long id;
 
@@ -17,7 +15,7 @@ public class Advertise {
 
     private Long kind;
     
-    private List<Eventsinfo> eventlist;
+    private String memo;
 
     public Long getId() {
         return id;
@@ -75,12 +73,13 @@ public class Advertise {
         this.kind = kind;
     }
 
-	public List<Eventsinfo> getEventlist() {
-		return eventlist;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setEventlist(List<Eventsinfo> eventlist) {
-		this.eventlist = eventlist;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
+
     
 }

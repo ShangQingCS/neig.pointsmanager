@@ -312,8 +312,8 @@
     <result column="outway" jdbcType="VARCHAR" property="outway" />
     <result column="orderstatus" jdbcType="BIGINT" property="orderstatus" />
     <result column="delivery_numb" jdbcType="VARCHAR" property="deliveryNumb" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="delivery_time" jdbcType="TIMESTAMP" property="deliveryTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="delivery_time" jdbcType="VARCHAR" property="deliveryTime" />
     <result column="paynumb" jdbcType="VARCHAR" property="paynumb" />
     <result column="positionid" jdbcType="BIGINT" property="positionid" />
     <result column="address" jdbcType="VARCHAR" property="address" />
@@ -330,8 +330,8 @@
     <collection property="orderdetail" column="id" select="cn.sqhl.neig.pointsmanager.mapper.NsOrderDetailMapper.selectOrderDetail" javaType="java.util.ArrayList" ofType="cn.sqhl.neig.pointsmanager.vo.OrderDetail"></collection>
   </resultMap>
   <sql id="order_Column_List">
-    id, userid, total, counts, paytype, outway, orderstatus, delivery_numb, create_time, 
-    delivery_time, paynumb, positionid, address, name, postcode, contactnumb, invoice, 
+    id, userid, total, counts, paytype, outway, orderstatus, delivery_numb, DATE_FORMAT(create_time,'%Y-%m-%d %H:%i:%s') as create_time, 
+    DATE_FORMAT(delivery_time,'%Y-%m-%d %H:%i:%s') as delivery_time, paynumb, positionid, address, name, postcode, contactnumb, invoice, 
     companyname, content, remark, commision_charge, cash, account_amount
   </sql>
   <select id="queryOrder" parameterType="java.util.Map" resultMap="orderResultMap">

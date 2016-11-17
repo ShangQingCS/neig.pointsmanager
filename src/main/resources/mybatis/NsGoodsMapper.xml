@@ -305,6 +305,7 @@
     <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
     <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
     <result column="goodimg" jdbcType="VARCHAR" property="goodimg" />
+    <result column="isuser" jdbcType="VARCHAR" property="isuser" />
     <result column="img1" jdbcType="VARCHAR" property="img1" />
     <result column="img2" jdbcType="VARCHAR" property="img2" />
     <result column="img3" jdbcType="VARCHAR" property="img3" />
@@ -315,8 +316,9 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="goods_Column_List">
-    id, gname, price, brand, goodimglist, Gfullname, storenumb, 
-    goodimg, img1, img2, img3, img4, img5
+    id, gname, price, brand, goodimglist, Gfullname, case
+    when sellnumb = 0 then 0 else storenumb end as storenumb, 
+    goodimg, img1, img2, img3, img4, img5,isuser
   </sql>
   <sql id="goods_Blob_Column_List">
     detail
@@ -326,7 +328,7 @@
   		<include refid="goods_Column_List" />
   		from ns_goods
 	  		<where>
-	  			isuse = '0'
+	  			1=1
   		<if test="map.parentid != '' ">
 	  			and brand=#{map.parentid,jdbcType=BIGINT}
   		</if>
@@ -338,7 +340,7 @@
   		<include refid="goods_Column_List" />
   		from ns_goods
 	  		<where>
-	  		 isuse = '0'
+	  		 1=1
   		<if test="map.searchcode != '' ">
 	  		and(	category in (select id from ns_goods_category where level=1 and cate_name like '%${map.searchcode}%')
 	  		or	kind in (select id from ns_goods_category where level=2 and cate_name like '%${map.searchcode}%')

@@ -266,4 +266,12 @@ public class GoodsController extends ContextInfo{
 		return rsJson;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/freeze")
+	public JSONObject queryGoodsList(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="parentid",required=false) String parentid,
+			@RequestParam(value="searchcode",required=false) String searchcode) throws IOException{
+		return null;
+	}
 }

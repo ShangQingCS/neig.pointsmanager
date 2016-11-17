@@ -170,6 +170,7 @@ public class OrderController extends ContextInfo{
 				nsorder=(NsOrder)autoLoad(nsorder,"commisionCharge",requestString);//手续费
 				nsorder=(NsOrder)autoLoad(nsorder,"cash",requestString);//现金
 				nsorder=(NsOrder)autoLoad(nsorder,"accountAmount",requestString);//账户费用
+				nsorder.setOrderstatus("1");
 				
 				if(!StringUtils.isEmpty(nsorder.getPositionid())){
 					NsAddress address=addressService.queryByPrimaryKey(nsorder.getPositionid());
@@ -257,5 +258,19 @@ public class OrderController extends ContextInfo{
 		rsJson.put("data", data);
 		response.setContentType("charset=utf-8");
 		return rsJson;
+	}
+	
+	/**
+	 * 交易确认
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping("/confirm")
+	public JSONObject managerGoods(HttpServletRequest request,
+			HttpServletResponse response) throws IOException{
+		return null;
 	}
 }

@@ -30,6 +30,8 @@ public class Goods {
     private String img4;
 
     private String img5;
+    
+    private String isuser;
 
     public Goods(){
     	
@@ -166,5 +168,13 @@ public class Goods {
 
 	public void setImg5(String img5) {
 		this.img5 = img5;
+	}
+
+	public String getIsuser() {
+		return isuser;
+	}
+
+	public void setIsuser(String isuser) {
+		this.isuser = isuser;
 	}
 }

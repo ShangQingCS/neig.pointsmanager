@@ -168,4 +168,31 @@
       kind = #{kind,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  
+   <resultMap id="advertiseResultMap" type="cn.sqhl.neig.pointsmanager.vo.Advertise">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="imgurl" jdbcType="VARCHAR" property="imgurl" />
+    <result column="linkkind" jdbcType="BIGINT" property="linkkind" />
+    <result column="imglink" jdbcType="VARCHAR" property="imglink" />
+    <result column="ordernumb" jdbcType="INTEGER" property="ordernumb" />
+    <result column="kind" jdbcType="BIGINT" property="kind" />
+    <result column="memo" jdbcType="LONGVARCHAR" property="memo" />
+  </resultMap>
+  <sql id="advertise_Column_List">
+    id, name, imgurl, linkkind, imglink, ordernumb, type, isuse, kind,memo
+  </sql>
+  <select id="queryByMap" parameterType="java.util.Map" resultMap="advertiseResultMap">
+    select 
+    <include refid="advertise_Column_List" />
+    from ns_advertise
+    where isuse = '0' and flag='1' 
+    and (unix_timestamp(now()) between unix_timestamp(start_time) and unix_timestamp(end_time)) = 1
+    <if test="map.type != null">
+    	and type=#{map.type,jdbcType=VARCHAR}
+    </if>
+    
+  </select>
+  
 </mapper>
