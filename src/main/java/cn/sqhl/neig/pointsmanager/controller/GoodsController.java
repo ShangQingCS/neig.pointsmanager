@@ -160,6 +160,12 @@ public class GoodsController extends ContextInfo{
 			message="查询成功";
 			logger.log(INFO, message);
 			data=list;
+			rsJson.put("page", page);
+		}else{
+			result="1";
+			message="查询失败";
+			logger.log(INFO, message);
+			data=null;
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
@@ -222,6 +228,7 @@ public class GoodsController extends ContextInfo{
 			message="查询成功~";
 			logger.log(INFO, message);
 			data=list;
+			rsJson.put("page", page);
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
@@ -261,4 +268,12 @@ public class GoodsController extends ContextInfo{
 		return rsJson;
 	}
 	
+	
+	@ResponseBody
+	@RequestMapping("/freeze")
+	public JSONObject queryGoodsList(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="parentid",required=false) String parentid,
+			@RequestParam(value="searchcode",required=false) String searchcode) throws IOException{
+		return null;
+	}
 }

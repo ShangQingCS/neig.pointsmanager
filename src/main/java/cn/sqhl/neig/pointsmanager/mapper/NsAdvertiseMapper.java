@@ -1,6 +1,7 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -24,5 +25,5 @@ public interface NsAdvertiseMapper {
 
     int updateByPrimaryKey(NsAdvertise record);
     
-    List<Advertise> queryListPageByType(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("type") Integer id);
+    List<Advertise> queryByMap(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
 }

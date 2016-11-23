@@ -12,11 +12,11 @@ public class NsOrder {
 
     private Integer counts;
 
-    private Long paytype;
+    private String paytype;
 
     private String outway;
 
-    private Long orderstatus;
+    private String orderstatus;
 
     private String deliveryNumb;
 
@@ -36,7 +36,7 @@ public class NsOrder {
 
     private String contactnumb;
 
-    private Integer invoice;
+    private String invoice;
 
     private String companyname;
 
@@ -44,9 +44,7 @@ public class NsOrder {
 
     private String remark;
 
-    private String username;
-
-    private BigDecimal commissionCharge;
+    private BigDecimal commisionCharge;
 
     private BigDecimal cash;
 
@@ -84,11 +82,11 @@ public class NsOrder {
         this.counts = counts;
     }
 
-    public Long getPaytype() {
+    public String getPaytype() {
         return paytype;
     }
 
-    public void setPaytype(Long paytype) {
+    public void setPaytype(String paytype) {
         this.paytype = paytype;
     }
 
@@ -100,11 +98,11 @@ public class NsOrder {
         this.outway = outway == null ? null : outway.trim();
     }
 
-    public Long getOrderstatus() {
+    public String getOrderstatus() {
         return orderstatus;
     }
 
-    public void setOrderstatus(Long orderstatus) {
+    public void setOrderstatus(String orderstatus) {
         this.orderstatus = orderstatus;
     }
 
@@ -180,11 +178,11 @@ public class NsOrder {
         this.contactnumb = contactnumb == null ? null : contactnumb.trim();
     }
 
-    public Integer getInvoice() {
+    public String getInvoice() {
         return invoice;
     }
 
-    public void setInvoice(Integer invoice) {
+    public void setInvoice(String invoice) {
         this.invoice = invoice;
     }
 
@@ -212,20 +210,12 @@ public class NsOrder {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public String getUsername() {
-        return username;
+    public BigDecimal getCommisionCharge() {
+        return commisionCharge;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
-
-    public BigDecimal getCommissionCharge() {
-        return commissionCharge;
-    }
-
-    public void setCommissionCharge(BigDecimal commissionCharge) {
-        this.commissionCharge = commissionCharge;
+    public void setCommisionCharge(BigDecimal commisionCharge) {
+        this.commisionCharge = commisionCharge;
     }
 
     public BigDecimal getCash() {

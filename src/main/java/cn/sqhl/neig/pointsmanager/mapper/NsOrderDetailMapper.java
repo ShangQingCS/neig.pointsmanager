@@ -14,4 +14,5 @@ public interface NsOrderDetailMapper {
     int updateByPrimaryKeySelective(NsOrderDetail record);
 
     int updateByPrimaryKey(NsOrderDetail record);
+    
 }

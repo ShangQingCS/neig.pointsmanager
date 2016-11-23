@@ -89,6 +89,12 @@ public class AdEventController extends ContextInfo{
 			message="查询成功~";
 			logger.log(INFO, message);
 			data=list;
+			rsJson.put("page", page);
+		}else{
+			result="1";
+			message="查询失败~";
+			logger.log(INFO, message);
+			data=null;
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
@@ -101,9 +107,7 @@ public class AdEventController extends ContextInfo{
 	@RequestMapping("/searchevent")
 	public JSONObject queryEvent(HttpServletRequest request,
 			HttpServletResponse response,
-			@Param(value="eventsid") String eventsid,
-			@Param(value="pagesize") String pagesize,
-			@Param(value="nowpage") String nowpage) throws IOException{
+			@Param(value="eventsid") String eventsid) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		
@@ -118,26 +122,12 @@ public class AdEventController extends ContextInfo{
 				eventsid=requestString.get("eventsid")+"";
 			}
 		}
-		if(StringUtils.isEmpty(pagesize) && requestString!=null){
-			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
-				pagesize=requestString.get("pagesize")+"";
-			}else{
-				pagesize="15";
-			}
-		}
-		if(StringUtils.isEmpty(nowpage) && requestString!=null){
-			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
-				nowpage=requestString.get("nowpage")+"";
-			}else{
-				nowpage="1";
-			}
-		}
 		Eventsinfo event=null;
-		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		
 		if(!StringUtils.isEmpty(eventsid)){
 			Map map=new HashMap();
 			map.put("eventsid",eventsid);
-			event=(Eventsinfo)adEventService.queryEvent(page,map);
+			event =adEventService.queryEvent(map);
 		}else{
 			result="1";
 			message="type 为空请确认无误后再行调用";
@@ -149,11 +139,24 @@ public class AdEventController extends ContextInfo{
 			message="查询成功~";
 			logger.log(INFO, message);
 			data=event;
+		}else{
+			result="1";
+			message="查询失败~";
+			logger.log(INFO, message);
+			data=null;
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);
 		response.setContentType("charset=utf-8");
 		return rsJson;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/searchpgm")
+	public JSONObject queryProgram(HttpServletRequest request,
+			HttpServletResponse response,
+			@Param(value="eventsid") String eventsid) throws IOException{
+		return null;
 	}
 }

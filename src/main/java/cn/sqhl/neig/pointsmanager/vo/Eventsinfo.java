@@ -6,10 +6,14 @@ public class Eventsinfo {
     private Long id;
 
     private String name;
+    
+    private String minpicture;
 
     private String picture;
     
-    private List<Goods> goodslist;
+    private String memo;
+    
+    private List<EventGoods> goodslist;
 
     public Long getId() {
         return id;
@@ -35,12 +39,28 @@ public class Eventsinfo {
         this.picture = picture == null ? null : picture.trim();
     }
 
-	public List<Goods> getGoodslist() {
+	public List<EventGoods> getGoodslist() {
 		return goodslist;
 	}
 
-	public void setGoodslist(List<Goods> goodslist) {
+	public void setGoodslist(List<EventGoods> goodslist) {
 		this.goodslist = goodslist;
+	}
+
+	public String getMinpicture() {
+		return minpicture;
+	}
+
+	public void setMinpicture(String minpicture) {
+		this.minpicture = minpicture;
+	}
+
+	public String getMemo() {
+		return memo;
+	}
+
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
     
 }

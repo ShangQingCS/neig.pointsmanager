@@ -3,6 +3,7 @@ package cn.sqhl.neig.pointsmanager.controller;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -204,6 +205,8 @@ public class ContextInfo {
 							setFieldValue(obj, str, adds,type);
 						}else if (type.equals("class java.lang.Long")) {
 							setFieldValue(obj, str, adds,type);
+						}else if (type.equals("class java.math.BigDecimal")) {
+							setFieldValue(obj, str, adds,type);
 						}else{
 							setFieldValue(obj, str, adds,type);
 						}
@@ -262,6 +265,8 @@ public class ContextInfo {
 					field.set(obj,Boolean.parseBoolean(fieldValue));
 				}else if (typename.equals("class java.lang.Long")) {
 					field.set(obj,Long.parseLong(fieldValue));
+				}else if (typename.equals("class java.math.BigDecimal")) {
+					field.set(obj,BigDecimal.valueOf(Double.parseDouble(fieldValue)));
 				}else{
 					field.set(obj,fieldValue);
 				}

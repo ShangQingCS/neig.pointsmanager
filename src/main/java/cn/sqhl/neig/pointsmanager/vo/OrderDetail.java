@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.vo;
 
+import java.util.ArrayList;
+
 public class OrderDetail {
     private Long id;
 
@@ -11,9 +13,19 @@ public class OrderDetail {
 
     private Long price;
     
-    private Goods goods;
+    private String goodsname;
+    
+    private String goodsimg;
 
-    public Long getId() {
+    public String getGoodsimg() {
+		return goodsimg;
+	}
+
+	public void setGoodsimg(String goodsimg) {
+		this.goodsimg = goodsimg;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -49,15 +61,16 @@ public class OrderDetail {
         return price;
     }
 
-    public Goods getGoods() {
-		return goods;
-	}
-
-	public void setGoods(Goods goods) {
-		this.goods = goods;
-	}
-
 	public void setPrice(Long price) {
         this.price = price;
     }
+
+	public String getGoodsname() {
+		return goodsname;
+	}
+
+	public void setGoodsname(String goodsname) {
+		this.goodsname = goodsname;
+	}
+
 }
