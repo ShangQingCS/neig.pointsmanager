@@ -25,9 +25,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
+import cn.sqhl.neig.pointsmanager.service.OrderService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
+import cn.sqhl.neig.pointsmanager.vo.Order;
+import cn.sqhl.neig.pointsmanager.vo.OrderDetail;
 
 
 @Controller
@@ -266,14 +269,5 @@ public class GoodsController extends ContextInfo{
 		rsJson.put("data", data);
 		response.setContentType("charset=utf-8");
 		return rsJson;
-	}
-	
-	
-	@ResponseBody
-	@RequestMapping("/freeze")
-	public JSONObject queryGoodsList(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value="parentid",required=false) String parentid,
-			@RequestParam(value="searchcode",required=false) String searchcode) throws IOException{
-		return null;
 	}
 }

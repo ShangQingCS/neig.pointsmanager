@@ -25,5 +25,7 @@ public interface NsOrderMapper {
     
     List<Order> queryOrder(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
     
+    List<Object> selectOrder(@Param("map") Map<String, Object> map);
+    
     int insertOrder(NsOrder record);
 }

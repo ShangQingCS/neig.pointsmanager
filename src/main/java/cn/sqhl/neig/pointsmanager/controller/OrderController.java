@@ -2,9 +2,13 @@ package cn.sqhl.neig.pointsmanager.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.sqhl.neig.pointsmanager.core.pay.alipay.alipayUtil;
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
 import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
+import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 
@@ -39,6 +45,9 @@ public class OrderController extends ContextInfo{
 	
 	@Autowired
 	private AddressService addressService;
+	
+	@Autowired
+	private GoodsService goodsService;
 	
 	@ResponseBody
 	@RequestMapping("/search")
@@ -262,7 +271,7 @@ public class OrderController extends ContextInfo{
 	}
 	
 	/**
-	 * 交易确认
+	 * 交易订单确认
 	 * @param request
 	 * @param response
 	 * @return
@@ -270,8 +279,132 @@ public class OrderController extends ContextInfo{
 	 */
 	@ResponseBody
 	@RequestMapping("/confirm")
-	public JSONObject managerGoods(HttpServletRequest request,
+	public JSONObject confirmBill(HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
 		return null;
 	}
+	
+	/***
+	 * 交易订单申请
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@ResponseBody
+	@RequestMapping("/apply")
+	public JSONObject applyBill(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="orderid",required=false) Long orderid,
+			@RequestParam(value="subject",required=false) String subject,
+			@RequestParam(value="body",required=false) String body,
+			@RequestParam(value="price",required=false) String price) throws IOException{
+		
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("ver", ver);
+		
+		InputStream requestjson = request.getInputStream();
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
+
+		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
+		logger.log(DEBUG, requestString);
+		
+		if(StringUtils.isEmpty(orderid)&&requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("orderid"))){
+				orderid=Long.parseLong(requestString.get("orderid")+"");
+			}
+		}
+		
+		if(StringUtils.isEmpty(subject)&&requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("subject"))){
+				subject=requestString.getString("subject");
+			}
+		}
+		
+		if(StringUtils.isEmpty(body)&&requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("body"))){
+				body=requestString.getString("body");
+			}
+		}
+		
+		if(StringUtils.isEmpty(price)&&requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("price"))){
+				price=requestString.getString("price");
+			}
+		}
+		
+		if(!StringUtils.isEmpty(price) && !StringUtils.isEmpty(body) && !StringUtils.isEmpty(subject)){
+		
+		if(!StringUtils.isEmpty(orderid)){
+			Map querymap=new HashMap();
+			querymap.put("orderid", orderid);
+			querymap.put("status", "1");
+			List<Object> order=orderService.queryObj(querymap);
+			if(order!=null && order.size()>0){//该订单为待支付订单才可以被冻结
+				try {
+					Map resultmap=goodsService.freazesGoods(orderid);//冻结 保存冻结记录
+					if(resultmap!=null && resultmap.size()>0){
+						int status=Integer.parseInt(resultmap.get("status")+"");
+						if(status == 0){
+							//调用支付交易订单申请接口
+							String exchangeorderinfo=alipayUtil.getOrderInfo( subject,body,  price, merchantUID,merchant_account, domain, notify_url);
+							if(!StringUtils.isEmpty(exchangeorderinfo)){
+								Map map=new HashMap();
+								result="0";
+								message="生成成功";
+								logger.log(INFO, message);
+								map.put("exchangeorderinfo", exchangeorderinfo);
+								data=map;
+							}else{
+								result="1";
+								message="生成失败~";
+								logger.log(INFO, message);
+								data="";
+							}
+						}else{
+							result=status+"";
+							message=resultmap.get("msg")+"";
+							logger.log(INFO, message);
+							data="";
+						}
+					}else{
+						result="1";
+						message="冻结失败~";
+						logger.log(INFO, message);
+						data="";
+					}
+				} catch (Exception e) {
+					result="1";
+					message=e.getMessage();
+					logger.log(INFO, message);
+					data="";
+				}
+				
+			}else{
+				result="1";
+				message="操作失败  查询不到对应订单";
+				logger.log(INFO, message);
+				data="";
+			}
+		}else{
+			result="1";
+			message="操作失败  orderid不能为空";
+			logger.log(INFO, message);
+			data="";
+		}
+		
+		}else{
+			result="1";
+			message="传入参数有误~ 请核对后重试";
+			logger.log(INFO, message);
+			data="";
+		}
+		rsJson.put("result", result);
+		rsJson.put("message", message);
+		rsJson.put("data", data);
+		response.setContentType("charset=utf-8");
+		return rsJson;
+	}
+	
 }

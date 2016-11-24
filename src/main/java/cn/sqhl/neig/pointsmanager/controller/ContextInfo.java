@@ -30,7 +30,24 @@ public class ContextInfo {
 	 protected String result;
 	 protected String message;
 	 protected Object data;
-
+	 
+	 @Value("${alipay.MerchantAccount}")
+	 protected String merchant_account;
+	 @Value("${alipay.MerchantUID}")
+	 protected String merchantUID;
+	 @Value("${alipay.APPID}")
+	 protected String appid;
+	 @Value("${alipay.AES}")
+	 protected String AES;
+	 @Value("${alipay.RSA1withRSA}")
+	 protected String RSA1withRSA;
+	 
+	 @Value("${alipay.notify_url}")
+	 protected String notify_url;
+	 @Value("${alipay.domain}")
+	 protected String domain;
+	 
+	 
 	/***
 	 * restr 为空 json不为空 则从json对象中获取 str的值 类型需要自行转换
 	 * 
@@ -303,4 +320,5 @@ public class ContextInfo {
         }  
         return result;  
     }  
+    
 }

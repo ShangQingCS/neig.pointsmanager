@@ -37,6 +37,25 @@
     from ns_order
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="selectOrder" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from ns_order
+    <where>
+    	1=1
+    	<if test="map.orderid">
+    		and id=#{map.orderid,jdbcType=BIGINT}
+    	</if>
+    	<if test="map.userid != null">
+    		and userid=#{map.userid,jdbcType=BIGINT}
+    	</if>
+    	<if test="map.status != null">
+    		and orderstatus=#{map.status,jdbcType=VARCHAR}
+    	</if>
+    </where>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ns_order
     where id = #{id,jdbcType=BIGINT}
@@ -348,6 +367,8 @@
     	</if>
     </where>
   </select>
+  
+  
   
   
   

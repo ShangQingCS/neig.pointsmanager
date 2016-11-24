@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
+import java.util.List;
+
 import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
 
 public interface NsOrderDetailMapper {
@@ -15,4 +17,5 @@ public interface NsOrderDetailMapper {
 
     int updateByPrimaryKey(NsOrderDetail record);
     
+    List<NsOrderDetail> queryOrderDetail(Long orderid);
 }

@@ -31,11 +31,10 @@ public class OrderServiceImpl implements OrderService{
 	public List<Order> queryOrder(PageCond page, Map<String, Object> obj) {
 		return nsOrderMapper.queryOrder(page,obj);
 	}
-
+	
 	@Override
 	public List<Object> queryObj(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return nsOrderMapper.selectOrder(map);
 	}
 
 	@Override

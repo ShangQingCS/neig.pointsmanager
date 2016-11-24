@@ -12,8 +12,8 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://127.0.0.1:3306/bxdz" userId="chen"
-			password="chen123">
+			connectionURL="jdbc:mysql://tobsenl.gicp.net:23599/nssc" userId="bxdz"
+			password="bxdz123">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -86,7 +86,7 @@
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-		 -->
+
 		<table tableName="ns_advertise" domainObjectName="NsAdvertise"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
@@ -96,6 +96,17 @@
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
+
+		<table tableName="ns_freazeslog" domainObjectName="NsFreazesLog"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+		 -->
 		
+		<table tableName="ns_user" domainObjectName="NsUser"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+			
 	</context>
 </generatorConfiguration>

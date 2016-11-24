@@ -3,6 +3,7 @@ package cn.sqhl.neig.pointsmanager.service;
 import java.util.List;
 import java.util.Map;
 
+import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
 import cn.sqhl.neig.pointsmanager.vo.GoodsCategory;
@@ -13,4 +14,5 @@ public interface GoodsService {
 	public List<Goods> queryPageByLike(PageCond page,Object obj);
 	public List<GoodsCategory> queryGoodsCategory(PageCond page,Object obj);
 	public List<GoodsCategory> queryAllCategory();
+	public Map freazesGoods(Long orderid) throws Exception;
 }
