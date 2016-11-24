@@ -298,7 +298,8 @@ public class OrderController extends ContextInfo{
 			@RequestParam(value="orderid",required=false) Long orderid,
 			@RequestParam(value="subject",required=false) String subject,
 			@RequestParam(value="body",required=false) String body,
-			@RequestParam(value="price",required=false) String price) throws IOException{
+			@RequestParam(value="price",required=false) String price,
+			@RequestParam(value="type",required=false) String type) throws IOException{
 		
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
@@ -334,6 +335,12 @@ public class OrderController extends ContextInfo{
 			}
 		}
 		
+		if(StringUtils.isEmpty(type)&&requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("type"))){
+				type=requestString.getString("type");
+			}
+		}
+		
 		if(!StringUtils.isEmpty(price) && !StringUtils.isEmpty(body) && !StringUtils.isEmpty(subject)){
 		
 		if(!StringUtils.isEmpty(orderid)){
@@ -348,13 +355,28 @@ public class OrderController extends ContextInfo{
 						int status=Integer.parseInt(resultmap.get("status")+"");
 						if(status == 0){
 							//调用支付交易订单申请接口
-							String exchangeorderinfo=alipayUtil.getOrderInfo( subject,body,  price, merchantUID,merchant_account, domain, notify_url);
+							String tradeno=alipayUtil.getOutTradeNo();
+							String exchangeorderinfo="";
+							if(type.equals("alipay")){								
+								exchangeorderinfo=alipayUtil.getOrderInfo( subject,body,  price, merchantUID,merchant_account, domain, notify_url,tradeno);
+							}else if(type.equals("weipay")){
+//								weixinUtil.getOrderInfo(subject,body,price,tradeno);
+							}else if(type.equals("nspay")){
+								
+							}else{
+								result="1";
+								message="生成失败~支付类型有误~";
+								logger.log(INFO, message);
+								data="";
+							}
+//							orderService.addExchangeOrder(obj);
 							if(!StringUtils.isEmpty(exchangeorderinfo)){
 								Map map=new HashMap();
 								result="0";
 								message="生成成功";
 								logger.log(INFO, message);
-								map.put("exchangeorderinfo", exchangeorderinfo);
+								map.put("alipayOrderinfo", exchangeorderinfo);
+								map.put("tradeno", tradeno);
 								data=map;
 							}else{
 								result="1";

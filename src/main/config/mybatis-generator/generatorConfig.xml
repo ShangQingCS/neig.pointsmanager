@@ -62,7 +62,7 @@
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 			
-		<table tableName="ns_dictionaries" domainObjectName="NsDictionaries"
+		<table tableName="ns_user" domainObjectName="NsUser"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
@@ -103,10 +103,11 @@
 			selectByExampleQueryId="false"></table>
 		 -->
 		
-		<table tableName="ns_user" domainObjectName="NsUser"
+		
+			
+		<table tableName="ns_dictionaries" domainObjectName="NsDictionaries"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-			
 	</context>
 </generatorConfiguration>

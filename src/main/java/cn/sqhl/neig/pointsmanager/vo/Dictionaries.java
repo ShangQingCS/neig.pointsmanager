@@ -1,43 +1,73 @@
 package cn.sqhl.neig.pointsmanager.vo;
 
 public class Dictionaries {
-    private Long id;
+	 	private Integer id;
 
-    private String name;
+	    private String type;
 
-    private Long parentid;
+	    private String code;
 
-    private String memo;
+	    private String name;
 
-    public Long getId() {
-        return id;
-    }
+	    private String parentcode;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	    private String remark;
 
-    public String getName() {
-        return name;
-    }
+	    private Integer order;
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
+	    public Integer getId() {
+	        return id;
+	    }
 
-    public Long getParentid() {
-        return parentid;
-    }
+	    public void setId(Integer id) {
+	        this.id = id;
+	    }
 
-    public void setParentid(Long parentid) {
-        this.parentid = parentid;
-    }
+	    public String getType() {
+	        return type;
+	    }
 
-    public String getMemo() {
-        return memo;
-    }
+	    public void setType(String type) {
+	        this.type = type == null ? null : type.trim();
+	    }
 
-    public void setMemo(String memo) {
-        this.memo = memo == null ? null : memo.trim();
-    }
+	    public String getCode() {
+	        return code;
+	    }
+
+	    public void setCode(String code) {
+	        this.code = code == null ? null : code.trim();
+	    }
+
+	    public String getName() {
+	        return name;
+	    }
+
+	    public void setName(String name) {
+	        this.name = name == null ? null : name.trim();
+	    }
+
+	    public String getParentcode() {
+	        return parentcode;
+	    }
+
+	    public void setParentcode(String parentcode) {
+	        this.parentcode = parentcode == null ? null : parentcode.trim();
+	    }
+
+	    public String getRemark() {
+	        return remark;
+	    }
+
+	    public void setRemark(String remark) {
+	        this.remark = remark == null ? null : remark.trim();
+	    }
+
+	    public Integer getOrder() {
+	        return order;
+	    }
+
+	    public void setOrder(Integer order) {
+	        this.order = order;
+	    }
 }

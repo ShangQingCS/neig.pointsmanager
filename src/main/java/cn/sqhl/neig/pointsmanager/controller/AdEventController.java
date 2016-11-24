@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
+import cn.sqhl.neig.pointsmanager.vo.Dictionaries;
 import cn.sqhl.neig.pointsmanager.vo.Eventsinfo;
 
 @Controller
@@ -156,7 +157,51 @@ public class AdEventController extends ContextInfo{
 	@RequestMapping("/searchpgm")
 	public JSONObject queryProgram(HttpServletRequest request,
 			HttpServletResponse response,
-			@Param(value="eventsid") String eventsid) throws IOException{
-		return null;
+			@Param(value="code") String code) throws IOException{
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("ver", ver);
+		
+		InputStream requestjson = request.getInputStream();
+		String encoding = request.getCharacterEncoding(); 
+		String locationsJSONString=IOUtils.toString(requestjson,encoding);
+
+		JSONObject requestString=JSONObject.parseObject(locationsJSONString);
+		logger.log(DEBUG, requestString);
+		if(StringUtils.isEmpty(code) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("code"))){
+				code=requestString.get("code")+"";
+			}
+		}
+		
+		List<Dictionaries> diction=null;
+		
+		if(!StringUtils.isEmpty(code)){
+			Map map=new HashMap();
+			map.put("type",code);
+			diction =adEventService.queryDictionary(map);
+		}else{
+			result="1";
+			message="code 为空请确认无误后再行调用";
+			logger.log(INFO, message);
+			data="";
+		}
+		
+		if(diction!=null && diction.size()>0){
+			result="0";
+			message="查询失败~";
+			logger.log(INFO, message);
+			data=diction;
+		}else{
+			result="1";
+			message="查询失败~";
+			logger.log(INFO, message);
+			data="";
+		}
+		
+		rsJson.put("result", result);
+		rsJson.put("message", message);
+		rsJson.put("data", data);
+		response.setContentType("charset=utf-8");
+		return rsJson;
 	}
 }

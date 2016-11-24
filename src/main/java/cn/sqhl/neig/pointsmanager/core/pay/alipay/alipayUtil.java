@@ -32,7 +32,7 @@ public class alipayUtil {
 	 * 用于生成唯一 tradeNo
 	 * @return
 	 */
-	private static String getOutTradeNo() {
+	public static String getOutTradeNo() {
 		SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss",Locale.getDefault());
 		Date date = new Date();
 		String key = format.format(date);
@@ -48,13 +48,13 @@ public class alipayUtil {
      */
     public static String getOrderInfo(String subject, 
     		String body, String price,String merchantUID,
-    		String merchant_account,String domain,String notify_url) {
+    		String merchant_account,String domain,String notify_url,String tradeno) {
         // 签约合作者身份ID
         String orderInfo = "partner=" + "\"" + merchantUID + "\"";
         // 签约卖家支付宝账号
         orderInfo += "&seller_id=" + "\"" + merchant_account + "\"";
         // 商户网站唯一订单号
-        orderInfo += "&out_trade_no=" + "\"" + getOutTradeNo() + "\"";
+        orderInfo += "&out_trade_no=" + "\"" + tradeno + "\"";
         // 商品名称
         orderInfo += "&subject=" + "\"" + subject + "\"";
         // 商品详情

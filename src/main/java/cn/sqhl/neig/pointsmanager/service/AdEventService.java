@@ -5,10 +5,13 @@ import java.util.Map;
 
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Advertise;
+import cn.sqhl.neig.pointsmanager.vo.Dictionaries;
 import cn.sqhl.neig.pointsmanager.vo.Eventsinfo;
 
 public interface AdEventService extends BaseService{
 	public Eventsinfo queryEvent(Map<String, Object> map);
 
 	public List<Advertise> queryAD(PageCond page,Object obj);
+	
+	public List<Dictionaries> queryDictionary(Map map);
 }

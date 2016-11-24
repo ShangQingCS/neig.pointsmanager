@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.sqhl.neig.pointsmanager.mapper.NsAdvertiseMapper;
+import cn.sqhl.neig.pointsmanager.mapper.NsDictionariesMapper;
 import cn.sqhl.neig.pointsmanager.mapper.NsEventsinfoMapper;
 import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Advertise;
+import cn.sqhl.neig.pointsmanager.vo.Dictionaries;
 import cn.sqhl.neig.pointsmanager.vo.Eventsinfo;
 
 @Service("adEventService")
@@ -21,6 +23,9 @@ public class AdEventServiceImpl implements AdEventService{
 	
 	@Autowired
 	private NsEventsinfoMapper nsEventsinfoMapper;
+	
+	@Autowired
+	private NsDictionariesMapper nsDictionariesMapper; 
 	
 	@Override
 	public Eventsinfo queryEvent(Map<String, Object> map) {
@@ -54,6 +59,11 @@ public class AdEventServiceImpl implements AdEventService{
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public List<Dictionaries> queryDictionary(Map map) {
+		return nsDictionariesMapper.selectDictionaries(map);
 	}
 
 }
