@@ -305,7 +305,7 @@
     <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
     <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
     <result column="goodimg" jdbcType="VARCHAR" property="goodimg" />
-    <result column="isuser" jdbcType="VARCHAR" property="isuser" />
+    <result column="isuse" jdbcType="VARCHAR" property="isuse" />
     <result column="img1" jdbcType="VARCHAR" property="img1" />
     <result column="img2" jdbcType="VARCHAR" property="img2" />
     <result column="img3" jdbcType="VARCHAR" property="img3" />
@@ -318,7 +318,7 @@
   <sql id="goods_Column_List">
     id, gname, price, brand, goodimglist, Gfullname, case
     when sellnumb = 0 then 0 else storenumb end as storenumb, 
-    goodimg, img1, img2, img3, img4, img5,isuser
+    goodimg, img1, img2, img3, img4, img5,isuse
   </sql>
   <sql id="goods_Blob_Column_List">
     detail

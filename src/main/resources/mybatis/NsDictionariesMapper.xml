@@ -147,8 +147,8 @@
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="order" jdbcType="INTEGER" property="order" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, type, code, name, parentcode, remark, order
+  <sql id="diction_Column_List">
+    id, type, code, name, parentcode, remark, `order`
   </sql>
   <select id="selectDictionaries" parameterType="java.lang.Integer" resultMap="dictionResultMap">
     select 
@@ -156,10 +156,10 @@
     from ns_dictionaries
     <where>
     	isedit = 0 and isuse = 0 
-    	<if test="${map.type}">
-    		type=${map.type,jdbcType=VARCHAR}
+    	<if test="map.type != null">
+    		and type=#{map.type,jdbcType=VARCHAR}
     	</if>
-    	order by order desc
+    	order by `order` desc
     </where>
   </select>
 </mapper>

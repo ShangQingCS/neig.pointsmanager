@@ -188,7 +188,7 @@ public class AdEventController extends ContextInfo{
 		
 		if(diction!=null && diction.size()>0){
 			result="0";
-			message="查询失败~";
+			message="查询成功~";
 			logger.log(INFO, message);
 			data=diction;
 		}else{

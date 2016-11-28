@@ -31,7 +31,7 @@ public class Goods {
 
     private String img5;
     
-    private String isuser;
+    private String isuse;
 
     public Goods(){
     	
@@ -170,11 +170,11 @@ public class Goods {
 		this.img5 = img5;
 	}
 
-	public String getIsuser() {
-		return isuser;
+	public String getIsuse() {
+		return isuse;
 	}
 
-	public void setIsuser(String isuser) {
-		this.isuser = isuser;
+	public void setIsuse(String isuse) {
+		this.isuse = isuse;
 	}
 }

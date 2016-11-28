@@ -118,8 +118,7 @@ public class CommentController extends ContextInfo{
 			result="1";
 			message="查询失败~";
 			logger.log(INFO, message);
-			data=list;
-			rsJson.put("page", page);
+			data="";
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
