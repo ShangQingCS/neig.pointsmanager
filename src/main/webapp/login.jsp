@@ -12,19 +12,19 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="Cache-Control" content="no-siteapp" />
 
-		<link rel="stylesheet" href="AmazeUI-2.4.2/assets/css/amazeui.css" />
-		<link href="css/dlstyle.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="${path }/AmazeUI-2.4.2/assets/css/amazeui.css" />
+		<link href="${path }/css/dlstyle.css" rel="stylesheet" type="text/css">
 	</head>
 
 	<body>
 
 		<div class="login-boxtitle">
-			<a href="home.jsp"><img alt="logo" src="images/logobig.png" /></a>
+			<a href="home.jsp"><img alt="logo" src="${path }/images/logobig.png" /></a>
 		</div>
 
 		<div class="login-banner">
 			<div class="login-main">
-				<div class="login-banner-bg"><span></span><img src="images/big.jpg" /></div>
+				<div class="login-banner-bg"><span></span><img src="${path }/images/big.jpg" /></div>
 				<div class="login-box">
 
 							<h3 class="title">登录商城</h3>
@@ -51,7 +51,7 @@
 								<br />
             </div>-->
 								<div class="am-cf">
-									<input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm" onclick="window.location.href='home.jsp'">
+									<input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm" onclick="window.location.href='${path }/jsp/home.jsp'">
 								</div>
 						<!--<div class="partner">		
 								<h3>合作账号</h3>
@@ -67,28 +67,8 @@
 		</div>
 
 
-					<div class="footer ">
-						<div class="footer-hd ">
-							<p>
-								<a href="# ">关于我们</a>
-								<b>|</b>
-								<a href="# ">联系我们</a>
-								<b>|</b>
-								<a href="# ">联系客服</a>
-								<b>|</b>
-								<a href="# ">商家入驻</a>
-							</p>
-						</div>
-						<div class="footer-bd ">
-							<p>
-								<!--<a href="# ">关于恒望</a>
-								<a href="# ">合作伙伴</a>
-								<a href="# ">联系我们</a>
-								<a href="# ">网站地图</a>-->
-								<em>Copyright © 2004 - 2016  neigrp.com 版权所有  |  消费者维权热线：4006067733</em>
-							</p>
-						</div>
-					</div>
+					
+				<jsp:include page="/common/footer.jsp"></jsp:include>
 	</body>
 
 </html>

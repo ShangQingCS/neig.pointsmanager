@@ -149,7 +149,7 @@
 												<input id="user-phone" placeholder="手机号必填" type="email">
 											</div>
 										</div>
-										<div class="am-form-group">
+										<!-- <div class="am-form-group">
 											<label for="user-address" class="am-form-label">所在地</label>
 											<div class="am-form-content address">
 												<select data-am-selected>
@@ -165,7 +165,7 @@
 													<option value="b" selected>洪山区</option>
 												</select>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="am-form-group">
 											<label for="user-intro" class="am-form-label">详细地址</label>

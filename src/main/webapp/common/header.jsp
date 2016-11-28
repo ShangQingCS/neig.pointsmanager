@@ -10,9 +10,9 @@
 		</div>
 	</ul>
 	<ul class="message-r">
-		<div class="topMessage home">
+		<%-- <div class="topMessage home">
 			<div class="menu-hd"><a href="${path }/jsp/home.jsp" target="_top" class="h">商城首页</a></div>
-		</div>
+		</div> --%>
 		<div class="topMessage my-shangcheng">
 			<div class="menu-hd MyShangcheng"><a href="${path }/jsp/person/information.jsp" target="_top"><i class="am-icon-user am-icon-fw"></i>个人中心</a></div>
 		</div>

@@ -483,7 +483,7 @@
                                     	<div class="rate">                
                                     		<strong>100<span>%</span></strong><br> <span>好评度</span>            
                                     	</div>
-                                        <dl>                    
+                                        <!-- <dl>                    
                                             <dt>买家印象</dt>                    
                                             <dd class="p-bfc">
                                             			<q class="comm-tags"><span>味道不错</span><em>(2177)</em></q>
@@ -496,7 +496,7 @@
                                             			<q class="comm-tags"><span>特价买的</span><em>(865)</em></q>
                                             			<q class="comm-tags"><span>皮很薄</span><em>(831)</em></q> 
                                             </dd>                                           
-                                         </dl> 
+                                         </dl>  -->
                                     </div>	
                                     <div class="clear"></div>
 									<div class="tb-r-filter-bar">
@@ -508,7 +508,7 @@
 												</div>
 											</li>
 
-											<li class="tb-taglist-li tb-taglist-li-1">
+											<!-- <li class="tb-taglist-li tb-taglist-li-1">
 												<div class="comment-info">
 													<span>好评</span>
 													<span class="tb-tbcr-num">(32)</span>
@@ -527,7 +527,7 @@
 													<span>差评</span>
 													<span class="tb-tbcr-num">(32)</span>
 												</div>
-											</li>
+											</li> -->
 										</ul>
 									</div>
 									<div class="clear"></div>
@@ -956,9 +956,9 @@
 									</ul>
 									<div class="clear"></div>
 
-									<div class="tb-reviewsft">
+									<!-- <div class="tb-reviewsft">
 										<div class="tb-rate-alert type-attention">购买前请查看该商品的 <a href="#" target="_blank">购物保障</a>，明确您的售后保障权益。</div>
-									</div>
+									</div> -->
 
 								</div>
 
@@ -1102,7 +1102,7 @@
 									<div class="clear"></div>-->
 
 									<!--分页 -->
-									<ul class="am-pagination am-pagination-right">
+									<!-- <ul class="am-pagination am-pagination-right">
 										<li class="am-disabled"><a href="#">&laquo;</a></li>
 										<li class="am-active"><a href="#">1</a></li>
 										<li><a href="#">2</a></li>
@@ -1111,7 +1111,7 @@
 										<li><a href="#">5</a></li>
 										<li><a href="#">&raquo;</a></li>
 									</ul>
-									<div class="clear"></div>
+									<div class="clear"></div> -->
 
 								</div>
 
