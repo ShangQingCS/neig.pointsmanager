@@ -118,9 +118,10 @@
     <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
     <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
     <result column="goodsuse" jdbcType="CHAR" property="goodsuse" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
   </resultMap>
   <sql id="Cart_Column_List">
-    id, userid, goodsid, count, price, goodsname,storenumb,goodsuse
+    id, userid, goodsid, count, price, goodsname,storenumb,goodsuse,img
   </sql>
   <select id="queryMapList" parameterType="java.lang.Long" resultMap="CartResultMap">
     select 
@@ -135,7 +136,8 @@
 	    b.gname as goodsname,
 	    b.storenumb as storenumb,
 	    b.isuse as goodsuse,
-	    a.create_time
+	    a.create_time,
+	    b.goodimg as img
 	from
 	ns_cart a left join ns_goods b on a.goodsid=b.id
 	<if test="userid != null">

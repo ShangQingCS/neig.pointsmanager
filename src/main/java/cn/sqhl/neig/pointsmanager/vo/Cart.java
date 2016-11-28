@@ -20,6 +20,8 @@ public class Cart {
     private Integer storenumb;
 
     private String goodsuse;
+    
+    private String img;
 
     public String getGoodsuse() {
 		return goodsuse;
@@ -91,5 +93,13 @@ public class Cart {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 }
