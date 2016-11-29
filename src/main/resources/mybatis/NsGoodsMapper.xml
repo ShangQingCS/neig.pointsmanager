@@ -300,7 +300,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gname" jdbcType="VARCHAR" property="gname" />
     <result column="price" jdbcType="DECIMAL" property="price" />
-    <result column="brand" jdbcType="BIGINT" property="brand" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
     <result column="goodimglist" jdbcType="VARCHAR" property="goodimglist" />
     <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
     <result column="storenumb" jdbcType="INTEGER" property="storenumb" />
@@ -316,7 +316,7 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="goods_Column_List">
-    id, gname, price, brand, goodimglist, Gfullname, case
+    id, gname, price,(select cate_name from ns_goods_category b where b.id=a.brand) as brand, goodimglist, Gfullname, case
     when sellnumb = 0 then 0 else storenumb end as storenumb, 
     goodimg, img1, img2, img3, img4, img5,isuse
   </sql>
@@ -326,7 +326,7 @@
   <select id="queryListPageByParentID" parameterType="java.util.Map" resultMap="GoodsResultMap">
   		select 
   		<include refid="goods_Column_List" />
-  		from ns_goods
+  		from ns_goods a
 	  		<where>
 	  			1=1
   		<if test="map.parentid != '' ">
@@ -338,7 +338,7 @@
   <select id="queryListPageByLike" parameterType="java.util.Map" resultMap="GoodsResultMap">
   		select 
   		<include refid="goods_Column_List" />
-  		from ns_goods
+  		from ns_goods a
 	  		<where>
 	  		 1=1
   		<if test="map.searchcode != '' ">

@@ -79,24 +79,18 @@ public class AdEventController extends ContextInfo{
 			Map map=new HashMap();
 			map.put("type",type);
 			list=adEventService.queryAD(page,map);
+				result="0";
+				message="查询成功~";
+				logger.log(INFO, message);
+				data=list;
+				rsJson.put("page", page);
 		}else{
 			result="1";
 			message="type 为空请确认无误后再行调用";
 			logger.log(INFO, message);
 			data="";
 		}
-		if(list!=null && list.size() > 0 ){
-			result="0";
-			message="查询成功~";
-			logger.log(INFO, message);
-			data=list;
-			rsJson.put("page", page);
-		}else{
-			result="1";
-			message="查询失败~";
-			logger.log(INFO, message);
-			data=null;
-		}
+		
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);

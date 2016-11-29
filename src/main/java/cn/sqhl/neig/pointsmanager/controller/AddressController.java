@@ -72,7 +72,7 @@ public class AddressController extends ContextInfo{
 				List<Address> ads=addressServices.queryObj(map);
 				result="0";
 				data=ads;
-				message="执行成功";
+				message="查询成功";
 			}catch(Exception e){
 				result="1";
 				message=e.getMessage();

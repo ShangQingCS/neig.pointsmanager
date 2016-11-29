@@ -86,18 +86,13 @@ public class ShopCarController extends ContextInfo{
 		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
 		if(!StringUtils.isEmpty(userid)){
 			list=shopCarService.queryObj(page,userid);
-			if(list!=null && list.size() > 0 ){
+			
 				result="0";
 				message="查询成功~";
 				logger.log(INFO, message);
 				data=list;
 				rsJson.put("page", page);
-			}else{
-				result="1";
-				message="查询失败~";
-				logger.log(INFO, message);
-				data="";
-			}
+			
 		}else{
 			result="1";
 			message="userid 为空请确认无误后再行调用";

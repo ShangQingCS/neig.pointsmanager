@@ -102,13 +102,6 @@ public class CommentController extends ContextInfo{
 				map.put("goodsid",goodsid);
 			}
 			list=commentService.queryObj(page,map);
-		}else{
-			result="1";
-			message="userid goodsid 均为空请确认无误后再行调用";
-			logger.log(INFO, message);
-			data="";
-		}
-		if(list!=null && list.size() > 0 ){
 			result="0";
 			message="查询成功~";
 			logger.log(INFO, message);
@@ -116,7 +109,7 @@ public class CommentController extends ContextInfo{
 			rsJson.put("page", page);
 		}else{
 			result="1";
-			message="查询失败~";
+			message="userid goodsid 均为空请确认无误后再行调用";
 			logger.log(INFO, message);
 			data="";
 		}

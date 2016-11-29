@@ -73,7 +73,7 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 		NsGoods nsgoods =nsGoodsMapper.selectByPrimaryKey(id);
 		if(nsgoods!=null){
 		return new Goods(nsgoods.getId(),nsgoods.getGname(),
-				nsgoods.getPrice(),nsgoods.getBrand(), 
+				nsgoods.getPrice(),nsGoodsCategoryMapper.selectByPrimaryKey(Integer.parseInt(nsgoods.getBrand()+"")).getCateName(), 
 				nsgoods.getGoodimglist(), nsgoods.getGfullname(), 
 				nsgoods.getSellnumb(), nsgoods.getGoodimg(), 
 				nsgoods.getDetail(),nsgoods.getImg1(),nsgoods.getImg2(),

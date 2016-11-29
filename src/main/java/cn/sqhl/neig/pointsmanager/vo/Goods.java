@@ -9,7 +9,7 @@ public class Goods {
 
     private BigDecimal price;
 
-    private Long brand;
+    private String brand;
 
     private String goodimglist;
 
@@ -38,7 +38,7 @@ public class Goods {
     }
     
     public Goods(Long id,String gname,
-    		BigDecimal price,Long brand,
+    		BigDecimal price,String brand,
     		String goodimglist,String gfullname,
     		Integer storenumb,String goodimg,
     		String detail,String img1,String img2,String img3,String img4,String img5) {
@@ -82,11 +82,11 @@ public class Goods {
         this.price = price;
     }
 
-    public Long getBrand() {
+    public String getBrand() {
         return brand;
     }
 
-    public void setBrand(Long brand) {
+    public void setBrand(String brand) {
         this.brand = brand;
     }
 

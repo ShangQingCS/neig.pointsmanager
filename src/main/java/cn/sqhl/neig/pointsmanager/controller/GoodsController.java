@@ -157,19 +157,14 @@ public class GoodsController extends ContextInfo{
 				map.put("searchcode",searchcode);
 				list=goodsService.queryPageByLike(page,map);
 			}
+				result="0";
+				message="查询成功";
+				logger.log(INFO, message);
+				data=list;
+				rsJson.put("page", page);
+			
 		}
-		if(list!=null && list.size() > 0 ){
-			result="0";
-			message="查询成功";
-			logger.log(INFO, message);
-			data=list;
-			rsJson.put("page", page);
-		}else{
-			result="1";
-			message="查询失败";
-			logger.log(INFO, message);
-			data=null;
-		}
+		
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);
@@ -220,18 +215,17 @@ public class GoodsController extends ContextInfo{
 			Map map=new HashMap();
 			map.put("parentid",parentid);
 			list=goodsService.queryGoodsCategory(page,map);
+			
+				result="0";
+				message="查询成功~";
+				logger.log(INFO, message);
+				data=list;
+				rsJson.put("page", page);
 		}else{
 			result="1";
 			message="parentid 为空请确认无误后再行调用";
 			logger.log(INFO, message);
 			data="";
-		}
-		if(list!=null && list.size() > 0 ){
-			result="0";
-			message="查询成功~";
-			logger.log(INFO, message);
-			data=list;
-			rsJson.put("page", page);
 		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
@@ -258,12 +252,12 @@ public class GoodsController extends ContextInfo{
 		
 		Map map=new HashMap();
 		list=goodsService.queryAllCategory();
-		if(list!=null && list.size() > 0 ){
+		
 			result="0";
 			message="查询成功~";
 			logger.log(INFO, message);
 			data=list;
-		}
+		
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);
