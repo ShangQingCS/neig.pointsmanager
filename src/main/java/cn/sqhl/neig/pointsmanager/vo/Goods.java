@@ -9,9 +9,9 @@ public class Goods {
 
     private BigDecimal price;
 
-    private Long category;
+    private String category;
 
-    private Long kind;
+    private String kind;
 
     private String brand;
 
@@ -45,7 +45,7 @@ public class Goods {
     		BigDecimal price,String brand,
     		String goodimglist,String gfullname,
     		Integer storenumb,String goodimg,
-    		String detail,String img1,String img2,String img3,String img4,String img5) {
+    		String detail,String img1,String img2,String img3,String img4,String img5,String category,String kind) {
 		this.id=id;
 		this.gname=gname;
 		this.price=price;
@@ -60,6 +60,8 @@ public class Goods {
 		this.img3=img3;
 		this.img4=img4;
 		this.img5=img5;
+		this.category=category;
+		this.kind=kind;
 	}
 
     public Long getId() {
@@ -182,19 +184,19 @@ public class Goods {
 		this.isuse = isuse;
 	}
 
-	public Long getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
-	public void setCategory(Long category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
-	public Long getKind() {
+	public String getKind() {
 		return kind;
 	}
 
-	public void setKind(Long kind) {
+	public void setKind(String kind) {
 		this.kind = kind;
 	}
 }

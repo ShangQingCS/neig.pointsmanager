@@ -77,7 +77,7 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 				nsgoods.getGoodimglist(), nsgoods.getGfullname(), 
 				nsgoods.getSellnumb(), nsgoods.getGoodimg(), 
 				nsgoods.getDetail(),nsgoods.getImg1(),nsgoods.getImg2(),
-				nsgoods.getImg3(),nsgoods.getImg4(),nsgoods.getImg5());
+				nsgoods.getImg3(),nsgoods.getImg4(),nsgoods.getImg5(),nsGoodsCategoryMapper.selectByPrimaryKey(Integer.parseInt(nsgoods.getCategory()+"")).getCateName(),nsGoodsCategoryMapper.selectByPrimaryKey(Integer.parseInt(nsgoods.getKind()+"")).getCateName());
 		}else{
 			return null;
 		}
