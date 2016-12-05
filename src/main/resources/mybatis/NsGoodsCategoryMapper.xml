@@ -16,7 +16,7 @@
     <result column="flag" jdbcType="CHAR" property="flag" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, cate_name, desc_, cate_order, level, logo, url, isuser, parent_id, create_time, 
+    id, cate_name, desc_, cate_order, level, logo, url, isuse, parent_id, create_time, 
     update_time, flag
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
