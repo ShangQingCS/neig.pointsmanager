@@ -32,7 +32,7 @@
 							<div class="clear"></div>
 						
 						<div class="login-form">
-						  <form>
+						  <form action="/login_web/login.do" method="post" id="loginform">
 							   <div class="user-name">
 								    <label for="user"><i class="am-icon-user"></i></label>
 								    <input type="text" name="" id="user" placeholder="邮箱/手机/用户名">
