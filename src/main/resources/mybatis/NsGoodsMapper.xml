@@ -300,6 +300,8 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="gname" jdbcType="VARCHAR" property="gname" />
     <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="kind" jdbcType="VARCHAR" property="kind" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
     <result column="brand" jdbcType="VARCHAR" property="brand" />
     <result column="goodimglist" jdbcType="VARCHAR" property="goodimglist" />
     <result column="Gfullname" jdbcType="VARCHAR" property="gfullname" />
@@ -316,7 +318,7 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="goods_Column_List">
-    id, gname, price,(select cate_name from ns_goods_category b where b.id=a.brand) as brand, goodimglist, Gfullname, case
+    id, gname, price,(select cate_name from ns_goods_category b where b.id=a.brand) as brand,(select cate_name from ns_goods_category b where b.id=a.category) as category,(select cate_name from ns_goods_category b where b.id=a.kind) as kind, goodimglist, Gfullname, case
     when sellnumb = 0 then 0 else storenumb end as storenumb, 
     goodimg, img1, img2, img3, img4, img5,isuse
   </sql>

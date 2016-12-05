@@ -7,6 +7,9 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/config/log4j2"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/config/mybatis"/>
+        <dependent-module archiveName="Integrated-payment-interface-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/IntegratedPayment/IntegratedPayment">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/neig.pointsmanager Maven Webapp/target/classes"/>
         <property name="context-root" value="/pointsmanager"/>
     </wb-module>

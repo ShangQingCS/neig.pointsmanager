@@ -9,6 +9,10 @@ public class Goods {
 
     private BigDecimal price;
 
+    private Long category;
+
+    private Long kind;
+
     private String brand;
 
     private String goodimglist;
@@ -176,5 +180,21 @@ public class Goods {
 
 	public void setIsuse(String isuse) {
 		this.isuse = isuse;
+	}
+
+	public Long getCategory() {
+		return category;
+	}
+
+	public void setCategory(Long category) {
+		this.category = category;
+	}
+
+	public Long getKind() {
+		return kind;
+	}
+
+	public void setKind(Long kind) {
+		this.kind = kind;
 	}
 }

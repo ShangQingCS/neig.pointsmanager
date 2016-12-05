@@ -12,9 +12,9 @@ http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!-- spring 与 spring mvc中定义的bean不在同一个container，彼此不能直接访问，
 		所以如果spring-mvc 的controller需要访问 config.properties 时需要加上下面这行配置 -->
 	<context:property-placeholder location="classpath:system.properties"/>
-	
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="cn.sqhl.neig.pointsmanager.controller" />
+	<context:component-scan base-package="cn.sqhl.neig.pointsmanager.controller.pay" />
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 		<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
