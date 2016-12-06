@@ -330,7 +330,7 @@
   		<include refid="goods_Column_List" />
   		from ns_goods a
 	  		<where>
-	  			1=1
+	  			isuse = '0'
   		<if test="map.parentid != '' ">
 	  			and brand=#{map.parentid,jdbcType=BIGINT}
   		</if>
@@ -342,7 +342,7 @@
   		<include refid="goods_Column_List" />
   		from ns_goods a
 	  		<where>
-	  		 1=1
+	  		 isuse = '0'
   		<if test="map.searchcode != '' ">
 	  		and(	category in (select id from ns_goods_category where level=1 and cate_name like '%${map.searchcode}%')
 	  		or	kind in (select id from ns_goods_category where level=2 and cate_name like '%${map.searchcode}%')
