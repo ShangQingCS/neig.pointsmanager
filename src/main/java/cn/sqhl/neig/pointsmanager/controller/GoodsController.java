@@ -140,7 +140,8 @@ public class GoodsController extends ContextInfo{
 			nowpage="1";
 		}
 		List list=null;
-		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize), Integer.parseInt(pagesize));
+		
 		if(StringUtils.isEmpty(parentid) && StringUtils.isEmpty(searchcode)){
 			result="1";
 			message="parentid 与 searchcode  为空请确认无误后再行调用";
@@ -210,7 +211,8 @@ public class GoodsController extends ContextInfo{
 			nowpage="1";
 		}
 		List list=null;
-		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize), Integer.parseInt(pagesize));
+		
 		if(!StringUtils.isEmpty(parentid)){
 			Map map=new HashMap();
 			map.put("parentid",parentid);

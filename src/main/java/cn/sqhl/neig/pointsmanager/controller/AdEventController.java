@@ -74,7 +74,8 @@ public class AdEventController extends ContextInfo{
 			nowpage="1";
 		}
 		List list=null;
-		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize), Integer.parseInt(pagesize));
+		
 		if(!StringUtils.isEmpty(type)){
 			Map map=new HashMap();
 			map.put("type",type);

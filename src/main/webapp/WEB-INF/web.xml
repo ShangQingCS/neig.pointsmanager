@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.4" 
-	xmlns="http://java.sun.com/xml/ns/j2ee" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	
+
 	<display-name>pointsManager</display-name>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/spring/spring.xml,/WEB-INF/classes/spring/spring-mybatis.xml</param-value>
 	</context-param>
-	
+
 	<!-- log4j2-begin -->
 	<listener>
 		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
@@ -29,8 +28,8 @@
 		<dispatcher>ERROR</dispatcher>
 	</filter-mapping>
 	<!-- log4j2-end -->
-	
-	
+
+
 	<!-- 字符集过滤器,UTF-8 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -39,12 +38,8 @@
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
-		 <!-- 
-		<init-param>  
-            <param-name>forceEncoding</param-name>  
-            <param-value>true</param-value>  
-        </init-param>
-         --> 
+		<!-- <init-param> <param-name>forceEncoding</param-name> <param-value>true</param-value> 
+			</init-param> -->
 	</filter>
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
@@ -65,7 +60,7 @@
 		<url-pattern>*.do</url-pattern>
 		<url-pattern>*.action</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- ④ Spring 监听器，自动装配ApplicationContext的配置信息 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -119,7 +114,7 @@
 		<filter-name>DruidWebStatFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-		<!-- 欢迎页面 -->
+	<!-- 欢迎页面 -->
 	<welcome-file-list>
 		<welcome-file>/index.jsp</welcome-file>
 		<welcome-file>/index.html</welcome-file>
@@ -127,20 +122,30 @@
 	</welcome-file-list>
 
 	<!-- 错误页面 -->
-	<!-- <error-page>
-		<error-code>403</error-code>
-		<location>/WEB-INF/jsp/error/403.html</location>
-	</error-page> -->
+	<!-- <error-page> <error-code>403</error-code> <location>/WEB-INF/jsp/error/403.html</location> 
+		</error-page> -->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/common/error_404.html</location>
 	</error-page>
-	<!-- <error-page>
-		<error-code>405</error-code>
-		<location>/WEB-INF/jsp/error/404.html</location>
-	</error-page> -->
+	<!-- <error-page> <error-code>405</error-code> <location>/WEB-INF/jsp/error/404.html</location> 
+		</error-page> -->
 	<error-page>
 		<error-code>500</error-code>
 		<location>/common/error_500.html</location>
 	</error-page>
+	<jsp-config>
+		<taglib>
+			<taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
+			<taglib-location>/WEB-INF/classes/jstld/fmt.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
+			<taglib-location>/WEB-INF/classes/jstld/c.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>http://java.sun.com/jsp/jstl/functions</taglib-uri>
+			<taglib-location>/WEB-INF/classes/jstld/fn.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 </web-app>

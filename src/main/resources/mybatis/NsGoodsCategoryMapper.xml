@@ -185,7 +185,7 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
   </resultMap>
   <sql id="category_Column_List">
-    id, cate_name, cate_order, level, parent_id,url
+    id, cate_name, cate_order, level, parent_id,logo as url
   </sql>
   <select id="queryByParentId" resultMap="categoryResultMap" parameterType="java.util.Map">
   	select 

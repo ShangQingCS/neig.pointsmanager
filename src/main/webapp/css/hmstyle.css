@@ -734,7 +734,7 @@ filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#f8c375',endCo
 /*导航*/
 #nav .category-content{ position:relative; width: 180px; float: left; z-index: 113; }
 #nav .category-content .all-goods {width:180px;}
-.category-content .category{  width:180px;}
+.category-content .category{  width:180px;height: 434px;}
 .category-content .category-info {padding-left: 12px;width: 182px;overflow: hidden;}
 .category-content .menu-item {left: 173px;}
 .category-content .category-list li {height:45px ;}

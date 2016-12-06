@@ -92,7 +92,8 @@ public class CommentController extends ContextInfo{
 		}
 		
 		
-		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize), Integer.parseInt(pagesize));
+		
 		if(!StringUtils.isEmpty(userid) || !StringUtils.isEmpty(goodsid)){
 			Map map=new HashMap();
 			if(!StringUtils.isEmpty(userid)){

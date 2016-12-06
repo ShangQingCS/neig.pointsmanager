@@ -83,7 +83,8 @@ public class ShopCarController extends ContextInfo{
 			nowpage="1";
 		}
 		List list=null;
-		PageCond page=new PageCond(Integer.parseInt(nowpage), Integer.parseInt(pagesize));
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize), Integer.parseInt(pagesize));
+		
 		if(!StringUtils.isEmpty(userid)){
 			list=shopCarService.queryObj(page,userid);
 			

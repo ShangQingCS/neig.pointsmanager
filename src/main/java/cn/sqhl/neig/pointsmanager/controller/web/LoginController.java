@@ -20,7 +20,7 @@ public class LoginController {
 	public String Login(HttpServletRequest request,HttpServletResponse response,Model model){
 		boolean k=true;
 		if(k){
-			return "/jsp/home";
+			return "redirect:/index_web/home.do";
 		}else{
 			return "/login";
 		}

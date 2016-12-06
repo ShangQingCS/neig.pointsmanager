@@ -11,7 +11,7 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="Cache-Control" content="no-siteapp" />
-
+		<script type="text/javascript" src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<link rel="stylesheet" href="${path }/AmazeUI-2.4.2/assets/css/amazeui.css" />
 		<link href="${path }/css/dlstyle.css" rel="stylesheet" type="text/css">
 	</head>
@@ -32,7 +32,7 @@
 							<div class="clear"></div>
 						
 						<div class="login-form">
-						  <form action="/login_web/login.do" method="post" id="loginform">
+						  <form action="${path }/login_web/login.do" method="post" id="loginform">
 							   <div class="user-name">
 								    <label for="user"><i class="am-icon-user"></i></label>
 								    <input type="text" name="" id="user" placeholder="邮箱/手机/用户名">
@@ -51,7 +51,7 @@
 								<br />
             </div>-->
 								<div class="am-cf">
-									<input type="submit" name="" value="登 录" class="am-btn am-btn-primary am-btn-sm" onclick="window.location.href='${path }/jsp/home.jsp'">
+									<input type="submit" name="login" value="登 录" class="am-btn am-btn-primary am-btn-sm" >
 								</div>
 						<!--<div class="partner">		
 								<h3>合作账号</h3>
@@ -65,7 +65,13 @@
 				</div>
 			</div>
 		</div>
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("div").on("click","input[name='login']",function(){
+			$("#loginform").submit();
+		});
+	});
+</script>
 
 					
 				<jsp:include page="/common/footer.jsp"></jsp:include>
