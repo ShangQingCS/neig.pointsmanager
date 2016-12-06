@@ -85,15 +85,14 @@ public class CommentController extends ContextInfo{
 			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
 				nowpage=requestString.get("nowpage")+"";
 			}else{
-				nowpage="1";
+				nowpage="0";
 			}
 		}else{
-			nowpage="1";
+			nowpage="0";
 		}
 		
 		
-		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize), Integer.parseInt(pagesize));
-		
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize),Integer.parseInt(pagesize));
 		if(!StringUtils.isEmpty(userid) || !StringUtils.isEmpty(goodsid)){
 			Map map=new HashMap();
 			if(!StringUtils.isEmpty(userid)){
