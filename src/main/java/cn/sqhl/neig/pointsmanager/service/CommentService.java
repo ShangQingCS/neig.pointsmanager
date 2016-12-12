@@ -8,6 +8,6 @@ import cn.sqhl.neig.pointsmanager.vo.Comment;
 
 public interface CommentService extends BaseService{
 	
-	public List<Comment> queryObj(PageCond page,Map<String, Object> map); 
+	public List<Comment> queryComment(PageCond page,Map<String, Object> map);
 
 }

@@ -18,10 +18,10 @@ public class CommentServiceImpl implements CommentService{
 	@Autowired
 	NsCommentMapper nsCommentMapper;
 	
-	@Override
-	public List<Comment> queryObj(PageCond page, Map<String, Object> map) {
-		return nsCommentMapper.queryComment(page,map);
+	public List<Comment> queryComment(PageCond page,Map<String, Object> map){
+		return nsCommentMapper.queryCommentList(page, map);
 	}
+	
 
 	@Override
 	public List<Object> queryObj(Map<String, Object> map) {

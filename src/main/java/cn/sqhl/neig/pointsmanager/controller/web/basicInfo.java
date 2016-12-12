@@ -18,5 +18,8 @@ public class basicInfo {
 
 	@Value("${ad.type}")
 	protected String adtype;
+	
+	@Value("${baseimg}")
+	protected String baseimg;
     
 }

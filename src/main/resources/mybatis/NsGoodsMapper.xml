@@ -347,6 +347,7 @@
 	  		and(	category in (select id from ns_goods_category where level=1 and cate_name like '%${map.searchcode}%')
 	  		or	kind in (select id from ns_goods_category where level=2 and cate_name like '%${map.searchcode}%')
 	  		or	brand in (select id from ns_goods_category where level=3 and cate_name like '%${map.searchcode}%')
+	  		or  gname like '%${map.searchcode}%'
 	  		)
   		</if>
 	  		</where>

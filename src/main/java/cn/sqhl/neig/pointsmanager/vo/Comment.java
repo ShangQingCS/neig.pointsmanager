@@ -6,22 +6,20 @@ public class Comment {
     private Long id;
 
     private Long goodsid;
-
-    public Long getGoodsid() {
-		return goodsid;
-	}
-
-	public void setGoodsid(Long goodsid) {
-		this.goodsid = goodsid;
-	}
+    
+    private String gname;
+    
+    private String gimg;
 
 	private String comment;
 
-    private Date createTime;
+    private String createTime;
 
     private Integer score;
 
     private Long userid;
+    
+    private String username;
     
     private Integer avgscore;
 
@@ -35,6 +33,13 @@ public class Comment {
         this.id = id;
     }
 
+    public Long getGoodsid() {
+		return goodsid;
+	}
+
+	public void setGoodsid(Long goodsid) {
+		this.goodsid = goodsid;
+	}
 
     public String getComment() {
         return comment;
@@ -44,11 +49,11 @@ public class Comment {
         this.comment = comment == null ? null : comment.trim();
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 
@@ -82,5 +87,29 @@ public class Comment {
 
 	public void setAvgscore(Integer avgscore) {
 		this.avgscore = avgscore;
+	}
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+
+	public String getGimg() {
+		return gimg;
+	}
+
+	public void setGimg(String gimg) {
+		this.gimg = gimg;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

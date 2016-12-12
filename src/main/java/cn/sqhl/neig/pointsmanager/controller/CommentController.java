@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -41,10 +42,10 @@ public class CommentController extends ContextInfo{
 	@RequestMapping("/search")
 	public JSONObject queryComment(HttpServletRequest request,
 			HttpServletResponse response,
-			@Param(value="goodsid") Long goodsid,
-			@Param(value="userid") Long userid,
-			@Param(value="pagesize") String pagesize,
-			@Param(value="nowpage") String nowpage) throws IOException{
+			@RequestParam(value="goodsid",required=false) Long goodsid,
+			@RequestParam(value="userid",required=false) Long userid,
+			@RequestParam(value="pagesize",required=false) String pagesize,
+			@RequestParam(value="nowpage",required=false) String nowpage) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		
@@ -101,7 +102,7 @@ public class CommentController extends ContextInfo{
 			if(!StringUtils.isEmpty(goodsid)){
 				map.put("goodsid",goodsid);
 			}
-			list=commentService.queryObj(page,map);
+			list=commentService.queryComment(page,map);
 			result="0";
 			message="查询成功~";
 			logger.log(INFO, message);

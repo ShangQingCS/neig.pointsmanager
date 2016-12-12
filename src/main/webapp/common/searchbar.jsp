@@ -7,10 +7,16 @@
 	</div>
 	<div class="search-bar pr">
 		<a name="index_none_header_sysc" href="#"></a>
-		<form>
+		<form action="" method="post" id="searchbar">
 			<input id="searchInput" name="index_none_header_sysc" type="text" placeholder="搜索" autocomplete="off">
-			<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="button" onclick="window.location.href='${path }/jsp/search.jsp'">
+			<input id="ai-topsearch" class="submit am-btn" value="搜索" index="1" type="button">
 		</form>
 	</div>
+	<script>
+		$("#ai-topsearch").click(function (){
+			$("#searchbar").attr("action","${path }/index_web/search.do");
+			$("#searchbar").submit();
+		});
+	</script>
 </div>
 <div class="clear"></div>

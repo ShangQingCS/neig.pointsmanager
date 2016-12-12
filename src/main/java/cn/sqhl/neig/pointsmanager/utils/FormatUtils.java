@@ -9,10 +9,14 @@ import java.io.InputStreamReader;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.util.StringUtils;
+
+import cn.sunchin.payment.Util.MD5Util;
 
 
 public class FormatUtils {
@@ -163,5 +167,18 @@ public class FormatUtils {
 	     }
 	     return strlist;
 	 }
-	 
+	 public static String MaptoStringforUrl(Map map){
+		
+		 	StringBuffer sb=new StringBuffer();
+			Set es = map.entrySet();
+			Iterator it = es.iterator();
+			while (it.hasNext()) {
+				Map.Entry entry = (Map.Entry) it.next();
+				String k = (String) entry.getKey();
+				String v = (String) entry.getValue();
+				sb.append(k + "=" + v + "&");
+			}
+			
+			return sb.toString().substring(0, sb.toString().length()-1);
+	 }
 }

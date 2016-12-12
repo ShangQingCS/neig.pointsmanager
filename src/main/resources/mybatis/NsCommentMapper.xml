@@ -125,29 +125,39 @@
       username = #{username,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-   <resultMap id="commentResultMap" type="cn.sqhl.neig.pointsmanager.vo.Comment">
+  
+  
+  <resultMap id="cmResultMap" type="cn.sqhl.neig.pointsmanager.vo.Comment">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="goodsid" jdbcType="BIGINT" property="goodsid" />
+    <result column="gname" jdbcType="VARCHAR" property="gname" />
+    <result column="gimg" jdbcType="VARCHAR" property="gimg" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="userid" jdbcType="BIGINT" property="userid" />
     <result column="ishidden" jdbcType="INTEGER" property="ishidden" />
     <result column="avgscore" jdbcType="DOUBLE" property="avgscore" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="comment_Column_List">
-    id, goodsid, comment, create_time, score, userid, ishidden 
+    id, goodsid, comment, create_time, score, userid, ishidden,gname,gimg,username 
   </sql>
-  <select id="queryComment" parameterType="java.util.Map" resultMap="commentResultMap">
+  <select id="queryCommentList" parameterType="java.util.Map" resultMap="cmResultMap">
     select 
-    <include refid="comment_Column_List" />
-    from ns_comment where flag = 1
+    id, goodsid, comment, DATE_FORMAT(create_time,"%Y-%m-%d %T") as create_time, score, userid, ishidden,(select  AVG(b.score) from ns_comment b
+    	where b.flag=1 and a.goodsid=b.goodsid
+    )as avgscore,
+    (select b.username from ns_user b where b.flag=1 and b.userid=a.userid) as username,
+    (select b.gname from ns_goods b where b.id=a.goodsid) as gname,
+    (select b.goodimg from ns_goods b where b.id=a.goodsid) as gimg 
+    from ns_comment a where flag = 1
 	    	<if test="map.goodsid != null">
 	    	 	and goodsid=${map.goodsid}
 	    	</if>
 	    	
-	    	<if test="map.user_id !=null">
-	    		and userid=${map.user_id}
+	    	<if test="map.userid !=null">
+	    		and userid=${map.userid}
 	    	</if>
   </select>
 </mapper>
