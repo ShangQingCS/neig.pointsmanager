@@ -35,7 +35,7 @@
 					<li class="banner${ad.id}">
 					<c:choose>
 						<c:when test="${ad.linkkind == 0 }"><!-- 商品 -->
-							<a href="${ad.imglink}">
+							<a href="${path }/goods_web/goods/${oth.imglink}/search.do">
 						</c:when>
 						<c:when test="${ad.linkkind == 1 }"><!-- 活动 -->
 							<a href="${ad.imglink}">
@@ -159,7 +159,7 @@
 								</div>
 								<c:choose>
 									<c:when test="${oth.linkkind == 0 }">
-										<a href="${path }/jsp/introduction.jsp">
+										<a href="${path }/goods_web/goods/${oth.imglink}/search.do">
 									</c:when>
 									<c:when test="${oth.linkkind == 1 }"><!-- 活动 -->
 										<a href="${oth.imglink}"> 

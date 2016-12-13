@@ -9,4 +9,8 @@ import cn.sqhl.neig.pointsmanager.vo.Cart;
 public interface ShopCarService extends BaseService{
 
 	public List<Cart> queryObj(PageCond page,Long userid);
+	
+	public List<Cart> selectList(Map map);
+	
+	public int removeObjList (String list) throws Exception;
 }

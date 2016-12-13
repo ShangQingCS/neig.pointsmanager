@@ -2,9 +2,9 @@
 <div class="footer ">
 	<div class="footer-hd ">
 		<p>
-			<a href="# ">贝翔电子</a>
+			<a href="#">贝翔电子</a>
 			<b>|</b>
-			<a href="# ">商城首页</a>
+			<a href="${path }/index_web/home.do">商城首页</a>
 			<b>|</b>
 			<a href="# ">支付宝</a>
 			<b>|</b>

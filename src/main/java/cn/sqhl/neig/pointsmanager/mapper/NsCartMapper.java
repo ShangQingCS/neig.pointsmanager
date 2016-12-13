@@ -27,5 +27,7 @@ public interface NsCartMapper {
     
     List<Object> selectMapList(@Param("map") Map<String, Object> map);
     
+    List<Cart> selectList(@Param("map") Map<String, Object> map);
+    
     
 }

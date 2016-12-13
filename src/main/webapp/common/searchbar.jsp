@@ -1,7 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <!--悬浮搜索框-->
 <div class="nav white">
-	<%-- <div class="logo"><img src="${path }/images/logo.png" /></div> --%>
+	
 	<div class="logoBig">
 		<li><img src="${path }/images/logobig.png" /></li>
 	</div>

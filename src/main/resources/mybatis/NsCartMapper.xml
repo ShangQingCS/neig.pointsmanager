@@ -147,4 +147,31 @@
 	</if>
     ) as carttmp order by create_time desc
   </select>
+  
+  <select id="selectList" parameterType="java.lang.Long" resultMap="CartResultMap">
+    select 
+    <include refid="Cart_Column_List" />
+	from (
+	    select 
+		a.count,
+	    a.id,
+	    a.userid,
+	    b.id as goodsid,
+	    b.price,
+	    b.gname as goodsname,
+	    b.storenumb as storenumb,
+	    b.isuse as goodsuse,
+	    a.create_time,
+	    b.goodimg as img
+	from
+	ns_cart a left join ns_goods b on a.goodsid=b.id
+	<if test="map.userid != null">
+		<where>
+			a. userid=#{map.userid,jdbcType=BIGINT}
+		</where>
+	</if>
+    ) as carttmp order by create_time desc
+  </select>
+  
+  
 </mapper>

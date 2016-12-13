@@ -1,10 +1,12 @@
 package cn.sqhl.neig.pointsmanager.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.sqhl.neig.pointsmanager.mapper.NsCartMapper;
 import cn.sqhl.neig.pointsmanager.po.NsCart;
@@ -41,6 +43,27 @@ public class ShopCarServiceImpl implements ShopCarService{
 	@Override
 	public List<Cart> queryObj(PageCond page, Long userid) {
 		return nsCartMapper.queryMapList(page,userid);
+	}
+	
+	public List<Cart> selectList(Map map){
+		return nsCartMapper.selectList(map);
+	}
+
+	@Override
+	@Transactional
+	public int removeObjList(String list) throws Exception{
+		int k=0;
+			List<String> idlist=Arrays.asList(list.split(","));
+			for(String goodsid:idlist){
+				int i=nsCartMapper.deleteByPrimaryKey(Long.parseLong(goodsid));
+				if(i>0){
+					k=k+1;
+					continue;
+				}else{
+					throw new RuntimeException("tansaction 异常 数据回滚");
+				}
+			}
+		return k;
 	}
 	
 }

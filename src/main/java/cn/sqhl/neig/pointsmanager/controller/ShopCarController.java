@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -111,7 +112,12 @@ public class ShopCarController extends ContextInfo{
 	public JSONObject managerAddress(HttpServletRequest request,
 			HttpServletResponse response,
 			NsCart cart,
-			@Param("type") String type) throws IOException{
+			@RequestParam(value="id",required=false) Long id,
+			@RequestParam(value="type",required=false) String type,
+			@RequestParam(value="userid",required=false) Long userid,
+			@RequestParam(value="goodsid",required=false) Long goodsid,
+			@RequestParam(value="count",required=false) Integer count,
+			@RequestParam(value="goodslist",required=false) String goodslist) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		InputStream requestjson = request.getInputStream();
@@ -124,16 +130,48 @@ public class ShopCarController extends ContextInfo{
 		if(StringUtils.isEmpty(type)&&requestString!=null){				
 			type=requestString.get("type")+"";
 		}
-		cart=(NsCart)autoLoad(cart,"userid",requestString);
-		cart=(NsCart)autoLoad(cart,"goodsid",requestString);
-		cart=(NsCart)autoLoad(cart,"count",requestString);
-		cart=(NsCart)autoLoad(cart,"id",requestString);
+		
+		if(StringUtils.isEmpty(goodslist)&&requestString!=null){				
+			goodslist=requestString.get("goodslist")+"";
+		}
+		
+		if(cart==null){
+			cart=new NsCart();
+		}
+		if(StringUtils.isEmpty(userid)&&requestString!=null){
+			cart=(NsCart)autoLoad(cart,"userid",requestString);
+		}else{
+			cart.setUserid(userid);
+		}
+		if(StringUtils.isEmpty(goodsid)&&requestString!=null){
+			cart=(NsCart)autoLoad(cart,"goodsid",requestString);
+		}else{
+			cart.setGoodsid(goodsid);
+		}
+		if(StringUtils.isEmpty(count)&&requestString!=null){
+			cart=(NsCart)autoLoad(cart,"count",requestString);
+		}else{
+			cart.setCount(count);
+		}
+		if(StringUtils.isEmpty(id)&&requestString!=null){
+			cart=(NsCart)autoLoad(cart,"id",requestString);
+		}else{
+			cart.setId(id);
+		}
 		
 		int i=0;
 		if(!StringUtils.isEmpty(type)){// 1 删除 2修改 0新增
 			if(!StringUtils.isEmpty(cart.getId())){ 
 				if(type.equals("1")){
-					i=shopCarService.removeObj(cart.getId());
+					if(!StringUtils.isEmpty(goodslist)){
+						try{
+							i=shopCarService.removeObjList(goodslist);
+						}catch(Exception e){
+							i=0;
+						}
+					}else{
+						i=shopCarService.removeObj(cart.getId());
+					}
 					
 				}else if(type.equals("2")){
 					i=shopCarService.updateObj(cart);

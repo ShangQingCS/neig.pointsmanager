@@ -38,7 +38,7 @@ public class GoodsWebController extends basicInfo{
 			ef.setResult("1");
 			ef.setMessage("查询失败");
 			ef.setCause("无对应商品~");
-			model.addAttribute("error", ef);
+			model.addAttribute("result", ef);
 			return "/jsp/error/info";
 		}
 	}
