@@ -10,11 +10,11 @@ public interface AddressService {
 
 	public List<Address> queryObj(Map<String, Object> map);
 	
-	public int addObj(NsAddress address);
+	public int addObj(NsAddress address) throws Exception;
 	
 	public int removeObj(NsAddress address);
 	
-	public int updateObj(NsAddress address);
+	public int updateObj(NsAddress address) throws Exception;
 	
 	public NsAddress queryByPrimaryKey(Long id);
 }

@@ -116,6 +116,12 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <update id="updateIsUseExcept" parameterType="cn.sqhl.neig.pointsmanager.po.NsAddress">
+    update ns_address
+    set isuse = '1'
+    where userid = #{userid,jdbcType=BIGINT} and id &lt;&gt; #{id,jdbcType=BIGINT}
+  </update>
   <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsAddress">
     update ns_address
     set uerid = #{uerid,jdbcType=BIGINT},
@@ -139,6 +145,23 @@
 	    <result column="isuse" jdbcType="INTEGER" property="isuse" />
    </resultMap>
    <select id="selectAddress" resultMap="ResultMap" parameterType="java.util.Map">
+	   	select 
+	    <include refid="Base_Column_List" />
+	    from ns_address
+	    <if test="map!=null">
+	    <where>
+	    	1=1
+	    	<if test="map.userid != null">
+	    		and uerid=${map.userid}
+	    	</if>
+	    	<if test="map.isuse != null">
+	    		and isuse=${map.isuse}
+	    	</if>
+	    </where>	    
+	    </if>
+   </select>
+   
+   <select id="selectNsAddress" resultMap="BaseResultMap" parameterType="java.util.Map">
 	   	select 
 	    <include refid="Base_Column_List" />
 	    from ns_address

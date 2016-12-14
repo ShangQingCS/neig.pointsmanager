@@ -19,11 +19,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
+import cn.sqhl.neig.pointsmanager.po.NsCart;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.Test;
@@ -94,7 +96,16 @@ public class AddressController extends ContextInfo{
 	
 	@ResponseBody
 	@RequestMapping(value="/manager")
-	public JSONObject managerAddress(HttpServletRequest request,HttpServletResponse response,NsAddress address,@Param(value="addressid") Long id,@Param("type") String type) throws IOException{
+	public JSONObject managerAddress(HttpServletRequest request,HttpServletResponse response,NsAddress address,
+			@RequestParam(value="addressid",required=false) Long id,
+			@RequestParam(value="isuse",required=false) Integer isuse,
+			@RequestParam(value="uerid",required=false) Long uerid,
+			@RequestParam(value="address",required=false) String adds,
+			@RequestParam(value="name",required=false) String name,
+			@RequestParam(value="post",required=false) String post,
+			@RequestParam(value="phonenumb",required=false) String phonenumb,
+			@RequestParam(value="telnumb",required=false) String telnumb,
+			@RequestParam(value="type",required=false) String type) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		InputStream requestjson = request.getInputStream();
@@ -119,15 +130,46 @@ public class AddressController extends ContextInfo{
 					}
 				}
 			}
+			if(address==null){
+				address=new NsAddress();
+			}
 //			address=(NsAddress)getValue(address,"uerid",requestString);
-			address=(NsAddress)autoLoad(address,"uerid",requestString);
-			address=(NsAddress)autoLoad(address,"address",requestString);
-			address=(NsAddress)autoLoad(address,"name",requestString);
-			address=(NsAddress)autoLoad(address,"post",requestString);
-			address=(NsAddress)autoLoad(address,"phonenumb",requestString);
-			address=(NsAddress)autoLoad(address,"telnumb",requestString);
-			address=(NsAddress)autoLoad(address,"isuse",requestString);
-			address=(NsAddress)autoLoad(address,"address",requestString);
+			if(StringUtils.isEmpty(uerid)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"uerid",requestString);
+			}else{
+				address.setUerid(uerid);
+			}
+			if(StringUtils.isEmpty(name)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"name",requestString);
+			}else{
+				address.setName(name);
+			}
+			if(StringUtils.isEmpty(post)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"post",requestString);
+			}else{
+				address.setPost(post);
+			}
+			if(StringUtils.isEmpty(phonenumb)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"phonenumb",requestString);
+			}else{
+				address.setPhonenumb(phonenumb);
+			}
+			if(StringUtils.isEmpty(telnumb)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"telnumb",requestString);
+			}else{
+				address.setTelnumb(telnumb);
+			}
+			
+			if(StringUtils.isEmpty(isuse)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"isuse",requestString);
+			}else{
+				address.setIsuse(isuse);
+			}
+			if(StringUtils.isEmpty(adds)&&!StringUtils.isEmpty(requestString)){
+				address=(NsAddress)autoLoad(address,"address",requestString);
+			}else{
+				address.setAddress(adds);
+			}
 		    
 		    
 			String userid=address.getUerid().toString();
@@ -140,7 +182,14 @@ public class AddressController extends ContextInfo{
 							i=addressServices.removeObj(address);
 							
 						}else if(type.equals("2")){
-							i=addressServices.updateObj(address);
+							try{								
+								i=addressServices.updateObj(address);
+							}catch(Exception e){
+								result="1";
+								message="操作失败 请重新尝试";
+								logger.log(INFO, message);
+								data="";
+							}
 							
 						}else{
 							result="1";
@@ -162,15 +211,22 @@ public class AddressController extends ContextInfo{
 						
 					}else{
 						if(type.equals("0")){
-							int i=addressServices.addObj(address);
-							if(i > 0){
-								result="0";
-								message="操作成功";
-								logger.log(INFO, message);
-								data="";
-							}else{
+							try{
+								int i=addressServices.addObj(address);
+								if(i > 0){
+									result="0";
+									message="操作成功";
+									logger.log(INFO, message);
+									data="";
+								}else{
+									result="1";
+									message="操作失败";
+									logger.log(INFO, message);
+									data="";
+								}
+							}catch(Exception e){
 								result="1";
-								message="操作失败";
+								message="操作失败 请重新尝试";
 								logger.log(INFO, message);
 								data="";
 							}

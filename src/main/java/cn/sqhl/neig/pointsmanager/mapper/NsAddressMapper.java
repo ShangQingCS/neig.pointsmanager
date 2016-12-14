@@ -21,5 +21,10 @@ public interface NsAddressMapper {
 
     int updateByPrimaryKey(NsAddress record);
     
+    int updateIsUseExcept(NsAddress record);
+    
     public List<Address> selectAddress(@Param("map") Map<String, Object> map);
+    
+    public List<NsAddress> selectNsAddress(@Param("map") Map<String, Object> map);
+    
 }
