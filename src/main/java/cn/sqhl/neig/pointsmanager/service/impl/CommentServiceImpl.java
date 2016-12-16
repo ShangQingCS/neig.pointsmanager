@@ -25,8 +25,7 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public List<Object> queryObj(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return  nsCommentMapper.selectCommentList(map);
 	}
 
 	@Override

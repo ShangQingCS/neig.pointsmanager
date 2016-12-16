@@ -1,11 +1,11 @@
 package cn.sqhl.neig.pointsmanager.vo;
 
-import java.util.Date;
-
 public class Comment {
     private Long id;
 
     private Long goodsid;
+    
+    private Long orderid;
     
     private String gname;
     
@@ -111,5 +111,13 @@ public class Comment {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public Long getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(Long orderid) {
+		this.orderid = orderid;
 	}
 }

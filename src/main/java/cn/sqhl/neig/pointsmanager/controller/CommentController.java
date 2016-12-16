@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
-import cn.sqhl.neig.pointsmanager.po.NsAddress;
-import cn.sqhl.neig.pointsmanager.po.NsCart;
 import cn.sqhl.neig.pointsmanager.po.NsComment;
 import cn.sqhl.neig.pointsmanager.service.CommentService;
-import cn.sqhl.neig.pointsmanager.service.ShopCarService;
-import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 
 @Controller
@@ -44,6 +39,8 @@ public class CommentController extends ContextInfo{
 			HttpServletResponse response,
 			@RequestParam(value="goodsid",required=false) Long goodsid,
 			@RequestParam(value="userid",required=false) Long userid,
+			@RequestParam(value="orderid",required=false) Long orderid,
+			@RequestParam(value="ispage",required=false) String ispage,
 			@RequestParam(value="pagesize",required=false) String pagesize,
 			@RequestParam(value="nowpage",required=false) String nowpage) throws IOException{
 		JSONObject rsJson = new JSONObject();
@@ -65,6 +62,23 @@ public class CommentController extends ContextInfo{
 				}
 			}
 		}
+		if(StringUtils.isEmpty(orderid) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("orderid"))){
+				String odid=requestString.get("orderid")+"";
+				if(!StringUtils.isEmpty(odid)){
+					orderid=Long.parseLong(odid);
+				}
+			}
+		}
+		
+		if(StringUtils.isEmpty(ispage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("ispage"))){
+				ispage=requestString.get("ispage")+"";
+			}else{
+				ispage="0";
+			}
+		}
+		
 		if(StringUtils.isEmpty(goodsid) && requestString!=null){
 			if(!StringUtils.isEmpty(requestString.get("goodsid"))){
 				String gdid=requestString.get("goodsid")+"";
@@ -94,7 +108,7 @@ public class CommentController extends ContextInfo{
 		
 		
 		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize),Integer.parseInt(pagesize));
-		if(!StringUtils.isEmpty(userid) || !StringUtils.isEmpty(goodsid)){
+		if(!StringUtils.isEmpty(userid) || !StringUtils.isEmpty(goodsid) || !StringUtils.isEmpty(orderid)){
 			Map map=new HashMap();
 			if(!StringUtils.isEmpty(userid)){
 				map.put("userid",userid);
@@ -102,7 +116,14 @@ public class CommentController extends ContextInfo{
 			if(!StringUtils.isEmpty(goodsid)){
 				map.put("goodsid",goodsid);
 			}
-			list=commentService.queryComment(page,map);
+			if(!StringUtils.isEmpty(orderid)){
+				map.put("orderid",orderid);
+			}
+			if(ispage.equals("0")){
+				list=commentService.queryComment(page,map);
+			}else{
+				list=commentService.queryObj(map);
+			}
 			result="0";
 			message="查询成功~";
 			logger.log(INFO, message);
@@ -110,7 +131,7 @@ public class CommentController extends ContextInfo{
 			rsJson.put("page", page);
 		}else{
 			result="1";
-			message="userid goodsid 均为空请确认无误后再行调用";
+			message="userid goodsid orderid 均为空请确认无误后再行调用";
 			logger.log(INFO, message);
 			data="";
 		}
@@ -140,6 +161,7 @@ public class CommentController extends ContextInfo{
 		comment=(NsComment)autoLoad(comment,"comment",requestString);
 		comment=(NsComment)autoLoad(comment,"score",requestString);
 		comment=(NsComment)autoLoad(comment,"ishidden",requestString);
+		comment=(NsComment)autoLoad(comment,"orderid",requestString);
 		
 		if(comment!=null){
 			int i=commentService.addObj(comment);

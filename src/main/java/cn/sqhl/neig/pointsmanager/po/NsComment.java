@@ -6,8 +6,18 @@ public class NsComment {
     private Long id;
 
     private Long goodsid;
+    
+    private Long orderid;
 
-    public Long getGoodsid() {
+    public Long getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(Long orderid) {
+		this.orderid = orderid;
+	}
+
+	public Long getGoodsid() {
 		return goodsid;
 	}
 

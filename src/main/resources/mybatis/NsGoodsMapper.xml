@@ -319,7 +319,7 @@
   </resultMap>
   <sql id="goods_Column_List">
     id, gname, price,(select cate_name from ns_goods_category b where b.id=a.brand) as brand,(select cate_name from ns_goods_category b where b.id=a.category) as category,(select cate_name from ns_goods_category b where b.id=a.kind) as kind, goodimglist, Gfullname, case
-    when sellnumb = 0 then 0 else storenumb end as storenumb, 
+    when (sellnumb = 0 or sellnumb is null )then 0 else storenumb end as storenumb, 
     goodimg, img1, img2, img3, img4, img5,isuse
   </sql>
   <sql id="goods_Blob_Column_List">

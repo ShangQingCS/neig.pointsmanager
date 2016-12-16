@@ -210,28 +210,7 @@
 				<jsp:include page="/common/footer.jsp"></jsp:include>
 			</div>
 
-			<aside class="menu">
-				<ul>
-					<li class="person">
-						<a href="#">个人中心</a>
-					</li>
-					<li class="person">
-						<a href="#">个人资料</a>
-						<ul>
-							<li> <a href="${path }/jsp/person/information.jsp">个人信息</a></li>
-							<li class="active"> <a href="${path }/jsp/person/address.jsp">收货地址</a></li>
-						</ul>
-					</li>
-					<li class="person">
-						<a href="#">我的交易</a>
-						<ul>
-							<li><a href="${path }/jsp/person/order.jsp">订单管理</a></li>
-						</ul>
-					</li>
-
-				</ul>
-
-			</aside>
+			<jsp:include page="/jsp/person/menuleft.jsp"></jsp:include>
 		</div>
 
 	</body>

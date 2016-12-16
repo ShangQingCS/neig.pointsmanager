@@ -24,4 +24,6 @@ public interface NsCommentMapper {
     int updateByPrimaryKey(NsComment record);
     
     List<Comment> queryCommentList(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("map") Map<String, Object> map);
+    
+    List<Object> selectCommentList(@Param("map") Map<String, Object> map);
 }

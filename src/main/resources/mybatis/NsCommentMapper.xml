@@ -9,10 +9,11 @@
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="userid" jdbcType="BIGINT" property="userid" />
     <result column="ishidden" jdbcType="CHAR" property="ishidden" />
+    <result column="orderid" jdbcType="BIGINT" property="orderid" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goodsid, comment, create_time, score, userid, ishidden, username
+    id, goodsid, comment, create_time, score, userid, ishidden, username,orderid
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -27,10 +28,10 @@
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsComment">
     insert into ns_comment (id, goodsid, comment, 
       create_time, score, userid, 
-      ishidden, username)
+      ishidden, username,orderid)
     values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{comment,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{score,jdbcType=INTEGER}, #{userid,jdbcType=BIGINT}, 
-      #{ishidden,jdbcType=CHAR}, #{username,jdbcType=VARCHAR})
+      #{ishidden,jdbcType=CHAR}, #{username,jdbcType=VARCHAR}, #{orderid,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsComment">
     insert into ns_comment
@@ -59,6 +60,9 @@
       <if test="username != null">
         username,
       </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,6 +88,9 @@
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
+      </if>
+       <if test="orderid != null">
+        #{orderid,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -136,12 +143,13 @@
     <result column="create_time" jdbcType="VARCHAR" property="createTime" />
     <result column="score" jdbcType="INTEGER" property="score" />
     <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="orderid" jdbcType="BIGINT" property="orderid" />
     <result column="ishidden" jdbcType="INTEGER" property="ishidden" />
     <result column="avgscore" jdbcType="DOUBLE" property="avgscore" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="comment_Column_List">
-    id, goodsid, comment, create_time, score, userid, ishidden,gname,gimg,username 
+    id, goodsid, comment, create_time, score, userid, ishidden,gname,gimg,username,orderid 
   </sql>
   <select id="queryCommentList" parameterType="java.util.Map" resultMap="cmResultMap">
     select 
@@ -150,7 +158,8 @@
     )as avgscore,
     (select b.username from ns_user b where b.flag=1 and b.userid=a.userid) as username,
     (select b.gname from ns_goods b where b.id=a.goodsid) as gname,
-    (select b.goodimg from ns_goods b where b.id=a.goodsid) as gimg 
+    (select b.goodimg from ns_goods b where b.id=a.goodsid) as gimg,
+    a.orderid 
     from ns_comment a where flag = 1
 	    	<if test="map.goodsid != null">
 	    	 	and goodsid=${map.goodsid}
@@ -158,6 +167,33 @@
 	    	
 	    	<if test="map.userid !=null">
 	    		and userid=${map.userid}
+	    	</if>
+	    	
+	    	<if test="map.orderid !=null">
+	    		and orderid=${map.orderid}
+	    	</if>
+  </select>
+  
+  <select id="selectCommentList" parameterType="java.util.Map" resultMap="cmResultMap">
+    select 
+    id, goodsid, comment, DATE_FORMAT(create_time,"%Y-%m-%d %T") as create_time, score, userid, ishidden,(select  AVG(b.score) from ns_comment b
+    	where b.flag=1 and a.goodsid=b.goodsid
+    )as avgscore,
+    (select b.username from ns_user b where b.flag=1 and b.userid=a.userid) as username,
+    (select b.gname from ns_goods b where b.id=a.goodsid) as gname,
+    (select b.goodimg from ns_goods b where b.id=a.goodsid) as gimg,
+    a.orderid 
+    from ns_comment a where flag = 1
+	    	<if test="map.goodsid != null">
+	    	 	and goodsid=${map.goodsid}
+	    	</if>
+	    	
+	    	<if test="map.userid !=null">
+	    		and userid=${map.userid}
+	    	</if>
+	    	
+	    	<if test="map.orderid !=null">
+	    		and orderid=${map.orderid}
 	    	</if>
   </select>
 </mapper>
