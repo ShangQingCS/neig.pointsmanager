@@ -131,8 +131,10 @@ public class ShopCarController extends ContextInfo{
 			type=requestString.get("type")+"";
 		}
 		
-		if(StringUtils.isEmpty(goodslist)&&requestString!=null){				
-			goodslist=requestString.get("goodslist")+"";
+		if(StringUtils.isEmpty(goodslist)&&requestString!=null){	
+			if(!StringUtils.isEmpty(requestString.get("goodslist"))){
+				goodslist=requestString.get("goodslist")+"";
+			}
 		}
 		
 		if(cart==null){
@@ -161,7 +163,6 @@ public class ShopCarController extends ContextInfo{
 		
 		int i=0;
 		if(!StringUtils.isEmpty(type)){// 1 删除 2修改 0新增
-			if(!StringUtils.isEmpty(cart.getId())){ 
 				if(type.equals("1")){
 					if(!StringUtils.isEmpty(goodslist)){
 						try{
@@ -170,32 +171,19 @@ public class ShopCarController extends ContextInfo{
 							i=0;
 						}
 					}else{
-						i=shopCarService.removeObj(cart.getId());
+						if(!StringUtils.isEmpty(cart.getId())){ 
+							i=shopCarService.removeObj(cart.getId());
+						}else{
+							result="1";
+							message="id为空 操作失败";
+							logger.log(INFO, message);
+							data="";
+						}
 					}
 					
 				}else if(type.equals("2")){
 					i=shopCarService.updateObj(cart);
-					
-				}else{
-					result="1";
-					message="type 操作类型有误";
-					logger.log(INFO, message);
-					data="";
-				}
-				if(i > 0){
-					result="0";
-					message="操作成功";
-					logger.log(INFO, message);
-					data="";
-				}else{
-					result="1";
-					message="操作失败";
-					logger.log(INFO, message);
-					data="";
-				}
-				
-			}else{
-				if(type.equals("0")){
+				}else if(type.equals("0")){
 					Map<String, Object> map=new HashMap<String, Object>();
 					map.put("userid", cart.getUserid());
 					map.put("goodsid", cart.getGoodsid());
@@ -222,11 +210,22 @@ public class ShopCarController extends ContextInfo{
 					}
 				}else{
 					result="1";
-					message="该type操作类型 id不能为空";
+					message="type 操作类型有误";
 					logger.log(INFO, message);
 					data="";
 				}
-			}
+				if(i > 0){
+					result="0";
+					message="操作成功";
+					logger.log(INFO, message);
+					data="";
+				}else{
+					result="1";
+					message="操作失败";
+					logger.log(INFO, message);
+					data="";
+				}
+			
 		}else{
 			result="1";
 			message="type 操作类型不能为空";

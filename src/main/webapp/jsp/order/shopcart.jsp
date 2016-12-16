@@ -169,7 +169,6 @@
 		function totalall(){
 			var list=$(".itemcheckbox:checked");
 			totalprice=0.00;
-			if(list.length>0){
 				for(var i=0;i<list.length;i++){
 					var count=$(list[i]).parents("ul.item-content").find("input.count").val();
 					var price=$(list[i]).parents("ul.item-content").find("em.price-now").attr("name");
@@ -178,7 +177,6 @@
 				totalprice=parseFloat(totalprice).toFixed(2);
 				var result=totalprice.split(".");
 				$("#J_Total").html(toThousands(result[0])+"."+result[1]);
-			}
 		}
 		function total(this_){
 			var ul=$(this_).parents("ul.cartrow");
@@ -257,14 +255,17 @@
 			$("input[name='minus']").click(function(){
 				var countobj=$(this).parents("div[name='count']").find("input.count");
 				var count=$(countobj).val();
+				var updatecount=1;
 				if((parseInt(count)-1) <= 1){
+					updatecount=1;
 					$(countobj).val(1);					
 				}else{
-					$(countobj).val(parseInt(count)-1);	
+					$(countobj).val(parseInt(count)-1);
+					updatecount=parseInt(count)-1;
 				}
 				total(this);
 				totalall();
-				updatenumb($(this).parents("ul.cartrow").find("a.goodsid").attr("name"),parseInt(count)-1,$(this).parents("ul.cartrow").find("a.delete").attr("name"));
+				updatenumb($(this).parents("ul.cartrow").find("a.goodsid").attr("name"),updatecount,$(this).parents("ul.cartrow").find("a.delete").attr("name"));
 			});
 			$("input[name='add']").click(function(){
 				var countobj=$(this).parents("div[name='count']").find("input.count");
