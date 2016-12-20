@@ -30,15 +30,13 @@
 			<b class="line"></b>
            <div class="search">
 			<div class="search-list">
-			<div class="nav-table">
-					   <div class="long-title"><span class="all-goods">商品搜索结果</span></div>
-					   <div class="nav-cont">
-							<ul>
-								<li class="index"><a href="${path }/index_web/home.do">首页</a></li>
-							</ul>
-						</div>
-			</div>
-			
+			<jsp:include page="/common/shopNav.jsp"></jsp:include>
+			<ol class="am-breadcrumb am-breadcrumb-slash">
+				<li>
+					商品搜索结果
+				</li>
+				
+			</ol>
 				
 					<div class="am-g am-g-fixed">
 						<div class="am-u-sm-12 am-u-md-12">

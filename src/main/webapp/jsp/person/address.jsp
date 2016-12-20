@@ -16,6 +16,7 @@
 		<link href="${path }/css/addstyle.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
+		<script src="${path }/js/jquery.js" type="text/javascript"></script>
 	</head>
 
 	<body>
@@ -31,15 +32,7 @@
 			</article>
 		</header>
 
-		<div class="nav-table">
-			<div class="long-title"><span class="all-goods">全部分类</span></div>
-			<div class="nav-cont">
-				<ul>
-					<li class="index"><a href="${path }/jsp/home.jsp">首页</a></li>
-				</ul>
-			</div>
-		</div>
-		<b class="line"></b>
+		<jsp:include page="/common/shopNav.jsp"></jsp:include>
 
 		<div class="center">
 			<div class="col-main">
@@ -127,7 +120,19 @@
 					</div>
 
 					<script type="text/javascript">
-						$(document).ready(function() {							
+						$(document).ready(function() {	
+							function setPersonMenu(this_){
+								$(this_).addClass("active");
+								var lilist=$(".person").find("li");
+								$.each(lilist,function(e){
+									if(e != this_ ){
+										$(e).removeClass("active");
+									}
+								});
+							}
+						
+							setPersonMenu($("li[name='objaddress']"));
+												
 							$(".new-option-r").click(function() {
 								$(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
 								$(this).html("<i class='am-icon-check-circle'></i>默认地址").parent('.user-addresslist').siblings().find(".new-option-r").html("<i class='am-icon-check-circle'></i>设为默认")

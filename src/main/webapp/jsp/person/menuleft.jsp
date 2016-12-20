@@ -4,15 +4,15 @@
 					<li class="person">
 						<a href="#">个人资料</a>
 						<ul>
-							<li class="active"> <a href="${path }/user_web/user/main.do">个人信息</a></li>
+							<li class="active" name="objperson"> <a href="${path }/user_web/user/main.do">个人信息</a></li>
 							<%-- <li> <a href="${path }/jsp/person/safety.jsp">安全设置</a></li> --%>
-							<li> <a href="${path }/user_web/user/address.do">收货地址</a></li>
+							<li name="objaddress"> <a href="${path }/user_web/user/address.do">收货地址</a></li>
 						</ul>
 					</li>
 					<li class="person">
 						<a href="#">我的交易</a>
 						<ul>
-							<li><a href="${path }/order_web/search.do">订单管理</a></li>
+							<li name="objorder"><a href="${path }/order_web/search.do">订单管理</a></li>
 							<!-- <li> <a href="change.html">退款售后</a></li> -->
 						</ul>
 					</li>

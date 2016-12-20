@@ -39,14 +39,14 @@ public class OrderWebController extends basicInfo{
 	@RequestMapping("/search")
 	public String queryGoods(HttpServletRequest request,
 			HttpServletResponse response,Model model) throws IOException{
-		
+		model.addAttribute("baseimg", baseimg);
 		return "/jsp/order/order";
 	}
 	
 	@ResponseBody
-	@RequestMapping("/order/${type}/search")
+	@RequestMapping("/order/search")
 	public JSONObject GetOrder(HttpServletRequest request,HttpServletResponse response,
-			@PathVariable("type") String type,
+			@RequestParam(value="type",required=false) String type,
 			@RequestParam(value="pagesize",required=false) String pagesize,
 			@RequestParam(value="nowpage",required=false) String nowpage){
 		JSONObject rsJson = new JSONObject();

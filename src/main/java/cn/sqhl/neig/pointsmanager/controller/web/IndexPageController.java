@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.controller.web;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +19,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
@@ -62,7 +68,7 @@ public class IndexPageController extends basicInfo {
 		List diction = adEventService.queryDictionary(map);
 
 		// 活动
-		PageCond page = new PageCond(0,100);
+		PageCond page = new PageCond(0, 100);
 		Map mapad = new HashMap();
 		mapad.put("type", "1");
 		List<Advertise> adheadlist = adEventService.queryAD(page, mapad);
@@ -78,6 +84,66 @@ public class IndexPageController extends basicInfo {
 		model.addAttribute("baseimg", baseimg);
 
 		return "/jsp/home";
+	}
+
+	@ResponseBody
+	@RequestMapping("/getcategoryall")
+	public JSONObject getGoodsCategory(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		String result = "";
+		String message = "";
+		Object data = null;
+		Map map = new HashMap();
+		JSONObject rsJson = new JSONObject();
+		// 所有分类、
+
+		List<GoodsCategory> categorylist = goodsService.queryAllCategory();
+		
+		List tree=new ArrayList();
+		
+		if(categorylist!=null && categorylist.size()>0){
+			for (GoodsCategory gc : categorylist) {
+				Map leve1map=new HashMap();
+				List leve2=new ArrayList();
+				if (gc.getLevel() == 1) {
+					leve1map.put("leve1", gc);
+					for (GoodsCategory gcc : categorylist) {
+						Map leve2map=new HashMap();
+						List leve3=new ArrayList();
+						if (gcc.getParentId() == gc.getId()) {
+							leve2map.put("leve2", gcc);
+							for (GoodsCategory gccc : categorylist) {
+								Map leve3map=new HashMap();
+								if (gccc.getParentId() == gcc.getId()) {
+									leve3map.put("leve3", gccc);
+									leve3.add(leve3map);
+								}
+								
+							}
+							leve2map.put("item", leve3);
+							leve2.add(leve2map);
+						}
+					}
+					leve1map.put("item", leve2);
+					tree.add(leve1map);
+				} 
+				
+			}
+			map.put("tree", tree);
+			
+			result="0";
+			message="查询成功~ ";
+			data=map;
+		}else{
+			result="0";
+			message="查询成功~ 无匹配数据";
+			data=map;
+		}
+		rsJson.put("result", result);
+		rsJson.put("message", message);
+		rsJson.put("data", data);
+		response.setContentType("charset=utf-8");
+		return rsJson;
 	}
 
 	@RequestMapping("/search")
@@ -116,7 +182,7 @@ public class IndexPageController extends basicInfo {
 					+ FormatUtils.MaptoStringforUrl(map));
 			model.addAttribute("baseimg", baseimg);
 		}
-		return "/jsp/search";
+		return "/jsp/goods/search";
 
 	}
 }

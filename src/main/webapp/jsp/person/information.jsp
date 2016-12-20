@@ -12,6 +12,7 @@
 		<link href="${path }/css/infstyle.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js" type="text/javascript"></script>
+		
 	</head>
 
 	<body>
@@ -26,19 +27,7 @@
 				</div>
 			</article>
 		</header>
-            <div class="nav-table">
-					   <div class="long-title"><span class="all-goods">全部分类</span></div>
-					   <div class="nav-cont">
-							<ul>
-								<li class="index"><a href="${path }/jsp/home.jsp">首页</a></li>
-							</ul>
-						    <!-- <div class="nav-extra">
-						    	<i class="am-icon-user-secret am-icon-md nav-user"></i><b></b>我的福利
-						    	<i class="am-icon-angle-right" style="padding-left: 10px;"></i>
-						    </div> -->
-						</div>
-			</div>
-			<b class="line"></b>
+        <jsp:include page="/common/shopNav.jsp"></jsp:include>
 		<div class="center">
 			<div class="col-main">
 				<div class="main-wrap">

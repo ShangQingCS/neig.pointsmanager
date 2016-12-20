@@ -111,8 +111,7 @@
 										</div>
 									</li>
 								</ul>
-								</c:forEach>				
-								
+								</c:forEach>
 								
 								
 							</div>
