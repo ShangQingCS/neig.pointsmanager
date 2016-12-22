@@ -15,13 +15,14 @@
 		<link href="${path }/basic/css/demo.css" rel="stylesheet" type="text/css" />
 		<link type="text/css" href="${path }/css/optstyle.css" rel="stylesheet" />
 		<link type="text/css" href="${path }/css/style.css" rel="stylesheet" />
-		<link type="text/css" href="${path }/css/headnav.css" rel="stylesheet" />
 		<script type="text/javascript" src="${path }/basic/js/jquery-1.7.min.js"></script>
 		<script type="text/javascript" src="${path }/basic/js/quick_links.js"></script>
 		<script type="text/javascript" src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
 		<script type="text/javascript" src="${path }/js/jquery.imagezoom.min.js"></script>
 		<script type="text/javascript" src="${path }/js/jquery.flexslider.js"></script>
-		<script type="text/javascript" src="${path }/js/jsrender.js"></script>
+		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
+		<script type="text/javascript" src="${path }/js/jspage.js"></script>
+		<link type="text/css" href="${path }/css/headnav.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -423,44 +424,31 @@
 
 						$(".avrage").html((data.data[0].avgscore * 20) + "<span>%</span>");
 						$(".allnumb").html("(" + data.page.totalRows + ")");
-
-						$(".pagination").find("li").removeAttr("class");
-						var htmlstring = "";
-						$(".pagination").append('<li><a href="#" name="prev">&laquo;</a></li>');
-						for(var k = 1; k <= data.page.totalPage; k++) {
-							$(".pagination").append('<li name="pages"><a href="#" name="' + k + '">' + k + '</a></li>');
-						}
-						$(".pagination").append('<li><a href="#" name="next">&raquo;</a></li>');
-
-						if(data.page.currentPage == 1) {
-							$("a[name='prev']").parent("li").attr("class", "am-disabled");
-						} else if(data.page.currentPage == data.page.totalPage) {
-							$("a[name='next']").parent("li").attr("class", "am-disabled");
-						}
-						$("a[name='" + data.page.currentPage + "']").parent("li").attr("class", "am-active");
-
-						$(".pagination").on("click", "li,a", function(this_) {
-							var name_;
-
-							if($(this).is("li")) {
-								name_ = $(this).find("a").attr("name");
-							} else {
-								name_ = $(this).attr("name");
-							}
-							nowpage = $(".am-active[name='pages']").find("a").attr("name");
-							if(name_ == "prev") {
-								nowpage = nowpage - 2;
-							} else if(name_ == "next") {} else {
-								nowpage = name_ - 1;
-							}
-							loadcomment(gid, pgsize, nowpage);
-						});
+						
+						loadpage(data.page);
 
 					}, "json"
 
 				);
 
 			}
+			
+			$(".pagination").on("click", "li,a", function(this_) {
+				var name_;
+		
+				if($(this).is("li")) {
+					name_ = $(this).find("a").attr("name");
+				} else {
+					name_ = $(this).attr("name");
+				}
+				nowpage = $(".am-active[name='pages']").find("a").attr("name");
+				if(name_ == "prev") {
+					nowpage = nowpage - 2;
+				} else if(name_ == "next") {} else {
+					nowpage = name_ - 1;
+				}
+				loadcomment(gid, pgsize, nowpage);
+			});
 
 			$("li").on("click", ".comment", function() {
 				loadcomment(gid, pgsize, nowpage);

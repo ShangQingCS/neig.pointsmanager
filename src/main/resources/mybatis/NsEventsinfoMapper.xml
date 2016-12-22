@@ -157,9 +157,10 @@
   	<result column="goodsid" jdbcType="BIGINT" property="goodsid" />
   	<result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
   	<result column="goodsimg" jdbcType="VARCHAR" property="goodsimg" />
+  	<result column="price" jdbcType="VARCHAR" property="price" />
   </resultMap>
    <sql id="content_Column_List">
-    goodsid,goodsname,goodsimg
+    goodsid,goodsname,goodsimg,price
   </sql>
   <select id="selectList" resultMap="selectListMap" parameterType="int">
   	select 
@@ -168,7 +169,8 @@
   		select 
   			a.goods_id as goodsid,
   			b.gname as goodsname,
-  			b.goodimg as goodsimg
+  			b.goodimg as goodsimg,
+  			 FORMAT(b.price,2) as price
   		from 
   		ns_events_goods a left join (select * from ns_goods where isuse=0 ) b on a.goods_id=b.id
   		where

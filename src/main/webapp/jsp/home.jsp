@@ -45,7 +45,7 @@
 							<a href="${ad.imglink}">
 						</c:when>
 						<c:when test="${ad.linkkind == 3 }"><!-- 类别 -->
-							<a href="${ad.imglink}">
+							<a href="${path }/index_web/${ad.id}/catagroygoodslist.do">
 						</c:when>
 						<c:otherwise><!-- 其他链接 -->
 							<a href="${ad.imglink}">
@@ -86,7 +86,7 @@
 																		<dt><span title="${lv2.cateName }">${lv2.cateName }</span></dt>
 																		<c:forEach items="${leve3}" var="lv3">
 																		<c:if test="${lv2.id eq lv3.parentId }">
-																		<dd><a title="${lv3.cateName }" href="${lv2.url }"><span>${lv3.cateName }</span></a></dd>
+																		<dd><a title="${lv3.cateName }" href="${path }/index_web/${lv3.id}/catagroygoodslist.do"><span>${lv3.cateName }</span></a></dd>
 																		</c:if>
 																		</c:forEach>
 																	</dl>

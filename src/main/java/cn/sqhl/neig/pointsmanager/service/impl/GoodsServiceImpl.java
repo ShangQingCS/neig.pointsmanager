@@ -72,12 +72,17 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	public Goods queryObj(Long id) {
 		NsGoods nsgoods =nsGoodsMapper.selectByPrimaryKey(id);
 		if(nsgoods!=null){
-		return new Goods(nsgoods.getId(),nsgoods.getGname(),
+		Goods goods=new Goods(nsgoods.getId(),nsgoods.getGname(),
 				nsgoods.getPrice(),nsGoodsCategoryMapper.selectByPrimaryKey(Integer.parseInt(nsgoods.getBrand()+"")).getCateName(), 
 				nsgoods.getGoodimglist(), nsgoods.getGfullname(), 
-				nsgoods.getSellnumb(), nsgoods.getGoodimg(), 
+				nsgoods.getStorenumb(), nsgoods.getGoodimg(), 
 				nsgoods.getDetail(),nsgoods.getImg1(),nsgoods.getImg2(),
 				nsgoods.getImg3(),nsgoods.getImg4(),nsgoods.getImg5(),nsGoodsCategoryMapper.selectByPrimaryKey(Integer.parseInt(nsgoods.getCategory()+"")).getCateName(),nsGoodsCategoryMapper.selectByPrimaryKey(Integer.parseInt(nsgoods.getKind()+"")).getCateName());
+		if(nsgoods.getSellnumb()==0){
+			goods.setStorenumb(0);
+		}
+		return goods;
+		
 		}else{
 			return null;
 		}

@@ -40,7 +40,7 @@
 										<dl class="dl-sort">
 											<dt><span title="{{: leve2.cateName }}">{{: leve2.cateName }}</span></dt> {{for item}}
 											<dd>
-												<a title="{{: leve3.cateName }}" href="{{:leve3.url }}"><span>{{: leve3.cateName }}</span></a>
+												<a title="{{: leve3.cateName }}" href="${path }/index_web/{{:leve3.id }}/catagroygoodslist.do"><span>{{: leve3.cateName }}</span></a>
 											</dd>
 											
 											{{/for}}

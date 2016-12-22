@@ -13,21 +13,18 @@
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js" type="text/javascript"></script>
 		
+		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
+		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
 	</head>
 
 	<body>
-		<!--头 -->
-		<header>
-			<article>
-				<div class="mt-logo">
-					<!--顶部导航条 -->
-					<jsp:include page="/common/header.jsp"></jsp:include>
-					<!--悬浮搜索框-->
-					<jsp:include page="/common/searchbar.jsp"></jsp:include>
-				</div>
-			</article>
-		</header>
-        <jsp:include page="/common/shopNav.jsp"></jsp:include>
+        <!--顶部导航条 -->
+		<jsp:include page="/common/header.jsp"></jsp:include>
+		<!--悬浮搜索框-->
+		<jsp:include page="/common/searchbar.jsp"></jsp:include>
+		<!-- catagroy -->
+		<jsp:include page="/common/shopNav.jsp"></jsp:include>
+
 		<div class="center">
 			<div class="col-main">
 				<div class="main-wrap">
@@ -181,7 +178,11 @@
 
 			<jsp:include page="/jsp/person/menuleft.jsp"></jsp:include>
 		</div>
-
+		<script>
+			$(document).ready(function() {
+							loadCategory();	
+			});
+		</script>
 	</body>
 
 </html>

@@ -16,22 +16,17 @@
 		<link href="${path }/css/orstyle.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
-		<script type="text/javascript" src="${path }/js/jsrender.js"></script>
-		<script src="${path }/js/jquery.js" type="text/javascript"></script>
+		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
+		
+		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
 	</head>
 
 	<body>
-		<!--头 -->
-		<header>
-			<article>
-				<div class="mt-logo">
-					<!--顶部导航条 -->
-					<jsp:include page="/common/header.jsp"></jsp:include>
-					<!--悬浮搜索框-->
-					<jsp:include page="/common/searchbar.jsp"></jsp:include>
-				</div>
-			</article>
-		</header>
+		<!--顶部导航条 -->
+		<jsp:include page="/common/header.jsp"></jsp:include>
+		<!--悬浮搜索框-->
+		<jsp:include page="/common/searchbar.jsp"></jsp:include>
+		<!-- catagroy -->
 		<jsp:include page="/common/shopNav.jsp"></jsp:include>
 		<div class="center">
 			<div class="col-main">
@@ -142,12 +137,7 @@
 				<div class="order-right">
 					<li class="td td-amount">
 						<div class="item-amount">
-							合计：
-							{{if total == 0 }}
-							0.00
-							{{else }}
-							{{toFloat:total}}
-							{{/if}}
+							合计： {{if total == 0 }} 0.00 {{else }} {{toFloat:total}} {{/if}}
 						</div>
 					</li>
 					<div class="move-right">
@@ -177,32 +167,32 @@
 		</div>
 	</script>
 	<script>
-		var currentPage=0;
-		var pageLength=1;
- 		$.views.converters({
-		    "toFloat":function(name){
-		        if(name){
-		            return parseFloat(name).toFixed(2);
-		        }
-		    }
+		var currentPage = 0;
+		var pageLength = 1;
+		$.views.converters({
+			"toFloat": function(name) {
+				if(name) {
+					return parseFloat(name).toFixed(2);
+				}
+			}
 		})
-		
-		function setPersonMenu(this_){
-								$(this_).addClass("active");
-								var lilist=$(".person").find("li");
-								$.each(lilist,function(e){
-									if(e != this_ ){
-										$(e).removeClass("active");
-									}
-								});
-							}
-		
+
+		function setPersonMenu(this_) {
+			$(this_).addClass("active");
+			var lilist = $(".person").find("li");
+			$.each(lilist, function(e) {
+				if(e != this_) {
+					$(e).removeClass("active");
+				}
+			});
+		}
+
 		function constructOrder(data) {
 			var tmpl = $.templates("#order"); // Get compiled template       // Define data
 			var html = tmpl.render(data); // Render template using data - as HTML string
 			$(".order-list").append(html); // Insert HTML string into DOM
 		}
-		
+
 		function getorder(now_, pagesize_) {
 			$.post(
 				_basePath + "/order_web/order/search.do", {
@@ -212,20 +202,20 @@
 				function(data) {
 					if(data.result == 0) {
 						constructOrder(data.data);
-						currentPage=data.page.currentPage;
+						currentPage = data.page.currentPage;
 					}
 				}, "json"
 			);
 		}
 
 		$(document).ready(function() {
-			
+			loadCategory();
 			setPersonMenu($("li[name='objorder']"));
 			getorder(currentPage, pageLength);
-			$(window).scroll(function(){
-			    if($(window).scrollTop() == $(document).height() - $(window).height()){
-			       	getorder(currentPage, pageLength);
-			    }
+			$(window).scroll(function() {
+				if($(window).scrollTop() == $(document).height() - $(window).height()) {
+					getorder(currentPage, pageLength);
+				}
 			});
 		});
 	</script>

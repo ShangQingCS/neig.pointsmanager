@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -151,38 +152,23 @@ public class IndexPageController extends basicInfo {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Model model,
-			@RequestParam(value = "index_none_header_sysc", required = true) String searchcode,
-			@RequestParam(value = "currentPage", required = false) String currentPage,
-			@RequestParam(value = "length", required = false) String length) {
+			@RequestParam(value = "index_none_header_sysc", required = true) String searchcode) {
 
-		List<Goods> list = null;
-		PageCond page = null;
-		Map querymap = new HashMap();
-		if (StringUtils.isEmpty(currentPage)) {
-			currentPage = "0";
-		}
-		if (StringUtils.isEmpty(length)) {
-			length = "20";
-		}
-		page = new PageCond(Integer.parseInt(length)
-				* Integer.parseInt(currentPage), Integer.parseInt(length));
-
-		if (StringUtils.isNotBlank(searchcode)) {
-			querymap.put("searchcode", searchcode);
-			list = goodsService.queryPageByLike(page, querymap);
-		}
-		Map map = new HashMap();
-		map.put("currentPage", currentPage);
-		map.put("length", length);
-		map.put("index_none_header_sysc", searchcode);
-		if (list != null && list.size() > 0) {
-			model.addAttribute("list", list);
-			model.addAttribute("page", page);
-			model.addAttribute("url", request.getRequestURL() + "?"
-					+ FormatUtils.MaptoStringforUrl(map));
-			model.addAttribute("baseimg", baseimg);
-		}
+		model.addAttribute("index_none_header_sysc", searchcode);
+		model.addAttribute("baseimg", baseimg);
 		return "/jsp/goods/search";
+
+	}
+	@RequestMapping("/{parentid}/catagroygoodslist")
+	public String catagroygoodslist(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Model model,
+			@PathVariable String parentid) {
+
+		model.addAttribute("parentid", parentid);
+		model.addAttribute("baseimg", baseimg);
+		return "/jsp/goods/goodslist";
 
 	}
 }

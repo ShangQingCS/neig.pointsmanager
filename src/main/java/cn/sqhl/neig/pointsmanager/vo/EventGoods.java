@@ -8,6 +8,8 @@ public class EventGoods {
     private String goodsimg;
     
     private Long goodsid;
+    
+    private String price;
 
 	public Long getId() {
 		return id;
@@ -39,5 +41,13 @@ public class EventGoods {
 
 	public void setGoodsid(Long goodsid) {
 		this.goodsid = goodsid;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
 	}
 }

@@ -122,10 +122,10 @@
 			var pgsize = "10";
 			var nowpage = ("${currentPage}" == "" ? "0" : "${currentPage}");
 
-			function loadsearch(searchcode, pagesize, nowpage) {
+			function loadsearch(parentid, pagesize, nowpage) {
 				$.post(
 					"${path}/goods/searchlist.do", {
-						searchcode: searchcode,
+						parentid: parentid,
 						nowpage: nowpage,
 						pagesize: pagesize
 					},
@@ -158,13 +158,13 @@
 				} else if(name_ == "next") {} else {
 					nowpage = name_ - 1;
 				}
-				loadsearch('${index_none_header_sysc}', pgsize, nowpage);
+				loadsearch('${parentid}', pgsize, nowpage);
 			});
 
 			$(document).ready(function() {
 				loadCategory();
 
-				loadsearch('${index_none_header_sysc}', pgsize, nowpage);
+				loadsearch('${parentid}', pgsize, nowpage);
 
 				$("ul").on("click", ".goods", function() {
 					var goodsid = $(this).find("input.id").val();
