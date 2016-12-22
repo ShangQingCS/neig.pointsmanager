@@ -137,11 +137,6 @@
     <result column="memo" jdbcType="VARCHAR" property="memo" />
     <result column="minpicture" jdbcType="VARCHAR" property="minpicture" />
     <result column="picture" jdbcType="VARCHAR" property="picture" />
-    <collection property="goodslist" column="id" 
-    select="cn.sqhl.neig.pointsmanager.mapper.NsEventsinfoMapper.selectList" 
-    javaType="java.util.ArrayList" 
-    ofType="cn.sqhl.neig.pointsmanager.vo.EventGoods">
-    </collection>
   </resultMap>
   <sql id="events_Column_List">
     id, name, memo, minpicture, picture
@@ -162,7 +157,7 @@
    <sql id="content_Column_List">
     goodsid,goodsname,goodsimg,price
   </sql>
-  <select id="selectList" resultMap="selectListMap" parameterType="int">
+  <select id="queryList" resultMap="selectListMap" parameterType="java.lang.Long">
   	select 
   	<include refid="content_Column_List" />
   	from (
@@ -170,7 +165,7 @@
   			a.goods_id as goodsid,
   			b.gname as goodsname,
   			b.goodimg as goodsimg,
-  			 FORMAT(b.price,2) as price
+  			truncate(b.price,2) as price
   		from 
   		ns_events_goods a left join (select * from ns_goods where isuse=0 ) b on a.goods_id=b.id
   		where

@@ -42,4 +42,13 @@ public class GoodsWebController extends basicInfo{
 			return "/jsp/error/info";
 		}
 	}
+	
+	@RequestMapping("/events/{eventsid}/search")
+	public String eventSearch(HttpServletRequest request,HttpServletResponse response,Model model,
+			@PathVariable String eventsid){
+		
+		model.addAttribute("eventsid", eventsid);
+		model.addAttribute("baseimg", baseimg);
+		return "/jsp/goods/adlist";
+	}
 }

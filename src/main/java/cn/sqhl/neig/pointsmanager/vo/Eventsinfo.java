@@ -13,8 +13,6 @@ public class Eventsinfo {
     
     private String memo;
     
-    private List<EventGoods> goodslist;
-
     public Long getId() {
         return id;
     }
@@ -38,14 +36,6 @@ public class Eventsinfo {
     public void setPicture(String picture) {
         this.picture = picture == null ? null : picture.trim();
     }
-
-	public List<EventGoods> getGoodslist() {
-		return goodslist;
-	}
-
-	public void setGoodslist(List<EventGoods> goodslist) {
-		this.goodslist = goodslist;
-	}
 
 	public String getMinpicture() {
 		return minpicture;

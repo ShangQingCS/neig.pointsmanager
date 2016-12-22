@@ -160,7 +160,7 @@ public class IndexPageController extends basicInfo {
 
 	}
 	@RequestMapping("/{parentid}/catagroygoodslist")
-	public String catagroygoodslist(
+	public String catagroyGoodsList(
 			HttpServletRequest request,
 			HttpServletResponse response,
 			Model model,
@@ -169,6 +169,19 @@ public class IndexPageController extends basicInfo {
 		model.addAttribute("parentid", parentid);
 		model.addAttribute("baseimg", baseimg);
 		return "/jsp/goods/goodslist";
+
+	}
+	
+	@RequestMapping("/{eventsid}/eventsgoodslist")
+	public String eventsGoodsList(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			Model model,
+			@PathVariable String eventsid) {
+
+		model.addAttribute("eventsid", eventsid);
+		model.addAttribute("baseimg", baseimg);
+		return "/jsp/goods/adlist";
 
 	}
 }

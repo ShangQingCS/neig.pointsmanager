@@ -42,10 +42,10 @@
 							<a href="${path }/goods_web/goods/${oth.imglink}/search.do">
 						</c:when>
 						<c:when test="${ad.linkkind == 1 }"><!-- 活动 -->
-							<a href="${ad.imglink}">
+							<a href="${path }/index_web/${ad.imglink}/eventsgoodslist.do">
 						</c:when>
 						<c:when test="${ad.linkkind == 3 }"><!-- 类别 -->
-							<a href="${path }/index_web/${ad.id}/catagroygoodslist.do">
+							<a href="${path }/index_web/${ad.imglink}/catagroygoodslist.do">
 						</c:when>
 						<c:otherwise><!-- 其他链接 -->
 							<a href="${ad.imglink}">
@@ -166,10 +166,10 @@
 										<a href="${path }/goods_web/goods/${oth.imglink}/search.do">
 									</c:when>
 									<c:when test="${oth.linkkind == 1 }"><!-- 活动 -->
-										<a href="${oth.imglink}"> 
+										<a href="${path }/index_web/${oth.imglink}/eventsgoodslist.do"> 
 									</c:when> 
 									<c:when test="${oth.linkkind == 3 }"><!-- 类别 -->
-										<a href="${oth.imglink}">
+										<a href="${path }/index_web/${oth.imglink}/catagroygoodslist.do">
 									</c:when>
 									<c:otherwise><!-- 其他链接 -->
 										<a href="${oth.imglink}">

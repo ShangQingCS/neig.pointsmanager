@@ -13,6 +13,7 @@ import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Advertise;
 import cn.sqhl.neig.pointsmanager.vo.Dictionaries;
+import cn.sqhl.neig.pointsmanager.vo.EventGoods;
 import cn.sqhl.neig.pointsmanager.vo.Eventsinfo;
 
 @Service("adEventService")
@@ -30,6 +31,11 @@ public class AdEventServiceImpl implements AdEventService{
 	@Override
 	public Eventsinfo queryEvent(Map<String, Object> map) {
 		return nsEventsinfoMapper.selectById(Long.parseLong(map.get("eventsid")+""));
+	}
+	
+	@Override
+	public List<EventGoods> queryGoodsList(PageCond page,Object id) {
+		return nsEventsinfoMapper.queryList(page,Long.parseLong(id+""));
 	}
 
 	@Override

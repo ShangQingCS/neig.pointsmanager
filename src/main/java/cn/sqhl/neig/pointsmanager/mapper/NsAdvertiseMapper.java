@@ -9,6 +9,7 @@ import cn.sqhl.neig.pointsmanager.core.PaginationInterceptor;
 import cn.sqhl.neig.pointsmanager.po.NsAdvertise;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Advertise;
+import cn.sqhl.neig.pointsmanager.vo.EventGoods;
 
 public interface NsAdvertiseMapper {
     int deleteByPrimaryKey(Long id);

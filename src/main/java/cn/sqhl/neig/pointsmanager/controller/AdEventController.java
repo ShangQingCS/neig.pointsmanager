@@ -25,6 +25,7 @@ import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Dictionaries;
+import cn.sqhl.neig.pointsmanager.vo.EventGoods;
 import cn.sqhl.neig.pointsmanager.vo.Eventsinfo;
 
 @Controller
@@ -103,7 +104,9 @@ public class AdEventController extends ContextInfo{
 	@RequestMapping("/searchevent")
 	public JSONObject queryEvent(HttpServletRequest request,
 			HttpServletResponse response,
-			@Param(value="eventsid") String eventsid) throws IOException{
+			@Param(value="eventsid") String eventsid,
+			@Param(value="pagesize") String pagesize,
+			@Param(value="nowpage") String nowpage) throws IOException{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
 		
@@ -118,12 +121,33 @@ public class AdEventController extends ContextInfo{
 				eventsid=requestString.get("eventsid")+"";
 			}
 		}
+		if(StringUtils.isEmpty(pagesize) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("pagesize"))){
+				pagesize=requestString.get("pagesize")+"";
+			}else{
+				pagesize="15";
+			}
+		}else{
+			pagesize="15";
+		}
+		if(StringUtils.isEmpty(nowpage) && requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("nowpage"))){
+				nowpage=requestString.get("nowpage")+"";
+			}else{
+				nowpage="0";
+			}
+		}else{
+			nowpage="0";
+		}
 		Eventsinfo event=null;
-		
+		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize),Integer.parseInt(pagesize));
+		List<EventGoods> goodslist=null;
 		if(!StringUtils.isEmpty(eventsid)){
 			Map map=new HashMap();
 			map.put("eventsid",eventsid);
 			event =adEventService.queryEvent(map);
+			goodslist=adEventService.queryGoodsList(page, eventsid);
+			
 		}else{
 			result="1";
 			message="type 为空请确认无误后再行调用";
@@ -134,7 +158,11 @@ public class AdEventController extends ContextInfo{
 			result="0";
 			message="查询成功~";
 			logger.log(INFO, message);
-			data=event;
+			Map maplist=new HashMap();
+			maplist.put("event", event);
+			maplist.put("goodslist", goodslist);
+			maplist.put("page", page);
+			data=maplist;
 		}else{
 			result="1";
 			message="查询失败~";
