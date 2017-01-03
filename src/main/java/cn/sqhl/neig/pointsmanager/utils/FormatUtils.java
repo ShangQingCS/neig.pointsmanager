@@ -16,8 +16,6 @@ import java.util.Set;
 
 import org.springframework.util.StringUtils;
 
-import cn.sunchin.payment.Util.MD5Util;
-
 
 public class FormatUtils {
 	 public static String getStringFromHttp(InputStream entity) {

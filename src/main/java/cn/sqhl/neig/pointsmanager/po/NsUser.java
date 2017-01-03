@@ -1,92 +1,207 @@
 package cn.sqhl.neig.pointsmanager.po;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class NsUser {
-    private Integer id;
+    private Long id;
 
-    private String username;
+    private String userName;
 
-    private String name;
+    private String nickName;
 
-    private String userid;
+    private String trueName;
 
-    private String email;
+    private String loginPwd;
 
-    private String address;
+    private String payPwd;
 
-    private String phoneno;
+    private Long userGrade;
 
-    private String sex;
+    private String userPhone;
+
+    private String userMail;
+
+    private Integer userSex;
+
+    private String identityCard;
+
+    private Date identityCardValidity;
+
+    private String identityIssuing;
+
+    private Integer identityStatus;
+
+    private BigDecimal userKyBalance;
+
+    private BigDecimal userFxBalance;
+
+    private BigDecimal userDjBalance;
+
+    private Integer tixianStatus;
+
+    private BigDecimal userJfBalance;
 
     private Date createTime;
 
-    private Date updateTime;
+    private Date optionTime;
 
-    private String flag;
+    private Integer userStatus;
 
-    public Integer getId() {
+    private Long userPid;
+
+    private String optionRemark;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
     }
 
-    public String getUserid() {
-        return userid;
+    public String getTrueName() {
+        return trueName;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setTrueName(String trueName) {
+        this.trueName = trueName == null ? null : trueName.trim();
     }
 
-    public String getEmail() {
-        return email;
+    public String getLoginPwd() {
+        return loginPwd;
     }
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
+    public void setLoginPwd(String loginPwd) {
+        this.loginPwd = loginPwd == null ? null : loginPwd.trim();
     }
 
-    public String getAddress() {
-        return address;
+    public String getPayPwd() {
+        return payPwd;
     }
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setPayPwd(String payPwd) {
+        this.payPwd = payPwd == null ? null : payPwd.trim();
     }
 
-    public String getPhoneno() {
-        return phoneno;
+    public Long getUserGrade() {
+        return userGrade;
     }
 
-    public void setPhoneno(String phoneno) {
-        this.phoneno = phoneno == null ? null : phoneno.trim();
+    public void setUserGrade(Long userGrade) {
+        this.userGrade = userGrade;
     }
 
-    public String getSex() {
-        return sex;
+    public String getUserPhone() {
+        return userPhone;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone == null ? null : userPhone.trim();
+    }
+
+    public String getUserMail() {
+        return userMail;
+    }
+
+    public void setUserMail(String userMail) {
+        this.userMail = userMail == null ? null : userMail.trim();
+    }
+
+    public Integer getUserSex() {
+        return userSex;
+    }
+
+    public void setUserSex(Integer userSex) {
+        this.userSex = userSex;
+    }
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard == null ? null : identityCard.trim();
+    }
+
+    public Date getIdentityCardValidity() {
+        return identityCardValidity;
+    }
+
+    public void setIdentityCardValidity(Date identityCardValidity) {
+        this.identityCardValidity = identityCardValidity;
+    }
+
+    public String getIdentityIssuing() {
+        return identityIssuing;
+    }
+
+    public void setIdentityIssuing(String identityIssuing) {
+        this.identityIssuing = identityIssuing == null ? null : identityIssuing.trim();
+    }
+
+    public Integer getIdentityStatus() {
+        return identityStatus;
+    }
+
+    public void setIdentityStatus(Integer identityStatus) {
+        this.identityStatus = identityStatus;
+    }
+
+    public BigDecimal getUserKyBalance() {
+        return userKyBalance;
+    }
+
+    public void setUserKyBalance(BigDecimal userKyBalance) {
+        this.userKyBalance = userKyBalance;
+    }
+
+    public BigDecimal getUserFxBalance() {
+        return userFxBalance;
+    }
+
+    public void setUserFxBalance(BigDecimal userFxBalance) {
+        this.userFxBalance = userFxBalance;
+    }
+
+    public BigDecimal getUserDjBalance() {
+        return userDjBalance;
+    }
+
+    public void setUserDjBalance(BigDecimal userDjBalance) {
+        this.userDjBalance = userDjBalance;
+    }
+
+    public Integer getTixianStatus() {
+        return tixianStatus;
+    }
+
+    public void setTixianStatus(Integer tixianStatus) {
+        this.tixianStatus = tixianStatus;
+    }
+
+    public BigDecimal getUserJfBalance() {
+        return userJfBalance;
+    }
+
+    public void setUserJfBalance(BigDecimal userJfBalance) {
+        this.userJfBalance = userJfBalance;
     }
 
     public Date getCreateTime() {
@@ -97,19 +212,35 @@ public class NsUser {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getOptionTime() {
+        return optionTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setOptionTime(Date optionTime) {
+        this.optionTime = optionTime;
     }
 
-    public String getFlag() {
-        return flag;
+    public Integer getUserStatus() {
+        return userStatus;
     }
 
-    public void setFlag(String flag) {
-        this.flag = flag == null ? null : flag.trim();
+    public void setUserStatus(Integer userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public Long getUserPid() {
+        return userPid;
+    }
+
+    public void setUserPid(Long userPid) {
+        this.userPid = userPid;
+    }
+
+    public String getOptionRemark() {
+        return optionRemark;
+    }
+
+    public void setOptionRemark(String optionRemark) {
+        this.optionRemark = optionRemark == null ? null : optionRemark.trim();
     }
 }

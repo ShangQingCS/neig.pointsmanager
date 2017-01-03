@@ -16,15 +16,15 @@
 							<!-- <li> <a href="change.html">退款售后</a></li> -->
 						</ul>
 					</li>
-					<!-- <li class="person">
+					<li class="person">
 						<a href="#">我的资产</a>
 						<ul>
-							<li> <a href="coupon.html">优惠券 </a></li>
+							<li> <a href="${path }/asset_web/coupon.do">优惠券 </a></li>
 							<li> <a href="bonus.html">红包</a></li>
 							<li> <a href="bill.html">账单明细</a></li>
 						</ul>
 					</li>
-
+					<!-- 
 					<li class="person">
 						<a href="#">我的小窝</a>
 						<ul>

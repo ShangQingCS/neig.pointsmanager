@@ -15,9 +15,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
+import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
+import cn.sqhl.neig.pointsmanager.service.UserService;
+import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
+import cn.sqhl.neig.pointsmanager.utils.CheckUserUtils;
+import cn.sqhl.neig.pointsmanager.utils.MD5Util;
 import cn.sqhl.neig.pointsmanager.vo.Address;
 import cn.sqhl.neig.pointsmanager.vo.web.ErrorInfo;
 
@@ -29,6 +37,8 @@ public class UserWebController extends basicInfo{
 	
 	@Autowired
 	private AddressService addressServices;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("/user/main")
 	public String Main(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -122,4 +132,54 @@ public class UserWebController extends basicInfo{
 		model.addAttribute("returnInfo", einfo);
 		return "/jsp/person/address";
 	}
+	
+	
+	@RequestMapping("/user/register")
+	public String register(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		
+		return "/jsp/register";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/checkusername")
+	public JSONObject checkUserName(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="username",required=true) String username,
+			@RequestParam(value="tel",required=true) String tel
+			) throws Exception{
+		
+		boolean result=CheckUserUtils.checkUser(userService, username, tel);
+
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/registerjson")
+	public JSONObject saveUser(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="username",required=false) String username,
+			@RequestParam(value="loginPwd",required=false) String loginPwd,
+			@RequestParam(value="tel",required=false) String tel
+			) throws Exception{
+		//获取推荐人ID
+		//request.getParameter("pid");
+		int result=0;
+		
+		if(CheckUserUtils.checkUser(userService, username, tel)){
+			NsUser user= new NsUser();
+			user.setUserName(username);
+			user.setLoginPwd(MD5Util.MD5(loginPwd));	
+			user.setUserPhone(tel);
+			result=userService.addObj(user);	
+		}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
+	
+	
+	
 }

@@ -11,4 +11,8 @@ public interface UserService extends BaseService{
 	
 	public List<NsUser> selectUser(Map<String, Object> map);
 	
+	public NsUser queryByUserName(String userName,String loginPwd);
+	
+	public NsUser queryByUserPhone(String userPhone,String loginPwd);
+	
 }

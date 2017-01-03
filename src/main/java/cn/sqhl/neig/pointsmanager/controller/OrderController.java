@@ -30,9 +30,6 @@ import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
-import cn.sunchin.payment.alipay.util.ConstructObject;
-import cn.sunchin.payment.alipay.util.alipayHelp;
-import cn.sunchin.payment.alipay.vo.app.AppBusinessParameter;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -354,11 +351,11 @@ public class OrderController extends ContextInfo{
 							String tradeno=alipayUtil.getOutTradeNo();
 							String exchangeorderinfo="";
 							if(type.equals("alipay")){
-								AppBusinessParameter abp=new AppBusinessParameter();
-								abp.setBody(body);
-								abp.setSubject(subject);
-								abp.setTotal_amount(price);
-								exchangeorderinfo=alipayHelp.getAppOrderInfo(abp);
+////								AppBusinessParameter abp=new AppBusinessParameter();
+//								abp.setBody(body);
+//								abp.setSubject(subject);
+//								abp.setTotal_amount(price);
+//								exchangeorderinfo=alipayHelp.getAppOrderInfo(abp);
 							}else if(type.equals("weipay")){
 //								weixinUtil.getOrderInfo(subject,body,price,tradeno);
 							}else if(type.equals("nspay")){
