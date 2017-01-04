@@ -62,9 +62,9 @@ public class UserController extends ContextInfo{
 			nsUser=(NsUser)autoLoad(nsUser,"phoneno",requestString);
 			nsUser=(NsUser)autoLoad(nsUser,"sex",requestString);
 			if(type.equals("0")){
-				if(!StringUtils.isEmpty(nsUser.getUserid())){
+				if(!StringUtils.isEmpty(nsUser.getId())){
 					Map<String, Object> map=new HashMap<String,Object>();
-					map.put("userid", nsUser.getUserid());
+					map.put("userid", nsUser.getId());
 					List<NsUser> list=userService.selectUser(map);
 					if(list!=null && list.size()>0){
 						result="1";

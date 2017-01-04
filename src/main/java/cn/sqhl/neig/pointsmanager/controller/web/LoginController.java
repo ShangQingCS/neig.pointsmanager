@@ -2,6 +2,7 @@ package cn.sqhl.neig.pointsmanager.controller.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,7 @@ public class LoginController {
 	private UserService userService;
 	
 	@RequestMapping("/login")
-	public String Register(HttpServletRequest request,HttpServletResponse response,Model model){
+	public String login(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		
 		return "login";
@@ -43,18 +44,19 @@ public class LoginController {
 			@RequestParam(value="loginPwd",required=false) String loginPwd
 			) throws Exception{	
 		boolean flag=false;
-		
+		HttpSession session=request.getSession();
 		if(CheckUserUtils.isNum(username)){
 			NsUser user=userService.queryByUserPhone(username, MD5Util.MD5(loginPwd));
-			System.err.println(user);
 			if(user !=null){
 				flag=true;	
+				session.setAttribute("user", user);
 			}		
 		}else{
 			NsUser user=userService.queryByUserName(username, MD5Util.MD5(loginPwd));
-			System.err.println(user);
+			
 			if(user !=null){
-				flag=true;	
+				flag=true;
+				session.setAttribute("user", user);
 			}	
 		}
 		
@@ -62,4 +64,12 @@ public class LoginController {
 		rsJson.put("msg", flag);
 		return rsJson;
 	}
+	@RequestMapping("/share")
+	public String share(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		
+		return "/jsp/share";
+	}
+	
+	
 }

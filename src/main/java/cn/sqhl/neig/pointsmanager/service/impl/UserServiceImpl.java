@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
-		return 0;
+		return nsUserMapper.updateByPrimaryKeySelective((NsUser)obj);
 	}
 
 	@Override

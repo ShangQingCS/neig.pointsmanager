@@ -82,8 +82,8 @@
 										
 									},function(data){
 										if(data.msg){
-											layer.msg('登陆成功!',{icon:5,time:1500},function(){
-                            				window.location.href="${path}/user_web/user/main.do"});
+											
+                            				window.location.href="${path}/login_web/share.do";
 										}else{
 											layer.msg('账户密码有误!',{icon:5,time:1500});
 										}

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -177,8 +178,43 @@ public class UserWebController extends basicInfo{
 		rsJson.put("msg", result);
 		return rsJson;
 	}
-	
-	
+	@RequestMapping("/user/safety")
+	public String safety(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/safety";
+	}
+	@RequestMapping("/user/setpay")
+	public String setpay(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/setpay";
+	}
+	@RequestMapping("/user/idcard")
+	public String idcard(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/idcard";
+	}
+	@ResponseBody
+	@RequestMapping("/user/idcardjson")
+	public JSONObject saveIDcard(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="truename",required=false) String trueName,
+			@RequestParam(value="IDcard",required=false) String IDcard,
+			@RequestParam(value="issuing",required=false) String issuing
+			) throws Exception{
+			int result=0;	
+			HttpSession session=request.getSession();
+			NsUser user=(NsUser) session.getAttribute("user");
+			System.err.println(user);
+		
+			user.setTrueName(trueName);
+			user.setIdentityCard(IDcard);	
+			user.setIdentityIssuing(issuing);
+			user.setIdentityStatus(1);
+			result=userService.updateObj(user);
+		
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
 	
 	
 	

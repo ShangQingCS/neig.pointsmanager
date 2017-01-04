@@ -39,6 +39,7 @@
 						</div>
 						<hr/>
 						<ul class="am-avg-sm-1 am-avg-md-3 am-thumbnails">
+						
 							<c:forEach items="${ads }" var="address">
 							<li class="user-addresslist <c:if test="${address.isuse == 0 }">defaultAddr</c:if>">
 								<span class="new-option-r"><i class="am-icon-check-circle"></i><c:if test="${address.isuse == 0 }">默认地址</c:if><c:if test="${address.isuse == 1 }">设为默认</c:if></span>

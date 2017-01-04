@@ -5,7 +5,7 @@
 						<a href="#">个人资料</a>
 						<ul>
 							<li class="active" name="objperson"> <a href="${path }/user_web/user/main.do">个人信息</a></li>
-							<%-- <li> <a href="${path }/jsp/person/safety.jsp">安全设置</a></li> --%>
+							<li> <a href="${path }/user_web/user/safety.do">安全设置</a></li> 
 							<li name="objaddress"> <a href="${path }/user_web/user/address.do">收货地址</a></li>
 						</ul>
 					</li>
