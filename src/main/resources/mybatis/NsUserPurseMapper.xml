@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsUserPurseMapper">
+  <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsUserPurse">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="trade_type" jdbcType="CHAR" property="tradeType" />
+    <result column="trade_amount" jdbcType="DECIMAL" property="tradeAmount" />
+    <result column="trade_sn" jdbcType="VARCHAR" property="tradeSn" />
+    <result column="trade_state" jdbcType="CHAR" property="tradeState" />
+    <result column="option_type" jdbcType="CHAR" property="optionType" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="user_amount" jdbcType="DECIMAL" property="userAmount" />
+    <result column="purse_type" jdbcType="INTEGER" property="purseType" />
+    <result column="pay_account" jdbcType="VARCHAR" property="payAccount" />
+    <result column="pay_open_bank" jdbcType="VARCHAR" property="payOpenBank" />
+    <result column="purse_status" jdbcType="CHAR" property="purseStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="option_time" jdbcType="TIMESTAMP" property="optionTime" />
+    <result column="option_adminid" jdbcType="BIGINT" property="optionAdminid" />
+    <result column="option_adminname" jdbcType="VARCHAR" property="optionAdminname" />
+    <result column="option_remark" jdbcType="VARCHAR" property="optionRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, trade_type, trade_amount, trade_sn, trade_state, option_type, user_id, user_amount, 
+    purse_type, pay_account, pay_open_bank, purse_status, create_time, option_time, option_adminid, 
+    option_adminname, option_remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_purse
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_purse
+    where user_id = #{userId,jdbcType=BIGINT}
+    and trade_state=2
+    and create_time=#{createTime,jdbcType=TIMESTAMP}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ns_user_purse
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserPurse">
+    insert into ns_user_purse (id, trade_type, trade_amount, 
+      trade_sn, trade_state, option_type, 
+      user_id, user_amount, purse_type, 
+      pay_account, pay_open_bank, purse_status, 
+      create_time, option_time, option_adminid, 
+      option_adminname, option_remark)
+    values (#{id,jdbcType=BIGINT}, #{tradeType,jdbcType=CHAR}, #{tradeAmount,jdbcType=DECIMAL}, 
+      #{tradeSn,jdbcType=VARCHAR}, #{tradeState,jdbcType=CHAR}, #{optionType,jdbcType=CHAR}, 
+      #{userId,jdbcType=BIGINT}, #{userAmount,jdbcType=DECIMAL}, #{purseType,jdbcType=INTEGER}, 
+      #{payAccount,jdbcType=VARCHAR}, #{payOpenBank,jdbcType=VARCHAR}, #{purseStatus,jdbcType=CHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{optionTime,jdbcType=TIMESTAMP}, #{optionAdminid,jdbcType=BIGINT}, 
+      #{optionAdminname,jdbcType=VARCHAR}, #{optionRemark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserPurse">
+    insert into ns_user_purse
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="tradeType != null">
+        trade_type,
+      </if>
+      <if test="tradeAmount != null">
+        trade_amount,
+      </if>
+      <if test="tradeSn != null">
+        trade_sn,
+      </if>
+      <if test="tradeState != null">
+        trade_state,
+      </if>
+      <if test="optionType != null">
+        option_type,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userAmount != null">
+        user_amount,
+      </if>
+      <if test="purseType != null">
+        purse_type,
+      </if>
+      <if test="payAccount != null">
+        pay_account,
+      </if>
+      <if test="payOpenBank != null">
+        pay_open_bank,
+      </if>
+      <if test="purseStatus != null">
+        purse_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="optionTime != null">
+        option_time,
+      </if>
+      <if test="optionAdminid != null">
+        option_adminid,
+      </if>
+      <if test="optionAdminname != null">
+        option_adminname,
+      </if>
+      <if test="optionRemark != null">
+        option_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="tradeType != null">
+        #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="tradeAmount != null">
+        #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeSn != null">
+        #{tradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null">
+        #{tradeState,jdbcType=CHAR},
+      </if>
+      <if test="optionType != null">
+        #{optionType,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userAmount != null">
+        #{userAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="purseType != null">
+        #{purseType,jdbcType=INTEGER},
+      </if>
+      <if test="payAccount != null">
+        #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payOpenBank != null">
+        #{payOpenBank,jdbcType=VARCHAR},
+      </if>
+      <if test="purseStatus != null">
+        #{purseStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionTime != null">
+        #{optionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionAdminid != null">
+        #{optionAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="optionAdminname != null">
+        #{optionAdminname,jdbcType=VARCHAR},
+      </if>
+      <if test="optionRemark != null">
+        #{optionRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserPurse">
+    update ns_user_purse
+    <set>
+      <if test="tradeType != null">
+        trade_type = #{tradeType,jdbcType=CHAR},
+      </if>
+      <if test="tradeAmount != null">
+        trade_amount = #{tradeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeSn != null">
+        trade_sn = #{tradeSn,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeState != null">
+        trade_state = #{tradeState,jdbcType=CHAR},
+      </if>
+      <if test="optionType != null">
+        option_type = #{optionType,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userAmount != null">
+        user_amount = #{userAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="purseType != null">
+        purse_type = #{purseType,jdbcType=INTEGER},
+      </if>
+      <if test="payAccount != null">
+        pay_account = #{payAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="payOpenBank != null">
+        pay_open_bank = #{payOpenBank,jdbcType=VARCHAR},
+      </if>
+      <if test="purseStatus != null">
+        purse_status = #{purseStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionTime != null">
+        option_time = #{optionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionAdminid != null">
+        option_adminid = #{optionAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="optionAdminname != null">
+        option_adminname = #{optionAdminname,jdbcType=VARCHAR},
+      </if>
+      <if test="optionRemark != null">
+        option_remark = #{optionRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserPurse">
+    update ns_user_purse
+    set trade_type = #{tradeType,jdbcType=CHAR},
+      trade_amount = #{tradeAmount,jdbcType=DECIMAL},
+      trade_sn = #{tradeSn,jdbcType=VARCHAR},
+      trade_state = #{tradeState,jdbcType=CHAR},
+      option_type = #{optionType,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_amount = #{userAmount,jdbcType=DECIMAL},
+      purse_type = #{purseType,jdbcType=INTEGER},
+      pay_account = #{payAccount,jdbcType=VARCHAR},
+      pay_open_bank = #{payOpenBank,jdbcType=VARCHAR},
+      purse_status = #{purseStatus,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      option_time = #{optionTime,jdbcType=TIMESTAMP},
+      option_adminid = #{optionAdminid,jdbcType=BIGINT},
+      option_adminname = #{optionAdminname,jdbcType=VARCHAR},
+      option_remark = #{optionRemark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

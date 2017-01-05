@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsCouponMapper">
+  <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsCoupon">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="coupon_name" jdbcType="VARCHAR" property="couponName" />
+    <result column="coupon_type" jdbcType="INTEGER" property="couponType" />
+    <result column="coupon_zs_balance" jdbcType="DECIMAL" property="couponZsBalance" />
+    <result column="coupon_blance" jdbcType="DECIMAL" property="couponBlance" />
+    <result column="coupon_xf_balance" jdbcType="DECIMAL" property="couponXfBalance" />
+    <result column="coupon_expiry_date" jdbcType="INTEGER" property="couponExpiryDate" />
+    <result column="coupon_remark" jdbcType="VARCHAR" property="couponRemark" />
+    <result column="coupon_status" jdbcType="INTEGER" property="couponStatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="option_adminid" jdbcType="BIGINT" property="optionAdminid" />
+    <result column="option_time" jdbcType="TIMESTAMP" property="optionTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, coupon_name, coupon_type, coupon_zs_balance, coupon_blance, coupon_xf_balance, 
+    coupon_expiry_date, coupon_remark, coupon_status, create_time, option_adminid, option_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ns_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsCoupon">
+    insert into ns_coupon (id, coupon_name, coupon_type, 
+      coupon_zs_balance, coupon_blance, coupon_xf_balance, 
+      coupon_expiry_date, coupon_remark, coupon_status, 
+      create_time, option_adminid, option_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{couponName,jdbcType=VARCHAR}, #{couponType,jdbcType=INTEGER}, 
+      #{couponZsBalance,jdbcType=DECIMAL}, #{couponBlance,jdbcType=DECIMAL}, #{couponXfBalance,jdbcType=DECIMAL}, 
+      #{couponExpiryDate,jdbcType=INTEGER}, #{couponRemark,jdbcType=VARCHAR}, #{couponStatus,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{optionAdminid,jdbcType=BIGINT}, #{optionTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsCoupon">
+    insert into ns_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="couponName != null">
+        coupon_name,
+      </if>
+      <if test="couponType != null">
+        coupon_type,
+      </if>
+      <if test="couponZsBalance != null">
+        coupon_zs_balance,
+      </if>
+      <if test="couponBlance != null">
+        coupon_blance,
+      </if>
+      <if test="couponXfBalance != null">
+        coupon_xf_balance,
+      </if>
+      <if test="couponExpiryDate != null">
+        coupon_expiry_date,
+      </if>
+      <if test="couponRemark != null">
+        coupon_remark,
+      </if>
+      <if test="couponStatus != null">
+        coupon_status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="optionAdminid != null">
+        option_adminid,
+      </if>
+      <if test="optionTime != null">
+        option_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="couponName != null">
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null">
+        #{couponType,jdbcType=INTEGER},
+      </if>
+      <if test="couponZsBalance != null">
+        #{couponZsBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="couponBlance != null">
+        #{couponBlance,jdbcType=DECIMAL},
+      </if>
+      <if test="couponXfBalance != null">
+        #{couponXfBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="couponExpiryDate != null">
+        #{couponExpiryDate,jdbcType=INTEGER},
+      </if>
+      <if test="couponRemark != null">
+        #{couponRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="couponStatus != null">
+        #{couponStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionAdminid != null">
+        #{optionAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="optionTime != null">
+        #{optionTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsCoupon">
+    update ns_coupon
+    <set>
+      <if test="couponName != null">
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponType != null">
+        coupon_type = #{couponType,jdbcType=INTEGER},
+      </if>
+      <if test="couponZsBalance != null">
+        coupon_zs_balance = #{couponZsBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="couponBlance != null">
+        coupon_blance = #{couponBlance,jdbcType=DECIMAL},
+      </if>
+      <if test="couponXfBalance != null">
+        coupon_xf_balance = #{couponXfBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="couponExpiryDate != null">
+        coupon_expiry_date = #{couponExpiryDate,jdbcType=INTEGER},
+      </if>
+      <if test="couponRemark != null">
+        coupon_remark = #{couponRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="couponStatus != null">
+        coupon_status = #{couponStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionAdminid != null">
+        option_adminid = #{optionAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="optionTime != null">
+        option_time = #{optionTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsCoupon">
+    update ns_coupon
+    set coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_type = #{couponType,jdbcType=INTEGER},
+      coupon_zs_balance = #{couponZsBalance,jdbcType=DECIMAL},
+      coupon_blance = #{couponBlance,jdbcType=DECIMAL},
+      coupon_xf_balance = #{couponXfBalance,jdbcType=DECIMAL},
+      coupon_expiry_date = #{couponExpiryDate,jdbcType=INTEGER},
+      coupon_remark = #{couponRemark,jdbcType=VARCHAR},
+      coupon_status = #{couponStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      option_adminid = #{optionAdminid,jdbcType=BIGINT},
+      option_time = #{optionTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
