@@ -40,16 +40,20 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="selectByUserName" parameterType="java.lang.String" resultType="cn.sqhl.neig.pointsmanager.po.NsUser">
-    select * from ns_user where 
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user where 
    	user_name = #{userName,jdbcType=VARCHAR}
    	<if test="loginPwd != null">
         and login_pwd=#{loginPwd,jdbcType=VARCHAR}
     </if>
   </select>
   
-  <select id="selectByUserPhone" parameterType="java.lang.String" resultType="cn.sqhl.neig.pointsmanager.po.NsUser">
-    select * from ns_user where 
+  <select id="selectByUserPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user where 
    	user_phone = #{userPhone,jdbcType=VARCHAR}
    	<if test="loginPwd != null">
         and login_pwd=#{loginPwd,jdbcType=VARCHAR}

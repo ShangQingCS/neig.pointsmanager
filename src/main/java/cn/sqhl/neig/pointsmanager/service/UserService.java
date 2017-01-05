@@ -15,4 +15,6 @@ public interface UserService extends BaseService{
 	
 	public NsUser queryByUserPhone(String userPhone,String loginPwd);
 	
+	
+	
 }

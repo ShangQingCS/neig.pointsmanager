@@ -47,6 +47,7 @@ public class LoginController {
 		HttpSession session=request.getSession();
 		if(CheckUserUtils.isNum(username)){
 			NsUser user=userService.queryByUserPhone(username, MD5Util.MD5(loginPwd));
+			
 			if(user !=null){
 				flag=true;	
 				session.setAttribute("user", user);
@@ -56,6 +57,7 @@ public class LoginController {
 			
 			if(user !=null){
 				flag=true;
+				
 				session.setAttribute("user", user);
 			}	
 		}

@@ -245,4 +245,21 @@ aside {width: 160px;}
 /*博客*/
 .blog-main{margin-top:30px ;}
    }
+ /*我的积分*/  
+.pointlist table{width:100%;}
+.pointlist table tr{height: 50px;border-bottom: 1px solid #eeeeee;position: relative;}
+.pointlist table td{vertical-align: middle;text-align: right;padding: 0px 5px;font-size:14px ;}
+.usable{width:100% ;height: 100px;text-align: center;font-size: 18px;padding-top:25px ;background:#f85e38;background: linear-gradient(#f99847,#f85e38);color:#fff ;margin-top: -5px;}
+.usable span{display: block;margin-top:10px ;}
+.pointshop{display: block;padding:10px 0px ;position: relative;background: #F5F8FA;}
+.pointshop a{display: block;background: #fff;height:42px ;line-height:42px ;padding-left:40px ;font-size:16px ;}
+/*账户余额*/
+.financeText{padding:10px ; border:1px solid #eeeeee;margin:10px 10px;}
+.financeText a{padding-top: 5px;display: block;}
+.financeText p{border-bottom:  1px dashed #eeeeee;padding-bottom: 5px;}
+.financeText p span{margin:0px 10px ;color:#FF0000;font-weight: 600;}
+.financeTip {position: relative;}
+.financeTip img{width:50% ;max-width:200px ;}
+.financeTip a {position:absolute;top:100px;left:55%;font-size:16px ;color:#FF0000;font-weight: 600;}
+.financeTip p{border-top:1px solid #eee ;padding:10px;text-indent: 2em}
 

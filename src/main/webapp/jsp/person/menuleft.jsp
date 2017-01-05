@@ -19,9 +19,11 @@
 					<li class="person">
 						<a href="#">我的资产</a>
 						<ul>
+							<li> <a href="${path }/asset_web/walletlist.do?dateCode=0">我的钱包</a></li>
+							
+							<li> <a href="bill.html">我的团队</a></li>
 							<li> <a href="${path }/asset_web/coupon.do">优惠券 </a></li>
-							<li> <a href="bonus.html">红包</a></li>
-							<li> <a href="bill.html">账单明细</a></li>
+							<li> <a href="bill.html">分红</a></li>
 						</ul>
 					</li>
 					<!-- 

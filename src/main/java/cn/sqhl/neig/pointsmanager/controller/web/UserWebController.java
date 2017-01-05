@@ -143,6 +143,40 @@ public class UserWebController extends basicInfo{
 	}
 	
 	@ResponseBody
+	@RequestMapping("/user/sendcode")
+	public JSONObject sendCode(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception{		
+		int result=0;
+		System.err.println("------发送验证码------");
+		String mobileCode="123456";
+		if(result==0){
+			HttpSession session=request.getSession();
+			session.setAttribute("mobileCode", mobileCode);	
+		}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	@ResponseBody
+	@RequestMapping("/user/checkcode")
+	public JSONObject checkcode(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="mobilecode",required=false) String mobileCode
+			) throws Exception{		
+		int result=0;
+		HttpSession session=request.getSession();
+		if(!StringUtils.isEmpty((String) session.getAttribute("mobileCode"))){
+			if(session.getAttribute("mobileCode").equals(mobileCode)){
+				result=1;	
+			}	
+		}else{
+			result=2;
+		}	
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping("/user/checkusername")
 	public JSONObject checkUserName(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="username",required=true) String username,
@@ -183,11 +217,44 @@ public class UserWebController extends basicInfo{
 		
 		return "/jsp/person/safety";
 	}
-	@RequestMapping("/user/setpay")
-	public String setpay(HttpServletRequest request,HttpServletResponse response,Model model){
+	@RequestMapping("/user/paypwd")
+	public String payPwd(HttpServletRequest request,HttpServletResponse response,Model model){
 		
-		return "/jsp/person/setpay";
+		return "/jsp/person/paypwd";
 	}
+	
+	@RequestMapping("/user/loginpwd")
+	public String loginPwd(HttpServletRequest request,HttpServletResponse response,Model model){
+		HttpSession session=request.getSession();
+		NsUser user=(NsUser) session.getAttribute("user");
+		
+		return "/jsp/person/loginpwd";
+	}
+	@ResponseBody
+	@RequestMapping("/user/loginpwdjson")
+	public JSONObject setLoginPwd(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="truename",required=false) String trueName,
+			@RequestParam(value="IDcard",required=false) String IDcard,
+			@RequestParam(value="issuing",required=false) String issuing
+			) throws Exception{
+			int result=0;	
+			HttpSession session=request.getSession();
+			NsUser user=(NsUser) session.getAttribute("user");
+			System.err.println(user);
+		
+			user.setTrueName(trueName);
+			user.setIdentityCard(IDcard);	
+			user.setIdentityIssuing(issuing);
+			
+			user.setIdentityStatus(1);
+			result=userService.updateObj(user);
+		
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
 	@RequestMapping("/user/idcard")
 	public String idcard(HttpServletRequest request,HttpServletResponse response,Model model){
 		
@@ -203,11 +270,12 @@ public class UserWebController extends basicInfo{
 			int result=0;	
 			HttpSession session=request.getSession();
 			NsUser user=(NsUser) session.getAttribute("user");
-			System.err.println(user);
+			
 		
 			user.setTrueName(trueName);
 			user.setIdentityCard(IDcard);	
 			user.setIdentityIssuing(issuing);
+			
 			user.setIdentityStatus(1);
 			result=userService.updateObj(user);
 		

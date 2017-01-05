@@ -112,14 +112,23 @@
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 		 
-		<table tableName="ns_user_coupon" domainObjectName="NsUserCoupon"
-			enableCountByExample="false" enableUpdateByExample="false"
-			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false"></table>	
-		-->
+		
+		
 		<table tableName="ns_coupon" domainObjectName="NsCoupon"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+				
+			
+			<table tableName="ns_user_coupon" domainObjectName="NsUserCoupon"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>	
+			-->
+		<table tableName="ns_user_purse" domainObjectName="NsUserPurse"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>		
+		
 	</context>
 </generatorConfiguration>
