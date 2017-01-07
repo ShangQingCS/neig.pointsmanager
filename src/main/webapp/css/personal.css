@@ -211,6 +211,15 @@ li.person{border-bottom:1px solid #F5F8FA ;padding-bottom:10px;padding-top: 10px
 
 	  
 	  
+
+
+@media only screen and (min-width: 1260px) 
+
+   {
+/*分类*/
+.nav-table,.footer{max-width:1200px;}
+.long-title {width:180px;}
+.nav-cont {padding-left: 180px;}
 /*分类*/
 .nav-table{max-width:1000px;margin: 0px auto;height: 45px;position: relative;overflow: hidden;display: block;margin-top:10px ;}
 .nav-table .all-goods{font-size: 16px;}
@@ -230,18 +239,12 @@ b.line{display: block;width:100%;height:2px ;border-bottom:2px solid #d2364c;}
 
 	   }
 
-@media only screen and (min-width: 1260px) 
-
-   {
-/*分类*/
-.nav-table,.footer{max-width:1200px;}
-.long-title {width:180px;}
-.nav-cont {padding-left: 180px;}
 /*固定框架*/
 .center{width:96%;max-width:1200px; margin:0px auto;min-height: 1px;margin-top:15px ;}
 aside {width: 160px;}
 .main-wrap {margin-left: 180px;}
 .am-container , .bloglist{max-width: 1200px;}
+
 /*博客*/
 .blog-main{margin-top:30px ;}
    }

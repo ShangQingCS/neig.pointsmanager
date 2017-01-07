@@ -11,9 +11,23 @@
 		<jsp:include page="/common/include.jsp"></jsp:include>
 		<title>我的钱包</title>
 		<jsp:include page="/common/meta.jsp"></jsp:include>
-
 		<link href="${path}/css/wallet.css" rel="stylesheet" type="text/css">
-
+		<script>
+			$(function(){
+				$("#data-am-selected").change(function(){
+					var dateCode=$("#data-am-selected").val();
+					if(dateCode==0){
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=0";
+					}else if(dateCode==1){
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=1";
+					}else if(dateCode==2){
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=2";
+					}else{
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=3";
+					}
+ 				});
+			});
+		</script>
 	</head>
 
 	<body>
@@ -50,11 +64,11 @@
 					<div class="order-time">
 						<label class="form-label">交易时间：</label>
 						<div class="show-input">
-							<select class="am-selected" data-am-selected>
-								<option value="today">今天</option>
-								<option value="sevenDays" selected="">最近一周</option>
-								<option value="oneMonth">最近一个月</option>
-								<option value="threeMonths">最近三个月</option>
+							<select class="am-selected" id="data-am-selected">
+								<option value="0">今天</option>
+								<option value="1" <c:if test="${dateCode==1}">selected="selected"</c:if>>最近一周</option>
+								<option value="2" <c:if test="${dateCode==2}">selected="selected"</c:if>>最近一个月</option>
+								<option value="3" <c:if test="${dateCode==3}">selected="selected"</c:if>>最近三个月</option>
 								
 							</select>
 						</div>

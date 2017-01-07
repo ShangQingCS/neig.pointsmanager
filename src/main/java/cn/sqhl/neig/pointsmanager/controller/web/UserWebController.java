@@ -1,5 +1,6 @@
 package cn.sqhl.neig.pointsmanager.controller.web;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +44,33 @@ public class UserWebController extends basicInfo{
 	
 	@RequestMapping("/user/main")
 	public String Main(HttpServletRequest request,HttpServletResponse response,Model model){
+
 		return "/jsp/person/information";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/information")
+	public JSONObject information(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="nickName",required=false) String nickName,
+			@RequestParam(value="userSex",required=false) String userSex,
+			@RequestParam(value="userMail",required=false) String userMail,
+			@RequestParam(value="birthday",required=false) String birthday
+			
+			) throws Exception{		
+		int result=0;
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		if(user!=null){
+			user.setNickName(nickName);
+			user.setUserSex(Integer.parseInt(userSex));
+			user.setBirthday("1989-08-08");
+			user.setUserMail(userMail);
+			result=userService.updateByNickName(user);
+		}		
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
 	
 	@RequestMapping("/user/address")
 	public String adddress(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -162,11 +188,9 @@ public class UserWebController extends basicInfo{
 			@RequestParam(value="mobilecode",required=false) String mobileCode
 			) throws Exception{		
 		int result=0;
-		HttpSession session=request.getSession();
-		if(!StringUtils.isEmpty((String) session.getAttribute("mobileCode"))){
-			if(session.getAttribute("mobileCode").equals(mobileCode)){
-				result=1;	
-			}	
+		
+		if(CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+			result=1;
 		}else{
 			result=2;
 		}	
@@ -225,30 +249,23 @@ public class UserWebController extends basicInfo{
 	
 	@RequestMapping("/user/loginpwd")
 	public String loginPwd(HttpServletRequest request,HttpServletResponse response,Model model){
-		HttpSession session=request.getSession();
-		NsUser user=(NsUser) session.getAttribute("user");
+		
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
 		
 		return "/jsp/person/loginpwd";
 	}
 	@ResponseBody
 	@RequestMapping("/user/loginpwdjson")
 	public JSONObject setLoginPwd(HttpServletRequest request,HttpServletResponse response,Model model,
-			@RequestParam(value="truename",required=false) String trueName,
-			@RequestParam(value="IDcard",required=false) String IDcard,
-			@RequestParam(value="issuing",required=false) String issuing
+			@RequestParam(value="mobilecode",required=false) String mobileCode,
+			@RequestParam(value="loginPwd",required=false) String loginPwd
 			) throws Exception{
 			int result=0;	
-			HttpSession session=request.getSession();
-			NsUser user=(NsUser) session.getAttribute("user");
-			System.err.println(user);
-		
-			user.setTrueName(trueName);
-			user.setIdentityCard(IDcard);	
-			user.setIdentityIssuing(issuing);
-			
-			user.setIdentityStatus(1);
-			result=userService.updateObj(user);
-		
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+				user.setLoginPwd(MD5Util.MD5(loginPwd));
+				result=userService.updateByLoginPwd(user);
+			}
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);
 		return rsJson;
@@ -265,25 +282,22 @@ public class UserWebController extends basicInfo{
 	public JSONObject saveIDcard(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="truename",required=false) String trueName,
 			@RequestParam(value="IDcard",required=false) String IDcard,
-			@RequestParam(value="issuing",required=false) String issuing
+			@RequestParam(value="issuing",required=false) String issuing,
+			@RequestParam(value="IDCardValidity",required=false) String idCardValidity
 			) throws Exception{
 			int result=0;	
-			HttpSession session=request.getSession();
-			NsUser user=(NsUser) session.getAttribute("user");
-			
-		
-			user.setTrueName(trueName);
-			user.setIdentityCard(IDcard);	
-			user.setIdentityIssuing(issuing);
-			
-			user.setIdentityStatus(1);
-			result=userService.updateObj(user);
-		
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null){
+				user.setTrueName(trueName);
+				user.setIdentityCard(IDcard);	
+				user.setIdentityIssuing(issuing);
+				user.setIdentityCardValidity(new Date());
+				user.setIdentityStatus(1);
+				result=userService.updateByIDcard(user);	
+			}
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);
 		return rsJson;
 	}
-	
-	
-	
+		
 }

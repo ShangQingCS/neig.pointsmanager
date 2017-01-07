@@ -7,6 +7,7 @@ import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 
 public interface UserPurseService extends BaseService{
 
-	public List<NsUserPurse> selectByUserId(Long UserId,Date createTime);
+	public List<NsUserPurse> selectByUserId(Long userId,Date beforeTime);
+	
 	
 }

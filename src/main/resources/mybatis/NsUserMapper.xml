@@ -26,12 +26,13 @@
     <result column="user_status" jdbcType="INTEGER" property="userStatus" />
     <result column="user_pid" jdbcType="BIGINT" property="userPid" />
     <result column="option_remark" jdbcType="VARCHAR" property="optionRemark" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
   </resultMap>
   <sql id="Base_Column_List">
     id, user_name, nick_name, true_name, login_pwd, pay_pwd, user_grade, user_phone, 
     user_mail, user_sex, identity_card, identity_card_validity, identity_issuing, identity_status, 
     user_ky_balance, user_fx_balance, user_dj_balance, tixian_status, user_jf_balance, 
-    create_time, option_time, user_status, user_pid, option_remark
+    create_time, option_time, user_status, user_pid, option_remark,birthday
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -74,7 +75,7 @@
       identity_issuing, identity_status, user_ky_balance, 
       user_fx_balance, user_dj_balance, tixian_status, 
       user_jf_balance, create_time, option_time, 
-      user_status, user_pid, option_remark
+      user_status, user_pid, option_remark,birthday
       )
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{trueName,jdbcType=VARCHAR}, #{loginPwd,jdbcType=VARCHAR}, #{payPwd,jdbcType=VARCHAR}, 
@@ -83,7 +84,7 @@
       #{identityIssuing,jdbcType=VARCHAR}, #{identityStatus,jdbcType=INTEGER}, #{userKyBalance,jdbcType=DECIMAL}, 
       #{userFxBalance,jdbcType=DECIMAL}, #{userDjBalance,jdbcType=DECIMAL}, #{tixianStatus,jdbcType=INTEGER}, 
       #{userJfBalance,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{optionTime,jdbcType=TIMESTAMP}, 
-      #{userStatus,jdbcType=INTEGER}, #{userPid,jdbcType=BIGINT}, #{optionRemark,jdbcType=VARCHAR}
+      #{userStatus,jdbcType=INTEGER}, #{userPid,jdbcType=BIGINT}, #{optionRemark,jdbcType=VARCHAR},#{birthday,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsUser">
@@ -161,6 +162,10 @@
       <if test="optionRemark != null">
         option_remark,
       </if>
+      <if test=" birthday != null">
+         birthday,
+      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -234,6 +239,9 @@
       </if>
       <if test="optionRemark != null">
         #{optionRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -309,6 +317,10 @@
       <if test="optionRemark != null">
         option_remark = #{optionRemark,jdbcType=VARCHAR},
       </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+     
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -336,7 +348,37 @@
       option_time = #{optionTime,jdbcType=TIMESTAMP},
       user_status = #{userStatus,jdbcType=INTEGER},
       user_pid = #{userPid,jdbcType=BIGINT},
-      option_remark = #{optionRemark,jdbcType=VARCHAR}
+      option_remark = #{optionRemark,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR}
+      
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updateByNickName" parameterType="cn.sqhl.neig.pointsmanager.po.NsUser">
+    update ns_user
+    set nick_name = #{nickName,jdbcType=VARCHAR},
+      user_mail = #{userMail,jdbcType=VARCHAR},
+      user_sex = #{userSex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByIDcard" parameterType="cn.sqhl.neig.pointsmanager.po.NsUser">
+    update ns_user
+    set identity_card = #{identityCard,jdbcType=VARCHAR},
+      identity_card_validity = #{identityCardValidity,jdbcType=TIMESTAMP},
+      identity_issuing = #{identityIssuing,jdbcType=VARCHAR},
+      identity_status = #{identityStatus,jdbcType=INTEGER},
+      true_name = #{trueName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByLoginPwd" parameterType="cn.sqhl.neig.pointsmanager.po.NsUser">
+    update ns_user
+    set login_pwd = #{loginPwd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPayPwd" parameterType="cn.sqhl.neig.pointsmanager.po.NsUser">
+    update ns_user
+    set  pay_pwd = #{payPwd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
 </mapper>

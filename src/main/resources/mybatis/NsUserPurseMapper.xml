@@ -32,14 +32,17 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByUserId"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from ns_user_purse
     where user_id = #{userId,jdbcType=BIGINT}
     and trade_state=2
-    and create_time=#{createTime,jdbcType=TIMESTAMP}
+    and create_time between #{beforeTime,jdbcType=TIMESTAMP}  and  #{createTime,jdbcType=TIMESTAMP} 
   </select>
+  
+  
+  
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ns_user_purse

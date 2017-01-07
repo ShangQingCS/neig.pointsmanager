@@ -65,6 +65,30 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return nsUserMapper.selectByUserPhone(userPhone,loginPwd);
 	}
+
+	@Override
+	public int updateByNickName(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByNickName(user);
+	}
+
+	@Override
+	public int updateByIDcard(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByIDcard(user);
+	}
+
+	@Override
+	public int updateByLoginPwd(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByLoginPwd(user);
+	}
+
+	@Override
+	public int updateByPayPwd(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByPayPwd(user);
+	}
 	
 	
 	

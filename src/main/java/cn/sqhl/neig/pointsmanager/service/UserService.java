@@ -15,6 +15,12 @@ public interface UserService extends BaseService{
 	
 	public NsUser queryByUserPhone(String userPhone,String loginPwd);
 	
+	public int updateByNickName(NsUser user);
 	
+	public int updateByIDcard(NsUser user);
+	
+	public int updateByLoginPwd(NsUser user);
+    
+	public int  updateByPayPwd(NsUser user);
 	
 }

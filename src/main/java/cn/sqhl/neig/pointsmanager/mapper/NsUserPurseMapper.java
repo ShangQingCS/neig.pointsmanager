@@ -3,6 +3,8 @@ package cn.sqhl.neig.pointsmanager.mapper;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 
 public interface NsUserPurseMapper {
@@ -18,5 +20,7 @@ public interface NsUserPurseMapper {
 
     int updateByPrimaryKey(NsUserPurse record);
     
-    List<NsUserPurse> selectByUserId(Long UserId,Date createTime);
+    
+    
+    List<NsUserPurse> selectByUserId(@Param(value="userId")Long UserId,@Param(value="createTime")Date createTime,@Param(value="beforeTime")Date beforeTime);
 }

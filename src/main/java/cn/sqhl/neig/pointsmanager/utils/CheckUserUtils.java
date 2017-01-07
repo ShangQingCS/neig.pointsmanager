@@ -5,7 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.StringUtils;
+
+
 
 
 
@@ -44,6 +48,15 @@ public class CheckUserUtils {
 		return str.matches("^[-+]?(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)$"); 
 	}
 	
+	public static boolean checkMobileCode(String mobileCode,HttpSession session){
+		boolean result=false;
+		if(StringUtils.isNotEmpty((String) session.getAttribute("mobileCode"))){
+			if(session.getAttribute("mobileCode").equals(mobileCode)){
+				result=true;	
+			}	
+		}
+		return  result;
+	}
 		
 	
 	

@@ -17,6 +17,14 @@ public interface NsUserMapper {
 
     int updateByPrimaryKey(NsUser record);
     
+    int updateByNickName(NsUser user);
+    
+    int updateByIDcard(NsUser user);
+   
+    int updateByLoginPwd(NsUser user);
+    
+    int  updateByPayPwd(NsUser user);
+    
     NsUser selectByUserName(@Param(value="userName")String userName,@Param(value="loginPwd")String loginPwd);
     
     NsUser selectByUserPhone(@Param(value="userPhone")String userPhone,@Param(value="loginPwd")String loginPwd);

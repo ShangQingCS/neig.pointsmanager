@@ -23,7 +23,30 @@
 		<script src="${path }/js/mobilecode.js" type="text/javascript"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 		<script>
+			function pwdsubmit(){
+				var mobilecode=$('#mobile_code').val();
+ 
+	        	if(mobilecode==""){
+	        		$('#msg').text('*验证码不能为空');
+	        	}else {
+	        		$.post(
+							_basePath+"/user_web/user/loginpwdjson.do",
+							{ 
+								"mobilecode":mobilecode		
+							},function(data){
+								if(data.msg==1){
+									
+								}else if(data.msg==0){
+									$('#msg').text('*输入的验证码有误');
+								}else{
+									$('#msg').text('*请先获取验证码');
+									
+								}
+							},"json"
+					);
+	        	}
 			
+			}
 		</script>
 	</head>
 
@@ -97,7 +120,7 @@
 							</div>
 						</div>
 						<div class="info-btn">
-							<div class="am-btn am-btn-danger"><a style="color:white">保存修改</a></div>
+							<div class="am-btn am-btn-danger" onclick="pwdsubmit()"><a style="color:white">保存修改</a></div>
 						</div>
 
 					</form>

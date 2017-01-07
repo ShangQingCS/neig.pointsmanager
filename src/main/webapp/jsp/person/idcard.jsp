@@ -10,15 +10,21 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 		<title>实名认证</title>
-		<link href="${path }/css/infstyle.css" rel="stylesheet" type="text/css">
+		<link href="${path }/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
+		<link href="${path }/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
+		<link href="${path }/css/personal.css" rel="stylesheet" type="text/css">
 		<link href="${path }/css/stepstyle.css" rel="stylesheet" type="text/css">
-	<jsp:include page="/common/meta.jsp"></jsp:include>
-		
+		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
+		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
+		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
+		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
 		<script>
 			function submit(){
 				var truename=$('#true-name').val();
 				var IDcard=$('#IDcard').val();
 				var issuing=$('#issuing').val();
+				var IDCardValidity=$('#issuing').val();
 				$.post(
 							_basePath+"/user_web/user/idcardjson.do",
 							{ 
@@ -26,7 +32,7 @@
 								"IDcard" :IDcard,
 								"issuing":issuing	
 							},function(data){
-								if(data>0){
+								if(data.msg>0){
 									layer.msg('申请验证成功!',{icon:5,time:1500});
 											
 								}else{
@@ -114,6 +120,11 @@
 				<jsp:include page="/common/footer.jsp"></jsp:include>
 		</div>
 				<jsp:include page="/jsp/person/menuleft.jsp"></jsp:include>
+				<script>
+			$(document).ready(function() {
+							loadCategory();	
+			});
+		</script>
 	</body>
 
 </html>

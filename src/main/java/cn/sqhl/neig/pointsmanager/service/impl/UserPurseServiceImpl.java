@@ -1,5 +1,6 @@
 package cn.sqhl.neig.pointsmanager.service.impl;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import cn.sqhl.neig.pointsmanager.mapper.NsUserPurseMapper;
 import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 import cn.sqhl.neig.pointsmanager.service.UserPurseService;
+import cn.sqhl.neig.pointsmanager.utils.DateHelper;
 @Service("userPurseService")
 public class UserPurseServiceImpl implements UserPurseService{
 	@Autowired
@@ -40,9 +42,12 @@ public class UserPurseServiceImpl implements UserPurseService{
 	}
 
 	@Override
-	public List<NsUserPurse> selectByUserId(Long userId,Date createTime) {
-		// TODO Auto-generated method stub
-		return nsUserPurseMapper.selectByUserId(userId,createTime);
+	public List<NsUserPurse> selectByUserId(Long UserId, 
+			Date beforeTime) {
+		
+		return nsUserPurseMapper.selectByUserId(UserId,new Date() , beforeTime);
 	}
+
+	
 
 }
