@@ -132,10 +132,7 @@ top: 11px;text-align: right;}
 .demo li, .demo li.title-first {height: 26px;line-height: 26px;}
 .marqueen-title{display: block;margin-left:5px ;margin-top: 10px;}
 .mod-vip{display: block;padding:10px 0px;border-top: 1px solid #eee;border-bottom: 1px solid #eee;}
-.m-baseinfo{position: relative;margin-bottom: 10px;}
-.m-baseinfo a img{display: block;width: 50px;height: 50px;border-radius: 50px;}
-.m-baseinfo em{position: absolute;top:15px;left:60px;font-size: 14px;color: #3C3C3C;}
-.m-baseinfo p{color:#fd3f49 ;font-size: 12px;}
+
 .member-logout{height: 25px;overflow: hidden;display: block;}
 .member-logout .btn{width:95px;margin-right:3px;height: 25px;display: inline-block;line-height: 25px;text-align: center;}
 

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.sqhl.neig.pointsmanager.mapper.NsUserGradeMapper">
+  <resultMap id="BaseResultMap" type="cn.sqhl.neig.pointsmanager.po.NsUserGrade">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="grade_name" jdbcType="VARCHAR" property="gradeName" />
+    <result column="grade_fc_level" jdbcType="DECIMAL" property="gradeFcLevel" />
+    <result column="grade_fc_level1" jdbcType="DECIMAL" property="gradeFcLevel1" />
+    <result column="grade_fc_level2" jdbcType="DECIMAL" property="gradeFcLevel2" />
+    <result column="grade_fc_level3" jdbcType="DECIMAL" property="gradeFcLevel3" />
+    <result column="grade_balance" jdbcType="DECIMAL" property="gradeBalance" />
+    <result column="grade_tx_balance" jdbcType="DECIMAL" property="gradeTxBalance" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="option_adminid" jdbcType="BIGINT" property="optionAdminid" />
+    <result column="option_time" jdbcType="TIMESTAMP" property="optionTime" />
+    <result column="option_remark" jdbcType="VARCHAR" property="optionRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, grade_name, grade_fc_level, grade_fc_level1, grade_fc_level2, grade_fc_level3, 
+    grade_balance, grade_tx_balance, create_time, option_adminid, option_time, option_remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_grade
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectUserGrade"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_grade   
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ns_user_grade
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserGrade">
+    insert into ns_user_grade (id, grade_name, grade_fc_level, 
+      grade_fc_level1, grade_fc_level2, grade_fc_level3, 
+      grade_balance, grade_tx_balance, create_time, 
+      option_adminid, option_time, option_remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{gradeName,jdbcType=VARCHAR}, #{gradeFcLevel,jdbcType=DECIMAL}, 
+      #{gradeFcLevel1,jdbcType=DECIMAL}, #{gradeFcLevel2,jdbcType=DECIMAL}, #{gradeFcLevel3,jdbcType=DECIMAL}, 
+      #{gradeBalance,jdbcType=DECIMAL}, #{gradeTxBalance,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{optionAdminid,jdbcType=BIGINT}, #{optionTime,jdbcType=TIMESTAMP}, #{optionRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserGrade">
+    insert into ns_user_grade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gradeName != null">
+        grade_name,
+      </if>
+      <if test="gradeFcLevel != null">
+        grade_fc_level,
+      </if>
+      <if test="gradeFcLevel1 != null">
+        grade_fc_level1,
+      </if>
+      <if test="gradeFcLevel2 != null">
+        grade_fc_level2,
+      </if>
+      <if test="gradeFcLevel3 != null">
+        grade_fc_level3,
+      </if>
+      <if test="gradeBalance != null">
+        grade_balance,
+      </if>
+      <if test="gradeTxBalance != null">
+        grade_tx_balance,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="optionAdminid != null">
+        option_adminid,
+      </if>
+      <if test="optionTime != null">
+        option_time,
+      </if>
+      <if test="optionRemark != null">
+        option_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="gradeName != null">
+        #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeFcLevel != null">
+        #{gradeFcLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeFcLevel1 != null">
+        #{gradeFcLevel1,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeFcLevel2 != null">
+        #{gradeFcLevel2,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeFcLevel3 != null">
+        #{gradeFcLevel3,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeBalance != null">
+        #{gradeBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeTxBalance != null">
+        #{gradeTxBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionAdminid != null">
+        #{optionAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="optionTime != null">
+        #{optionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionRemark != null">
+        #{optionRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserGrade">
+    update ns_user_grade
+    <set>
+      <if test="gradeName != null">
+        grade_name = #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeFcLevel != null">
+        grade_fc_level = #{gradeFcLevel,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeFcLevel1 != null">
+        grade_fc_level1 = #{gradeFcLevel1,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeFcLevel2 != null">
+        grade_fc_level2 = #{gradeFcLevel2,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeFcLevel3 != null">
+        grade_fc_level3 = #{gradeFcLevel3,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeBalance != null">
+        grade_balance = #{gradeBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="gradeTxBalance != null">
+        grade_tx_balance = #{gradeTxBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionAdminid != null">
+        option_adminid = #{optionAdminid,jdbcType=BIGINT},
+      </if>
+      <if test="optionTime != null">
+        option_time = #{optionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="optionRemark != null">
+        option_remark = #{optionRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.sqhl.neig.pointsmanager.po.NsUserGrade">
+    update ns_user_grade
+    set grade_name = #{gradeName,jdbcType=VARCHAR},
+      grade_fc_level = #{gradeFcLevel,jdbcType=DECIMAL},
+      grade_fc_level1 = #{gradeFcLevel1,jdbcType=DECIMAL},
+      grade_fc_level2 = #{gradeFcLevel2,jdbcType=DECIMAL},
+      grade_fc_level3 = #{gradeFcLevel3,jdbcType=DECIMAL},
+      grade_balance = #{gradeBalance,jdbcType=DECIMAL},
+      grade_tx_balance = #{gradeTxBalance,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      option_adminid = #{optionAdminid,jdbcType=BIGINT},
+      option_time = #{optionTime,jdbcType=TIMESTAMP},
+      option_remark = #{optionRemark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

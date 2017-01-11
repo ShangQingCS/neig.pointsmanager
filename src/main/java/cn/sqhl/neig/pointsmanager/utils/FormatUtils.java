@@ -16,7 +16,7 @@ import java.util.Set;
 
 import org.springframework.util.StringUtils;
 
-import cn.sunchin.payment.Util.MD5Util;
+//import cn.sunchin.payment.Util.MD5Util;
 
 
 public class FormatUtils {
@@ -181,4 +181,13 @@ public class FormatUtils {
 			
 			return sb.toString().substring(0, sb.toString().length()-1);
 	 }
+	 /**
+	  * 生成6位随机数
+	  * @return
+	  */
+	 public static String getRandom() {
+		
+			 return String.valueOf((Math.random()*9+1)*100000);
+		
+		 }
 }

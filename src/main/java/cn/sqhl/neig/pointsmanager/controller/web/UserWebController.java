@@ -1,11 +1,13 @@
 package cn.sqhl.neig.pointsmanager.controller.web;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -15,9 +17,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
+import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
+import cn.sqhl.neig.pointsmanager.service.UserService;
+import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
+import cn.sqhl.neig.pointsmanager.utils.CheckUserUtils;
+import cn.sqhl.neig.pointsmanager.utils.MD5Util;
 import cn.sqhl.neig.pointsmanager.vo.Address;
 import cn.sqhl.neig.pointsmanager.vo.web.ErrorInfo;
 
@@ -29,11 +39,38 @@ public class UserWebController extends basicInfo{
 	
 	@Autowired
 	private AddressService addressServices;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping("/user/main")
 	public String Main(HttpServletRequest request,HttpServletResponse response,Model model){
+
 		return "/jsp/person/information";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/information")
+	public JSONObject information(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="nickName",required=false) String nickName,
+			@RequestParam(value="userSex",required=false) String userSex,
+			@RequestParam(value="userMail",required=false) String userMail,
+			@RequestParam(value="birthday",required=false) String birthday
+			
+			) throws Exception{		
+		int result=0;
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		if(user!=null){
+			user.setNickName(nickName);
+			user.setUserSex(Integer.parseInt(userSex));
+			user.setBirthday("1989-08-08");
+			user.setUserMail(userMail);
+			result=userService.updateByNickName(user);
+		}		
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
 	
 	@RequestMapping("/user/address")
 	public String adddress(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -122,4 +159,160 @@ public class UserWebController extends basicInfo{
 		model.addAttribute("returnInfo", einfo);
 		return "/jsp/person/address";
 	}
+	
+	
+	@RequestMapping("/user/register")
+	public String register(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		
+		return "/jsp/register";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/sendcode")
+	public JSONObject sendCode(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception{		
+		int result=0;
+		System.err.println("------发送验证码------");
+		String mobileCode="123456";
+		if(result==0){
+			HttpSession session=request.getSession();
+			session.setAttribute("mobileCode", mobileCode);	
+		}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	@ResponseBody
+	@RequestMapping("/user/checkcode")
+	public JSONObject checkcode(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="mobilecode",required=false) String mobileCode
+			) throws Exception{		
+		int result=0;
+		
+		if(CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+			result=1;
+		}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/user/checkusername")
+	public JSONObject checkUserName(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="username",required=true) String username,
+			@RequestParam(value="tel",required=true) String tel
+			) throws Exception{
+		
+		boolean result=CheckUserUtils.checkUser(userService, username, tel);
+
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/registerjson")
+	public JSONObject saveUser(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="username",required=false) String username,
+			@RequestParam(value="loginPwd",required=false) String loginPwd,
+			@RequestParam(value="tel",required=false) String tel
+			) throws Exception{
+		//获取推荐人ID
+		//request.getParameter("pid");
+		int result=0;
+		
+		if(CheckUserUtils.checkUser(userService, username, tel)){
+			NsUser user= new NsUser();
+			user.setUserName(username);
+			user.setLoginPwd(MD5Util.MD5(loginPwd));	
+			user.setUserPhone(tel);
+			result=userService.addObj(user);	
+		}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	@RequestMapping("/user/safety")
+	public String safety(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/safety";
+	}
+	@RequestMapping("/user/paypwd")
+	public String payPwd(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/paypwd";
+	}
+	@ResponseBody
+	@RequestMapping("/user/paypwdjson")
+	public JSONObject setPayPwd(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="mobilecode",required=false) String mobileCode,
+			@RequestParam(value="payPwd",required=false) String payPwd
+			) throws Exception{
+			int result=0;	
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+				user.setPayPwd(MD5Util.MD5(payPwd));
+				
+				result=userService.updateByPayPwd(user);
+			}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
+	@RequestMapping("/user/loginpwd")
+	public String loginPwd(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		
+		return "/jsp/person/loginpwd";
+	}
+	@ResponseBody
+	@RequestMapping("/user/loginpwdjson")
+	public JSONObject setLoginPwd(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="mobilecode",required=false) String mobileCode,
+			@RequestParam(value="loginPwd",required=false) String loginPwd
+			) throws Exception{
+			int result=0;	
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+				user.setLoginPwd(MD5Util.MD5(loginPwd));
+				result=userService.updateByLoginPwd(user);
+			}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
+	@RequestMapping("/user/idcard")
+	public String idcard(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/idcard";
+	}
+	@ResponseBody
+	@RequestMapping("/user/idcardjson")
+	public JSONObject saveIDcard(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="truename",required=false) String trueName,
+			@RequestParam(value="IDcard",required=false) String IDcard,
+			@RequestParam(value="issuing",required=false) String issuing,
+			@RequestParam(value="IDCardValidity",required=false) String idCardValidity
+			) throws Exception{
+			int result=0;	
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null){
+				user.setTrueName(trueName);
+				user.setIdentityCard(IDcard);	
+				user.setIdentityIssuing(issuing);
+				user.setIdentityCardValidity(new Date());
+				user.setIdentityStatus(1);
+				result=userService.updateByIDcard(user);	
+			}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+		
 }

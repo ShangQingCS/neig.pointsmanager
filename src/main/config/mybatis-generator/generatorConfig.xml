@@ -4,7 +4,7 @@
    "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
 	<!--数据库驱动 -->
-	<classPathEntry location="E:/work_test/mysql-connector-java-5.1.39.jar" />
+	<classPathEntry location="D:\mavenRepository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar" />
 	<context id="DB2Tables" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<property name="suppressDate" value="true" />
@@ -12,8 +12,8 @@
 		</commentGenerator>
 		<!--数据库链接地址账号密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://tobsenl.gicp.net:23599/nssc" userId="bxdz"
-			password="bxdz123">
+			connectionURL="jdbc:mysql://localhost:3306/bxsc" userId="root"
+			password="123456">
 		</jdbcConnection>
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
@@ -101,13 +101,39 @@
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
-		 -->
-		
-		
 			
 		<table tableName="ns_dictionaries" domainObjectName="NsDictionaries"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
+		
+		<table tableName="ns_user" domainObjectName="NsUser"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+		 
+		
+		
+		<table tableName="ns_coupon" domainObjectName="NsCoupon"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+				
+			
+			<table tableName="ns_user_coupon" domainObjectName="NsUserCoupon"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>	
+			
+		<table tableName="ns_user_purse" domainObjectName="NsUserPurse"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>
+			-->
+			<table tableName="ns_user_grade" domainObjectName="NsUserGrade"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false"></table>		
+		
 	</context>
 </generatorConfiguration>

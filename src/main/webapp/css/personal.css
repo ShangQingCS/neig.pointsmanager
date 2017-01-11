@@ -177,6 +177,14 @@ aside ul{ margin-left:10px;margin-right:-10px;padding:0px 8px;font-size:14px ;ba
 aside a{display: block;overflow: hidden;text-decoration: none;line-height: 28px;color: #000;height: 28px;}
 aside ul li{text-align: center;}
 aside ul li.active a{color: #F69}
+li.person:first-child{border-bottom: 3px solid #fd6d37;position: relative;}
+li.person:first-child a{font-size: 16px;line-height: 32px;font-weight: 700;}
+li.person:first-child a i{position: absolute;left:10px;font-size: 15px;}
+li.person:first-child a i{position: absolute;left:20px;}
+li.person p i{position: absolute;left:12px;} 
+li.person p{position: relative;height: 28px;line-height:28px ;font-size: 14px;}
+li.person p i{position: absolute;font-size: 15px;color:#fd6d37 ;width: 28px;}
+aside ul li.active a{color:#F03726;font-weight: 600;}
 li.person{border-bottom:1px solid #F5F8FA ;padding-bottom:10px;padding-top: 10px;}
 .person ul{padding-left:6px; border:none; padding-top:0px; padding-bottom:0px; margin:0px auto;font-size:12px;}
 .person ul li a{color: #666;}
@@ -211,6 +219,15 @@ li.person{border-bottom:1px solid #F5F8FA ;padding-bottom:10px;padding-top: 10px
 
 	  
 	  
+
+
+@media only screen and (min-width: 1260px) 
+
+   {
+/*分类*/
+.nav-table,.footer{max-width:1200px;}
+.long-title {width:180px;}
+.nav-cont {padding-left: 180px;}
 /*分类*/
 .nav-table{max-width:1000px;margin: 0px auto;height: 45px;position: relative;overflow: hidden;display: block;margin-top:10px ;}
 .nav-table .all-goods{font-size: 16px;}
@@ -230,19 +247,30 @@ b.line{display: block;width:100%;height:2px ;border-bottom:2px solid #d2364c;}
 
 	   }
 
-@media only screen and (min-width: 1260px) 
-
-   {
-/*分类*/
-.nav-table,.footer{max-width:1200px;}
-.long-title {width:180px;}
-.nav-cont {padding-left: 180px;}
 /*固定框架*/
 .center{width:96%;max-width:1200px; margin:0px auto;min-height: 1px;margin-top:15px ;}
 aside {width: 160px;}
 .main-wrap {margin-left: 180px;}
 .am-container , .bloglist{max-width: 1200px;}
+
 /*博客*/
 .blog-main{margin-top:30px ;}
    }
+ /*我的积分*/  
+.pointlist table{width:100%;}
+.pointlist table tr{height: 50px;border-bottom: 1px solid #eeeeee;position: relative;}
+.pointlist table td{vertical-align: middle;text-align: right;padding: 0px 5px;font-size:14px ;}
+.usable{width:100% ;height: 100px;text-align: center;font-size: 18px;padding-top:25px ;background:#f85e38;background: linear-gradient(#f99847,#f85e38);color:#fff ;margin-top: -5px;}
+.usable span{display: block;margin-top:10px ;}
+.pointshop{display: block;padding:10px 0px ;position: relative;background: #F5F8FA;}
+.pointshop a{display: block;background: #fff;height:42px ;line-height:42px ;padding-left:40px ;font-size:16px ;}
+/*账户余额*/
+.financeText{padding:10px ; border:1px solid #eeeeee;margin:10px 10px;}
+.financeText a{padding-top: 5px;display: block;}
+.financeText p{border-bottom:  1px dashed #eeeeee;padding-bottom: 5px;}
+.financeText p span{margin:0px 10px ;color:#FF0000;font-weight: 600;}
+.financeTip {position: relative;}
+.financeTip img{width:50% ;max-width:200px ;}
+.financeTip a {position:absolute;top:100px;left:55%;font-size:16px ;color:#FF0000;font-weight: 600;}
+.financeTip p{border-top:1px solid #eee ;padding:10px;text-indent: 2em}
 

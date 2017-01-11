@@ -12,9 +12,38 @@
 		<link href="${path }/css/infstyle.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js" type="text/javascript"></script>
-		
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
 		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
+		<script>
+			$(function(){
+				$('#btn_submit').click(function(){
+					var nickName=$('#nick_name').val();
+					var userSex=$("input[name='radio_sex']:checked").val();
+					
+					var userMail=$('#user_mail').val();
+					var birthday=$('#user_birthday').val();
+					if(nickName !=""&&userMail !=""){
+						$.post(
+							_basePath+"/user_web/information.do",
+							{ 
+								"nickName":nickName,
+								"userSex":userSex,
+								"userMail":userMail,
+								"birthday" :birthday	
+							},function(data){
+								if(data.msg>0){
+									layer.msg('信息修改成功!',{icon:5,time:1500});		
+								}else{
+									
+								}
+							},"json"
+						);
+					}
+				});
+			});
+		</script>
+		
 	</head>
 
 	<body>
@@ -69,15 +98,7 @@
 								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">昵称</label>
 									<div class="am-form-content">
-										<input type="text" id="user-name2" placeholder="nickname">
-
-									</div>
-								</div>
-
-								<div class="am-form-group">
-									<label for="user-name" class="am-form-label">姓名</label>
-									<div class="am-form-content">
-										<input type="text" id="user-name2" placeholder="name">
+										<input type="text" id="nick_name" placeholder="nickname">
 
 									</div>
 								</div>
@@ -86,14 +107,11 @@
 									<label class="am-form-label">性别</label>
 									<div class="am-form-content sex">
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="male" data-am-ucheck> 男
+											<input type="radio" name="radio_sex" value="1" checked="checked"> 男
 										</label>
 										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="female" data-am-ucheck> 女
-										</label>
-										<label class="am-radio-inline">
-											<input type="radio" name="radio10" value="secret" data-am-ucheck> 保密
-										</label>
+											<input type="radio" name="radio_sex" value="0" data-am-ucheck> 女
+										</label>										
 									</div>
 								</div>
 
@@ -122,48 +140,17 @@
 									</div>
 							
 								</div>
-								<div class="am-form-group">
-									<label for="user-phone" class="am-form-label">电话</label>
-									<div class="am-form-content">
-										<input id="user-phone" placeholder="telephonenumber" type="tel">
-
-									</div>
-								</div>
+								
 								<div class="am-form-group">
 									<label for="user-email" class="am-form-label">电子邮件</label>
 									<div class="am-form-content">
-										<input id="user-email" placeholder="Email" type="email">
+										<input id="user_mail" placeholder="Email" type="email">
 
 									</div>
 								</div>
-								<div class="am-form-group address">
-									<label for="user-address" class="am-form-label">收货地址</label>
-									<div class="am-form-content address">
-										<a href="address.html">
-											<p class="new-mu_l2cw">
-												<span class="province">湖北</span>省
-												<span class="city">武汉</span>市
-												<span class="dist">洪山</span>区
-												<span class="street">雄楚大道666号(中南财经政法大学)</span>
-												<span class="am-icon-angle-right"></span>
-											</p>
-										</a>
-
-									</div>
-								</div>
-								<div class="am-form-group safety">
-									<label for="user-safety" class="am-form-label">账号安全</label>
-									<div class="am-form-content safety">
-										<a href="safety.html">
-
-											<span class="am-icon-angle-right"></span>
-
-										</a>
-
-									</div>
-								</div>
+								
 								<div class="info-btn">
-									<div class="am-btn am-btn-danger">保存修改</div>
+									<div class="am-btn am-btn-danger" id="btn_submit"><a style="color:white">保存修改</a></div>
 								</div>
 
 							</form>

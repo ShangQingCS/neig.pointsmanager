@@ -17,16 +17,6 @@ public class UserServiceImpl implements UserService {
 	private NsUserMapper nsUserMapper;
 	
 	@Override
-	public NsUser queryByPrimaryKey(Integer id) {
-		return nsUserMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public List<NsUser> selectUser(Map<String, Object> map) {
-		return nsUserMapper.selectUser(map);
-	}
-
-	@Override
 	public List<Object> queryObj(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
@@ -46,7 +36,66 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
-		return 0;
+		return nsUserMapper.updateByPrimaryKeySelective((NsUser)obj);
 	}
+
+	@Override
+	public NsUser queryByPrimaryKey(Integer id) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.selectByPrimaryKey(new Long(id));
+	}
+
+	@Override
+	public List<NsUser> selectUser(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+
+	@Override
+	public NsUser queryByUserName(String userName,String loginPwd) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.selectByUserName(userName,loginPwd);
+	}
+
+	@Override
+	public NsUser queryByUserPhone(String userPhone,String loginPwd) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.selectByUserPhone(userPhone,loginPwd);
+	}
+
+	@Override
+	public int updateByNickName(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByNickName(user);
+	}
+
+	@Override
+	public int updateByIDcard(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByIDcard(user);
+	}
+
+	@Override
+	public int updateByLoginPwd(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByLoginPwd(user);
+	}
+
+	@Override
+	public int updateByPayPwd(NsUser user) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.updateByPayPwd(user);
+	}
+
+	@Override
+	public List<NsUser> queryByUserPid(Long id) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.selectByUserPid(id);
+	}
+	
+	
 	
 }
