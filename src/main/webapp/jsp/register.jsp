@@ -33,7 +33,7 @@
                 	username=$('#username').val();
                 	if(username!=''){
                 		$.post(
-							_basePath+"/user_web/information.do",
+							_basePath+"/user_web/user/checkusername.do",
 							{ 
 								"username":username,
 								"tel" :""

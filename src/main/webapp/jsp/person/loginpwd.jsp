@@ -25,22 +25,24 @@
 		<script>
 			function pwdsubmit(){
 				var mobilecode=$('#mobile_code').val();
- 
+ 				var loginPwd=$('#user-password').val();
 	        	if(mobilecode==""){
 	        		$('#msg').text('*验证码不能为空');
 	        	}else {
 	        		$.post(
 							_basePath+"/user_web/user/loginpwdjson.do",
 							{ 
-								"mobilecode":mobilecode		
+								"mobilecode":mobilecode,
+								"loginPwd"	:loginPwd	
 							},function(data){
 								if(data.msg==1){
+									layer.msg('修改密码成功',{icon:5,time:1500},function(){
+                            				window.location.reload();});
 									
-								}else if(data.msg==0){
-									$('#msg').text('*输入的验证码有误');
+									 
 								}else{
-									$('#msg').text('*请先获取验证码');
-									
+									layer.msg('修改密码失败',{icon:5,time:1500});
+										
 								}
 							},"json"
 					);

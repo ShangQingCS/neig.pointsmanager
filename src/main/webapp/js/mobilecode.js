@@ -15,10 +15,9 @@
 						},function(data){
 							if(data.msg==1){
 								
-							}else if(data.msg==0){
-								$('#msg').text('*输入的验证码有误');
 							}else{
-								$('#msg').text('*请先获取验证码');
+								$('#msg').text('*输入的验证码有误');
+								
 								
 							}
 						},"json"

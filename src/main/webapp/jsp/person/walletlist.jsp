@@ -17,13 +17,13 @@
 				$("#data-am-selected").change(function(){
 					var dateCode=$("#data-am-selected").val();
 					if(dateCode==0){
-						window.location.href="${path }/asset_web/walletlist.do?dateCode=0";
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=0&type=0";
 					}else if(dateCode==1){
-						window.location.href="${path }/asset_web/walletlist.do?dateCode=1";
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=1&type=0";
 					}else if(dateCode==2){
-						window.location.href="${path }/asset_web/walletlist.do?dateCode=2";
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=2&type=0";
 					}else{
-						window.location.href="${path }/asset_web/walletlist.do?dateCode=3";
+						window.location.href="${path }/asset_web/walletlist.do?dateCode=3&type=0";
 					}
  				});
 			});
@@ -89,9 +89,9 @@
 						<div class="walletCont">
 						<!-- 循环开始 -->
 						<c:forEach items="${walletList}" var="mywallet">
-							<c:choose>
-								<c:when test="${mywallet.purseType=='0'}">
-<!-- 类型为可用余额 -->
+							
+<!-- 类型为可用余额 -->	
+							<c:if test="${mywallet.purseType=='0'}">
 								<li class="cost">
 								<!-- 创建时间 -->
 								<div class="time">
@@ -129,92 +129,8 @@
 								<div class="balance">
 									<span class="amount_green">${mywallet.userAmount}</span>
 								</div>
-							</li>		
-							</c:when>
-							<c:when test="${mywallet.purseType=='1'}">
-<!-- 类型为分红 -->
-								<li class="cost">
-								<!-- 创建时间 -->
-								<div class="time">
-									<p> <fmt:formatDate value="${mywallet.createTime}" type="both"/></p>	
-								</div>
-								<!-- 钱包类型 -->
-								<div class="time"><p>分红</p></div>
-								<!-- 来源/去向 -->
-								<div class="title name"><p class="content">
-									<c:choose>
-										<c:when test="${mywallet.tradeType=='0'}">支付宝0</c:when>
-										<c:when test="${mywallet.tradeType=='1'}">微信1</c:when>
-										<c:otherwise>其他234</c:otherwise>
-									</c:choose></p>
-								</div>
-								<!--详情 -->
-									<c:choose>
-										<c:when test="${mywallet.optionType=='0'}">
-										<div class="title name"><span>转入进0</span></div>
-											<!--金额 -->
-											<div class="amount">
-											<span class="amount-pay" style="color:green">+${mywallet.tradeAmount}</span>
-										</div>
-										</c:when>
-										<c:otherwise>
-											<div class="title name"><span>转出为1</span></div>
-											<!--金额 -->
-											<div class="amount">
-											<span class="amount-pay" >-${mywallet.tradeAmount}</span>
-										</div>
-										</c:otherwise>
-									</c:choose>
-								
-								<!--余额 -->
-								<div class="balance">
-									<span class="amount_green">${mywallet.userAmount}</span>
-								</div>
-							</li>		
-							</c:when>
-						<c:otherwise>
-							
-<!-- 类型为积分 -->
-								<li class="cost">
-								<!-- 创建时间 -->
-								<div class="time">
-									<p> <fmt:formatDate value="${mywallet.createTime}" type="both"/></p>	
-								</div>
-								<!-- 钱包类型 -->
-								<div class="time"><p>积分</p></div>
-								<!-- 来源/去向 -->
-								<div class="title name"><p class="content">
-									<c:choose>
-										<c:when test="${mywallet.tradeType=='0'}">支付宝0</c:when>
-										<c:when test="${mywallet.tradeType=='1'}">微信1</c:when>
-										<c:otherwise>其他234</c:otherwise>
-									</c:choose></p>
-								</div>
-								<!--详情 -->
-									<c:choose>
-										<c:when test="${mywallet.optionType=='0'}">
-										<div class="title name"><span>增加为0</span></div>
-											<!--金额 -->
-											<div class="amount">
-											<span class="amount-pay" style="color:green">+${mywallet.tradeAmount}</span>
-										</div>
-										</c:when>
-										<c:otherwise>
-											<div class="title name"><span>消耗为1</span></div>
-											<!--金额 -->
-											<div class="amount">
-											<span class="amount-pay" >-${mywallet.tradeAmount}</span>
-										</div>
-										</c:otherwise>
-									</c:choose>
-								
-								<!--余额 -->
-								<div class="balance">
-									<span class="amount_green">${mywallet.userAmount}</span>
-								</div>
-							</li>		
-						</c:otherwise>
-					</c:choose>
+							</li>
+						</c:if>			
 					<!-- 判断END -->
 				</c:forEach>
 				</div>

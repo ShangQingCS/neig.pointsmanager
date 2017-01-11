@@ -23,4 +23,6 @@ public interface UserService extends BaseService{
     
 	public int  updateByPayPwd(NsUser user);
 	
+	public List<NsUser> queryByUserPid(Long id);
+	
 }

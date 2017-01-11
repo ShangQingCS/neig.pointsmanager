@@ -89,6 +89,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return nsUserMapper.updateByPayPwd(user);
 	}
+
+	@Override
+	public List<NsUser> queryByUserPid(Long id) {
+		// TODO Auto-generated method stub
+		return nsUserMapper.selectByUserPid(id);
+	}
 	
 	
 	

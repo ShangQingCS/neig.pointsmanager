@@ -191,9 +191,7 @@ public class UserWebController extends basicInfo{
 		
 		if(CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
 			result=1;
-		}else{
-			result=2;
-		}	
+		}
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);
 		return rsJson;
@@ -246,11 +244,28 @@ public class UserWebController extends basicInfo{
 		
 		return "/jsp/person/paypwd";
 	}
+	@ResponseBody
+	@RequestMapping("/user/paypwdjson")
+	public JSONObject setPayPwd(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="mobilecode",required=false) String mobileCode,
+			@RequestParam(value="payPwd",required=false) String payPwd
+			) throws Exception{
+			int result=0;	
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+				user.setPayPwd(MD5Util.MD5(payPwd));
+				
+				result=userService.updateByPayPwd(user);
+			}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
 	
 	@RequestMapping("/user/loginpwd")
 	public String loginPwd(HttpServletRequest request,HttpServletResponse response,Model model){
 		
-		NsUser user=(NsUser) request.getSession().getAttribute("user");
 		
 		return "/jsp/person/loginpwd";
 	}

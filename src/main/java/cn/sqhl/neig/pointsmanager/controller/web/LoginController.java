@@ -72,6 +72,11 @@ public class LoginController {
 		
 		return "/jsp/share";
 	}
-	
+	@RequestMapping("/usercenter")
+	public String usercenter(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		
+		return "/jsp/person/usercenter";
+	}
 	
 }

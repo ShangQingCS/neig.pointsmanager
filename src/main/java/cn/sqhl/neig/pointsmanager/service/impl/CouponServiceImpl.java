@@ -7,16 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.sqhl.neig.pointsmanager.mapper.NsUserCouponMapper;
-
+import cn.sqhl.neig.pointsmanager.mapper.NsUserGradeMapper;
 import cn.sqhl.neig.pointsmanager.po.NsUserCoupon;
+import cn.sqhl.neig.pointsmanager.po.NsUserGrade;
 import cn.sqhl.neig.pointsmanager.service.CouponService;
 
 @Service("couponService")
 public class CouponServiceImpl implements CouponService{
 	@Autowired
 	private NsUserCouponMapper nsUserCouponMapper;
-	
-	
+	@Autowired
+	private NsUserGradeMapper nsUserGradeMapper ;
 	@Override
 	public List<Object> queryObj(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -45,6 +46,12 @@ public class CouponServiceImpl implements CouponService{
 	public List<NsUserCoupon> selectByUserId(Long userId, String status) {
 		// TODO Auto-generated method stub
 		return nsUserCouponMapper.selectByUserId(userId,status);
+	}
+
+	@Override
+	public List<NsUserGrade> selectUserGrade() {
+		// TODO Auto-generated method stub
+		return nsUserGradeMapper.selectUserGrade();
 	}
 
 	

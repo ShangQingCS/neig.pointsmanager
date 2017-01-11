@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import cn.sqhl.neig.pointsmanager.po.NsUser;
@@ -28,4 +30,6 @@ public interface NsUserMapper {
     NsUser selectByUserName(@Param(value="userName")String userName,@Param(value="loginPwd")String loginPwd);
     
     NsUser selectByUserPhone(@Param(value="userPhone")String userPhone,@Param(value="loginPwd")String loginPwd);
+    
+    List<NsUser> selectByUserPid(Long id);
 }

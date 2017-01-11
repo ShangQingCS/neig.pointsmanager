@@ -13,7 +13,7 @@
     <result column="order" jdbcType="INTEGER" property="order" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, type, code, name, parentcode, remark, isuse, isedit, order
+    id, type, code, name, parentcode, remark, isuse, isedit
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -148,7 +148,7 @@
     <result column="order" jdbcType="INTEGER" property="order" />
   </resultMap>
   <sql id="diction_Column_List">
-    id, type, code, name, parentcode, remark, `order`
+    id, type, code, name, parentcode, remark
   </sql>
   <select id="selectDictionaries" parameterType="java.lang.Integer" resultMap="dictionResultMap">
     select 
@@ -159,7 +159,7 @@
     	<if test="map.type != null">
     		and type=#{map.type,jdbcType=VARCHAR}
     	</if>
-    	order by `order` desc
+    	
     </where>
   </select>
 </mapper>

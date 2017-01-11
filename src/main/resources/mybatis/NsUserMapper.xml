@@ -28,6 +28,11 @@
     <result column="option_remark" jdbcType="VARCHAR" property="optionRemark" />
     <result column="birthday" jdbcType="VARCHAR" property="birthday" />
   </resultMap>
+  <resultMap id="UserPidResultMap" type="cn.sqhl.neig.pointsmanager.po.NsUser">
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="true_name" jdbcType="VARCHAR" property="trueName" />
+  </resultMap>
+  
   <sql id="Base_Column_List">
     id, user_name, nick_name, true_name, login_pwd, pay_pwd, user_grade, user_phone, 
     user_mail, user_sex, identity_card, identity_card_validity, identity_issuing, identity_status, 
@@ -41,6 +46,13 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
+  <select id="selectByUserPid" parameterType="java.lang.Long" resultMap="UserPidResultMap">
+     select user_name,true_name 
+     from ns_user where 
+     user_pid in(select id FROM ns_user where user_pid=#{id,jdbcType=BIGINT}) 
+     OR user_pid=#{id,jdbcType=BIGINT}
+  </select>
+  
   <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -49,8 +61,9 @@
    	<if test="loginPwd != null">
         and login_pwd=#{loginPwd,jdbcType=VARCHAR}
     </if>
+        and user_status != '0'
   </select>
-  
+ 
   <select id="selectByUserPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -59,6 +72,7 @@
    	<if test="loginPwd != null">
         and login_pwd=#{loginPwd,jdbcType=VARCHAR}
     </if>
+        and user_status != '0'
   </select>
   
   

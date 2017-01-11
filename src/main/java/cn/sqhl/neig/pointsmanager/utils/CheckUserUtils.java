@@ -52,6 +52,7 @@ public class CheckUserUtils {
 		boolean result=false;
 		if(StringUtils.isNotEmpty((String) session.getAttribute("mobileCode"))){
 			if(session.getAttribute("mobileCode").equals(mobileCode)){
+				
 				result=true;	
 			}	
 		}
