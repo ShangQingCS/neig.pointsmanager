@@ -94,4 +94,17 @@ public class OrderWebController extends basicInfo{
 		return rsJson;
 		
 	}
+	
+	@RequestMapping("/manager")
+	public String eidtOrders(HttpServletRequest request,
+			HttpServletResponse response,Model model,
+			@RequestParam(value="goodsid",required=false) Long goodsid,
+			@RequestParam(value="count",required=false) Integer count) throws IOException{
+		
+		
+		
+		
+		model.addAttribute("baseimg", baseimg);
+		return "/jsp/order/order";
+	}
 }

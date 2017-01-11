@@ -32,6 +32,8 @@ public class GoodsWebController extends basicInfo{
 		if(goods!=null){
 			model.addAttribute("goods", goods);
 			model.addAttribute("baseimg", baseimg);
+			
+			model.addAttribute("userid", "4002");
 			return "/jsp/goods/introduction";
 		}else{
 			ErrorInfo ef=new ErrorInfo();

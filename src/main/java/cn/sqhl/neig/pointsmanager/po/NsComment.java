@@ -9,26 +9,6 @@ public class NsComment {
     
     private Long orderid;
 
-    public Long getOrderid() {
-		return orderid;
-	}
-
-	public void setOrderid(Long orderid) {
-		this.orderid = orderid;
-	}
-
-	public Long getGoodsid() {
-		return goodsid;
-	}
-
-	public void setGoodsid(Long goodsid) {
-		this.goodsid = goodsid;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	private String comment;
 
     private Date createTime;
@@ -41,59 +21,76 @@ public class NsComment {
 
     private String username;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setGoodid(Long goodid) {
-        this.goodsid = goodsid;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getComment() {
-        return comment;
-    }
+	public Long getGoodsid() {
+		return goodsid;
+	}
 
-    public void setComment(String comment) {
-        this.comment = comment == null ? null : comment.trim();
-    }
+	public void setGoodsid(Long goodsid) {
+		this.goodsid = goodsid;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Long getOrderid() {
+		return orderid;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	public void setOrderid(Long orderid) {
+		this.orderid = orderid;
+	}
 
-    public Integer getScore() {
-        return score;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public void setScore(Integer score) {
-        this.score = score;
-    }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    public Long getUserid() {
-        return userid;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setUserid(Long userid) {
-        this.userid = userid;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public String getIshidden() {
-        return ishidden;
-    }
+	public Integer getScore() {
+		return score;
+	}
 
-    public void setIshidden(String ishidden) {
-        this.ishidden = ishidden;
-    }
+	public void setScore(Integer score) {
+		this.score = score;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public Long getUserid() {
+		return userid;
+	}
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
-    }
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
+	public String getIshidden() {
+		return ishidden;
+	}
+
+	public void setIshidden(String ishidden) {
+		this.ishidden = ishidden;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 }

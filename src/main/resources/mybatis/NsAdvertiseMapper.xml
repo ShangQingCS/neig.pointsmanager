@@ -192,6 +192,7 @@
     <if test="map.type != null">
     	and type=#{map.type,jdbcType=VARCHAR}
     </if>
+    order by ordernumb,id asc
     
   </select>
   

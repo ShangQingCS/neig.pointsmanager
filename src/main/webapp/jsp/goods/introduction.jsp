@@ -177,15 +177,16 @@
 									</div>
 									<div class="theme-popbod dform">
 										<form class="theme-signin" name="loginform" action="" method="post">
-
+											<input type="hidden" name="goodsid" value="${goods.id} "/>
+											<input type="hidden" name="userid" value="${userid}"/>
 											<div class="theme-signin-left">
 
 												<div class="theme-options">
 													<div class="cart-title number">数量</div>
 													<dd>
-														<input id="min" class="am-btn am-btn-default" name="" type="button" value="-" />
-														<input id="text_box" name="" type="text" value="1" style="width:30px;" />
-														<input id="add" class="am-btn am-btn-default" name="" type="button" value="+" />
+														<input id="min" class="am-btn am-btn-default" name="minus" type="button" value="-" />
+														<input id="text_box" name="buynumb" type="text" value="1" style="width:30px;" />
+														<input id="add" class="am-btn am-btn-default" name="add" type="button" value="+" />
 														<span id="Stock" class="tb-hidden">库存<span class="stock">${goods.storenumb }</span>件</span>
 													</dd>
 
@@ -402,6 +403,8 @@
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+		
+		
 			var pgsize = "10";
 			var nowpage = ("${page.currentPage}" == "" ? "0" : "${page.currentPage}");
 			var gid = ${goods.id};
@@ -421,8 +424,11 @@
 						var tmpl = $.templates("#comment"); // Get compiled template       // Define data
 						var html = tmpl.render(data.data); // Render template using data - as HTML string
 						$(".commentsinfo").append(html); // Insert HTML string into DOM
-
-						$(".avrage").html((data.data[0].avgscore * 20) + "<span>%</span>");
+						if(data.data[0].avgscore){
+							$(".avrage").html((data.data[0].avgscore * 20) + "<span>%</span>");
+						}else{
+							$(".avrage").html("100<span>%</span>");
+						}
 						$(".allnumb").html("(" + data.page.totalRows + ")");
 						
 						loadpage(data.page);
@@ -453,7 +459,55 @@
 			$("li").on("click", ".comment", function() {
 				loadcomment(gid, pgsize, nowpage);
 			});
+			
+			$("input[name='minus']").click(function(){
+				var countobj=$(this).parents("form[name='loginform']").find("input[name='buynumb']");
+				var count=$(countobj).val();
+				var updatecount=1;
+				if((parseInt(count)-1) <= 1){
+					updatecount=1;
+					$(countobj).val(1);					
+				}else{
+					$(countobj).val(parseInt(count)-1);
+					updatecount=parseInt(count)-1;
+				}
+				
+			});
+			$("input[name='add']").click(function(){
+				var countobj=$(this).parents("form[name='loginform']").find("input[name='buynumb']");
+				var count=$(countobj).val();
+				$(countobj).val(parseInt(count)+1);
+				
+			});
+			$("input[name='buynumb']").keyup(function(){
+				var value=$(this).val();
+				if((new RegExp("^[0-9]*[1-9][0-9]*$")).test(value)){
+					$(this).val(value);
+				}else{
+					value=1;
+					$(this).val(1);
+				}
+				
+			});
+			$("li").on("click","#LikBasket",function(){
+				var form=$("form[name='loginform']");
+				var goodsid=$("input[name='goodsid']").val();
+				var userid=$("input[name='userid']").val();
+				var buynumb=$("input[name='buynumb']").val();
+				$.post(
+					"${path}/shopcar/manager.do", {
+						goodsid: goodsid,
+						userid: userid,
+						count: buynumb,
+						type:"0"
+					},
+					function(data) {
+						data.data;
 
+					}, "json"
+
+				);
+			});
 		});
 	</script>
 
