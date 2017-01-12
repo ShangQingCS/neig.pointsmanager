@@ -52,15 +52,6 @@ public class NsUser {
 
     private String optionRemark;
     
-    private String birthday;
-
-    public String getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
 
 	public Long getId() {
         return id;

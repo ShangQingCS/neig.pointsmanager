@@ -9,7 +9,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 
-		<title>支付密码</title>
+		<title>重置密码</title>
 		<jsp:include page="/common/include.jsp"></jsp:include>
 		<link href="${path }/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
 		<link href="${path }/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css">
@@ -24,21 +24,22 @@
 		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 		<script>
 			function pwdsubmit(){
-			
 				var mobilecode=$('#mobile_code').val();
- 				var payPwd=$('#user-password').val();
+ 				var loginPwd=$('#user-password').val();
 	        	if(mobilecode==""){
 	        		$('#msg').text('*验证码不能为空');
 	        	}else {
 	        		$.post(
-							_basePath+"/user_web/user/paypwdjson.do",
+							_basePath+"/user_web/user/loginpwdjson.do",
 							{ 
 								"mobilecode":mobilecode,
-								"payPwd"	:payPwd	
+								"loginPwd"	:loginPwd	
 							},function(data){
 								if(data.msg==1){
 									layer.msg('修改密码成功',{icon:5,time:1500},function(){
-                            				window.location.reload();}); 
+                            				window.location.reload();});
+									
+									 
 								}else{
 									layer.msg('修改密码失败',{icon:5,time:1500});
 										
@@ -64,7 +65,7 @@
 				<div class="main-wrap">
 
 					<div class="am-cf am-padding">
-						<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">支付密码</strong> / <small>Set&nbsp;pay&nbsp;Password</small></div>
+						<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">重置密码</strong> / <small>Set&nbsp;Login&nbsp;Password</small></div>
 					</div>
 					<hr/>
 					<!--进度条-->
@@ -73,7 +74,7 @@
 							<span class="step-1 step">
                                 <em class="u-progress-stage-bg"></em>
                                 <i class="u-stage-icon-inner">1<em class="bg"></em></i>
-                                <p class="stage-name">支付密码</p>
+                                <p class="stage-name">重置密码</p>
                             </span>
 							<span class="step-2 step">
                                 <em class="u-progress-stage-bg"></em>
@@ -89,40 +90,36 @@
 					<form class="am-form am-form-horizontal">
 						<div class="am-form-group bind">
 							<label for="user-phone" class="am-form-label">验证手机</label>
-							<div class="am-form-content" style="margin-top:2px">
-								<span id="user-phone" >${user.userPhone}</span>
-								<input type="hidden" name="tel" id="tel" value="${user.userPhone}"/>
+							<div class="am-form-content">
+								<span id="user-phone">186XXXX0531</span>
 							</div>
 						</div>
-						<div class="" style="height:30px;padding-left: 85px">
-							<span id="msg" style="color:red"></span>
-						</div>
-						
 						<div class="am-form-group code">
-							
 							<label for="user-code" class="am-form-label">验证码</label>
 							<div class="am-form-content">
-								<input type="tel" id="mobile_code" placeholder="短信验证码">
-								
+								<input type="tel" id="user-code" placeholder="短信验证码">
 							</div>
-							<a class="btn" href="javascript:void(0);"  id="sendMobileCode">
-								<div class="am-btn am-btn-danger">获取</div>
+							<a class="btn" href="javascript:void(0);" onclick="sendMobileCode();" id="sendMobileCode">
+								<div class="am-btn am-btn-danger">验证码</div>
 							</a>
 						</div>
 						<div class="am-form-group">
-							<label for="user-password" class="am-form-label">新密码</label>
+							<label for="user-new-phone" class="am-form-label">验证手机</label>
 							<div class="am-form-content">
-								<input type="tel" id="user-password" placeholder="请输入新密码">
+								<input type="tel" id="user-new-phone" placeholder="绑定新手机号">
 							</div>
 						</div>
-						<div class="am-form-group">
-							<label for="user-confirm-password" class="am-form-label">确认密码</label>
+						<div class="am-form-group code">
+							<label for="user-new-code" class="am-form-label">验证码</label>
 							<div class="am-form-content">
-								<input type="tel" id="user-confirm-password" placeholder="请再次输入上面的密码">
+								<input type="tel" id="user-new-code" placeholder="短信验证码">
 							</div>
+							<a class="btn" href="javascript:void(0);" onclick="sendMobileCode();" id="sendMobileCode">
+								<div class="am-btn am-btn-danger">验证码</div>
+							</a>
 						</div>
 						<div class="info-btn">
-							<div class="am-btn am-btn-danger" onclick="pwdsubmit()"><a style="color:white">保存修改</a></div>
+							<div class="am-btn am-btn-danger">保存修改</div>
 						</div>
 
 					</form>

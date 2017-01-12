@@ -187,7 +187,11 @@ public class FormatUtils {
 	  */
 	 public static String getRandom() {
 		
-			 return String.valueOf((Math.random()*9+1)*100000);
+		float i =(float) (Math.random()*9+1)*100000;
+		 	int j=(int) i;
+			 return String.valueOf(j);
 		
 		 }
+	 
+	 
 }

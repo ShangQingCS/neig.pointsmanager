@@ -27,7 +27,9 @@ import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.service.UserService;
 import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
 import cn.sqhl.neig.pointsmanager.utils.CheckUserUtils;
+import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.MD5Util;
+import cn.sqhl.neig.pointsmanager.utils.SmsHelper;
 import cn.sqhl.neig.pointsmanager.vo.Address;
 import cn.sqhl.neig.pointsmanager.vo.web.ErrorInfo;
 
@@ -62,7 +64,7 @@ public class UserWebController extends basicInfo{
 		if(user!=null){
 			user.setNickName(nickName);
 			user.setUserSex(Integer.parseInt(userSex));
-			user.setBirthday("1989-08-08");
+			
 			user.setUserMail(userMail);
 			result=userService.updateByNickName(user);
 		}		
@@ -170,14 +172,18 @@ public class UserWebController extends basicInfo{
 	
 	@ResponseBody
 	@RequestMapping("/user/sendcode")
-	public JSONObject sendCode(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception{		
+	public JSONObject sendCode(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="tel",required=false) String tel
+			) throws Exception{		
 		int result=0;
-		System.err.println("------发送验证码------");
-		String mobileCode="123456";
-		if(result==0){
-			HttpSession session=request.getSession();
-			session.setAttribute("mobileCode", mobileCode);	
-		}
+		
+		String mobileCode=FormatUtils.getRandom();
+		System.err.println(tel+"------发送验证码------"+mobileCode);
+		//SmsHelper.sendSms(tel, mobileCode);
+		
+		HttpSession session=request.getSession();
+		session.setAttribute("mobileCode", mobileCode);	
+		
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);
 		return rsJson;
@@ -295,6 +301,34 @@ public class UserWebController extends basicInfo{
 	@ResponseBody
 	@RequestMapping("/user/idcardjson")
 	public JSONObject saveIDcard(HttpServletRequest request,HttpServletResponse response,Model model,
+			@RequestParam(value="truename",required=false) String trueName,
+			@RequestParam(value="IDcard",required=false) String IDcard,
+			@RequestParam(value="issuing",required=false) String issuing,
+			@RequestParam(value="IDCardValidity",required=false) String idCardValidity
+			) throws Exception{
+			int result=0;	
+			NsUser user=(NsUser) request.getSession().getAttribute("user");
+			if(user!=null){
+				user.setTrueName(trueName);
+				user.setIdentityCard(IDcard);	
+				user.setIdentityIssuing(issuing);
+				user.setIdentityCardValidity(new Date());
+				user.setIdentityStatus(1);
+				result=userService.updateByIDcard(user);	
+			}
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	@RequestMapping("/user/bindphone")
+	public String bindPhone(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		return "/jsp/person/bindphone";
+	}
+	@ResponseBody
+	@RequestMapping("/bindphonejson")
+	public JSONObject bindphonejson(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="truename",required=false) String trueName,
 			@RequestParam(value="IDcard",required=false) String IDcard,
 			@RequestParam(value="issuing",required=false) String issuing,

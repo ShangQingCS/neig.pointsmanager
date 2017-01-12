@@ -92,6 +92,7 @@
 							<label for="user-phone" class="am-form-label">验证手机</label>
 							<div class="am-form-content" style="margin-top:2px">
 								<span id="user-phone" >${user.userPhone}</span>
+								<input type="hidden" name="tel" id="tel" value="${user.userPhone}"/>
 							</div>
 						</div>
 						<div class="" style="height:30px;padding-left: 85px">

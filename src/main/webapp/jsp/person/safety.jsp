@@ -42,7 +42,7 @@
 						</div>
 						<hr/>
 
-						<!--头像 -->
+						<!--头像 
 						<div class="user-infoPic">
 
 							<div class="filePic">
@@ -59,7 +59,7 @@
 								</div>
 							</div>
 						</div>
-
+-->
 						<div class="check">
 							<ul>
 								<li>
@@ -82,7 +82,12 @@
 									</div>
 									<div class="fore3">
 										<a href="${path }/user_web/user/paypwd.do">
-											<div class="am-btn am-btn-secondary">立即启用</div>
+											<c:choose>
+												<c:when test="${user.payPwd==null}"><div class="am-btn am-btn-secondary">立即启用</div></c:when>
+												
+												<c:otherwise><div class="am-btn am-btn-secondary">修改</div></c:otherwise>
+											</c:choose>
+											
 										</a>
 									</div>
 								</li>
@@ -95,11 +100,33 @@
 									</div>
 									<div class="fore3">
 										<a href="${path }/user_web/user/idcard.do">
-											<div class="am-btn am-btn-secondary">认证</div>
+											
+											
+											<c:choose>
+												<c:when test="${user.identityStatus==2}">
+													<div class="am-btn am-btn-secondary">已认证</div>
+												</c:when>
+												<c:when test="${user.identityStatus==1}">
+													<div class="am-btn am-btn-secondary">认证中</div>
+												</c:when>
+												<c:otherwise><div class="am-btn am-btn-secondary">认证</div></c:otherwise>
+											</c:choose>
+											
 										</a>
 									</div>
 								</li>
-								
+								<li>
+									<i class="i-safety-iphone"></i>
+									<div class="m-left">
+										<div class="fore1">手机验证</div>
+										<div class="fore2"><small>您验证的手机：186XXXXXXXX 若已丢失或停用，请立即更换</small></div>
+									</div>
+									<div class="fore3">
+										<a href="bindphone.html">
+											<div class="am-btn am-btn-secondary">换绑</div>
+										</a>
+									</div>
+								</li>
 							</ul>
 						</div>
 

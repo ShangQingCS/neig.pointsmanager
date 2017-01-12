@@ -56,6 +56,8 @@
 							</c:choose>
 							</span></p>
 							<p>可用积分:<span>${user.userJfBalance }</span></p>
+							
+							<p><span>申请提现</span></p>
 						</div>
 					</div>
 

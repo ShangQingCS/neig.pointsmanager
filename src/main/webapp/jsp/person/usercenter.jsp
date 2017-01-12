@@ -42,16 +42,16 @@
 									</a>
 									<div class="m-baseinfo" style="background:url(${path}/images/icon_bg.png) no-repeat 0 0;">
 										<a class="m-pic" href="javascript:;">
-											<img src="${path }/images/Avatar.jpg">
+											<img src="${path }/images/Avatar${user.userSex }.jpg">
 										</a>
 										<div class="m-info">
-											<em class="s-name">小叮当</em>
-											<div class="vip1"><a href="#"><span>会员等级</span><em>${user.userGrade}</em></a></div>
-											<div class="safeText"><a href="safety.html">账户安全:<em style="margin-left:20px ;">60</em>分</a>
-												<div class="progressBar"><span style="left: -95px;" class="progress"></span></div>
+											<em class="s-name">${user.userName} </em>
+											<div class="vip1"><a href="#"><span>会员等级</span><em><c:if test="${user.userGrade ==null}">0</c:if>${user.userGrade }</em></a></div>
+											<div class="safeText"><a href="${path }/asset_web/vip.do"><span style="margin-left:45px">查看会员等级说明</span></a>
+												<div class="progressBar"><span style="left: 0px" class="progress"></span></div>
 											</div>
 											<div class="m-address">
-												<a href="javascript:;" class="i-trigger">收货地址<i class="am-icon-angle-right" style="padding-left:5px ;"></i></a>
+												<a href="${path }/user_web/user/address.do" class="i-trigger">收货地址<i class="am-icon-angle-right" style="padding-left:5px ;"></i></a>
 											</div>
 										</div>
 									</div>
@@ -66,30 +66,30 @@
 								<!--个人资产-->
 								<div class="m-userproperty">
 									<div class="s-bar">
-										<i class="s-icon"></i>个人资产
+										<i class="s-icon"></i>我的资产
 									</div>
 									<p class="m-coupon">
-										<a href="javascript:;">
-											<em class="m-num">2</em>
-											<span class="m-title">优惠券</span>
+										<a href="${path }/asset_web/coupon.do">
+											<em class="m-num">${numCoupon } 张</em>
+											<span class="m-title">优 &nbsp;惠 &nbsp;券</span>
 										</a>
 									</p>
 									<p class="m-wallet">
-										<a href="javascript:;">
-											<em class="m-num">0.00</em>
-											<span class="m-title">账户余额</span>
+										<a href="${path }/asset_web/walletlist.do?dateCode=1&type=0">
+											<em class="m-num">${user.userKyBalance }</em>
+											<span class="m-title">我的钱包</span>
 										</a>
 									</p>
 									<p class="m-bill">
-										<a href="javascript:;">
-											<em class="m-num">10</em>
-											<span class="m-title">可用积分</span>
+										<a href="${path }/asset_web/walletlist.do?dateCode=1&type=1">
+											<em class="m-num">${user.userJfBalance }</em>
+											<span class="m-title">我的积分</span>
 										</a>
 									</p>
 									<p class="m-bill">
-										<a href="javascript:;">
-											<em class="m-num">10</em>
-											<span class="m-title">分红</span>
+										<a href="${path }/asset_web/walletlist.do?dateCode=1&type=2">
+											<em class="m-num">${user.userFxBalance }</em>
+											<span class="m-title">我的分红</span>
 										</a>
 									</p>
 								</div>
@@ -97,24 +97,24 @@
 								<!--我的钱包-->
 								<div class="wallet">
 									<div class="s-bar">
-										<i class="s-icon"></i>商城钱包
+										<i class="s-icon"></i>快捷设置
 									</div>
 									<p class="m-big squareS">
-										<a href="javascript:;">
+										<a href="${path }/order_web/search.do">
 											<i><img src="${path }/images/shopping.png"/></i>
-											<span class="m-title">能购物</span>
+											<span class="m-title">我的订单</span>
 										</a>
 									</p>
 									<p class="m-big squareA">
-										<a href="#">
-											<i><img src=""/></i>
-											<span class="m-title">够安全</span>
+										<a href="${path }/user_web/user/safety.do">
+											<i><img src="${path }/images/safe.png"/></i>
+											<span class="m-title">安全设置</span>
 										</a>
 									</p>
 									<p class="m-big squareL">
 										<a href="#">
 											<i><img src="${path }/images/profit.png"/></i>
-											<span class="m-title">很灵活</span>
+											<span class="m-title">账户充值</span>
 										</a>
 									</p>
 								</div>
@@ -212,37 +212,36 @@
 						<!-- 日历-->
 						<div class="day-list">
 							<div class="s-title">
-								每日新鲜事
+								Android扫码下载
 							</div>
 							<div class="s-box">
-								<ul>
-									<li><a><p>粮油冲锋周 满128减18</p></a></li>
-									<li><a><p>防晒这么重要的事怎能随意</p></a></li>
-									<li><a><p>春日护肤面膜不可少，你选对了吗？</p></a></li>
-									<li><a><p>纯粹时尚，摩登出游，吸睛美衣</p></a></li>
-									<li><a><p>粮油冲锋周 满128减18</p></a></li>
-									<li><a><p>春日护肤面膜不可少，你选对了吗？</p></a></li>									
-								</ul>
-							</div>
+								
+							</div>					
 						</div>
-						<!--新品 -->
-						<div class="new-goods">
-							<div class="s-bar">
-								<i class="s-icon"></i>今日新品
-								<a class="i-load-more-item-shadow">15款新品</a>
+						
+						<div class="day-list" style="margin-top:15px">
+							<div class="s-title">
+								IOS扫码下载
 							</div>
+							<div class="s-box">
+								
+							</div>
+							
+							
+						</div>
+						<!--新品 
+						<div class="new-goods">
+						
+							<div class="s-bar">
+								<i class="s-icon">手机APP扫码下载</i>
+								
+							</div>
+							
 							<div class="new-goods-info">
-								<a class="shop-info" href="#">
-									<div class="face-img-panel">
-										<img src="${path }/images/imgsearch1.jpg" alt="">
-									</div>
-									<span class="new-goods-num ">4</span>
-									<span class="shop-title">剥壳松子</span>
-								</a>
-								<a class="follow">收藏</a>
+								
 							</div>
 						</div>						
-
+-->
 											
      				</div>
      				

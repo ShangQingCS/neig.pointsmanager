@@ -33,7 +33,8 @@
 								"issuing":issuing	
 							},function(data){
 								if(data.msg>0){
-									layer.msg('申请验证成功!',{icon:5,time:1500});
+								layer.msg('申请验证成功!',{icon:5,time:1500},function(){
+                            				window.location.reload();});
 											
 								}else{
 									layer.msg('申请失败!',{icon:5,time:1500});
@@ -86,25 +87,25 @@
 							<div class="am-form-group">
 								<label for="user-name" class="am-form-label" style="width:110px">真实姓名</label>
 								<div class="am-form-content">
-									<input type="text" id="true-name" placeholder="请输入您的真实姓名">
+									<input type="text" id="true-name" placeholder="请输入您的真实姓名" value="${user.trueName }">
 								</div>
 							</div>
 							<div class="am-form-group">
-								<label for="user-IDcard" class="am-form-label" style="width:110px">身份证号</label>
+								<label for="user-IDcard" class="am-form-label" style="width:110px" >身份证号</label>
 								<div class="am-form-content">
-									<input type="tel" id="IDcard" placeholder="请输入您的身份证信息">
+									<input type="tel" id="IDcard" placeholder="请输入您的身份证信息" value="${user.identityCard }">
 								</div>
 							</div>
 							<div class="am-form-group">
-								<label for="user-IDcard" class="am-form-label" style="width:110px">发证机关</label>
+								<label for="user-IDcard" class="am-form-label" style="width:110px" >发证机关</label>
 								<div class="am-form-content">
-									<input type="tel" id="issuing" placeholder="请输入身份证发证机关">
+									<input type="tel" id="issuing" placeholder="请输入身份证发证机关" value="${identityIssuing }">
 								</div>
 							</div>
 							<div class="am-form-group">
 								<label for="user-IDcard" class="am-form-label" style="width:110px">身份证有效期</label>
 								<div class="am-form-content">
-									<input type="tel" id="issuing" placeholder="请输入身份证发证有效日期">
+									<input type="tel" id="issuing" placeholder="请输入身份证发证有效日期" value="${user.identityCardValidity }">
 								</div>
 							</div>
 							
@@ -113,7 +114,19 @@
 						</div>
 						
 						<div class="info-btn">
-							<div class="am-btn am-btn-danger" id="btn-submit" onclick="submit()">提交</div>
+							<c:choose>
+								<c:when test="${user.identityStatus ==2}">
+									
+									<div class="am-btn am-btn-danger" id="btn-submit">已认证</div>
+								</c:when>
+								<c:when test="${user.identityStatus ==1}">
+									<div class="am-btn am-btn-danger" id="btn-submit">认证中</div>
+								</c:when>
+								<c:otherwise>
+									<div class="am-btn am-btn-danger" id="btn-submit" onclick="submit()">提交</div>
+								</c:otherwise>
+							</c:choose>
+							
 						</div>
 					</div>
 				</div>
