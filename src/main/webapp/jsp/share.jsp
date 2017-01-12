@@ -63,8 +63,9 @@
 									<input type="text" id="content"  value="http://localhost:8080/pointsmanager/jsp/register.jsp?userPid=${user.id}" style="float:left" >
 										<input type="button" name="" onclick="jsCopy()" id="btn_copy" value="复制链接" class="am-btn am-btn-primary am-btn-sm am-fl" style="width=50px;margin-top:10px" />			
 								</div>
+								</form>
 								</div>
-							</form>
+							
 					</div>
 				</div>
 				<!--底部-->

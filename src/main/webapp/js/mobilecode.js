@@ -26,11 +26,11 @@
         });
 		
 		$('#sendMobileCode').click(function(){
-			layer.msg('000',{icon:5,time:1500});
+				var tel= $('#tel').val();
 					$.post(
 								_basePath+"/user_web/user/sendcode.do",
 								{ 
-										
+									"tel":tel	
 								},function(data){
 									if(data.msg==0){
 										layer.msg('短信已发送，请在30秒内进行验证!',{icon:5,time:1500});

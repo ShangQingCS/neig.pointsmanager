@@ -1,4 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -33,9 +36,10 @@
 								"birthday" :birthday	
 							},function(data){
 								if(data.msg>0){
-									layer.msg('信息修改成功!',{icon:5,time:1500});		
+									layer.msg('修改信息成功',{icon:5,time:1500},function(){
+                            				window.location.reload();});		
 								}else{
-									
+									layer.msg('修改信息失败',{icon:5,time:1500});
 								}
 							},"json"
 						);
@@ -65,40 +69,48 @@
 						</div>
 						<hr/>
 
-						<!--头像 -->
-						<div class="user-infoPic">
-
-							<div class="filePic">
-								<input type="file" class="inputPic" allowexts="gif,jpeg,jpg,png,bmp" accept="image/*">
-								<img class="am-circle am-img-thumbnail" src="${path }/images/getAvatar.do.jpg" alt="" />
-							</div>
-
-							<p class="am-form-help">头像</p>
-
-							<div class="info-m">
-								<div><b>用户名：<i>小叮当</i></b></div>
-								<div class="u-level">
-									<span class="rank r2">
-							             <s class="vip1"></s><a class="classes" href="#">铜牌会员</a>
-						            </span>
-								</div>
-								<div class="u-safety">
-									<a href="safety.html">
-									 账户安全
-									<span class="u-profile"><i class="bc_ee0000" style="width: 60px;" width="0">60分</i></span>
-									</a>
-								</div>
-							</div>
-						</div>
-
+	
 						<!--个人信息 -->
 						<div class="info-main">
 							<form class="am-form am-form-horizontal">
 
+                                 <div class="am-form-group">
+									<label for="user-name2" class="am-form-label">用户名</label>
+									<div class="am-form-content">
+										${user.userName }
+
+									</div>
+								</div>
+								
+								<div class="am-form-group">
+									<label for="user-name2" class="am-form-label">真实姓名</label>
+									<div class="am-form-content">
+										${user.trueName }      
+									</div>
+									<div class="fore3">
+										<a href="${path }/user_web/user/idcard.do">
+											<div class="am-btn am-btn-secondary">认证</div>
+										</a>
+									</div>
+								</div>
+								
+								<div class="am-form-group">
+									<label for="user-name2" class="am-form-label">手机</label>
+									<div class="am-form-content">
+										${user.userPhone }
+
+									</div>
+									<div class="fore3">
+										<a href="bindphone.html">
+											<div class="am-btn am-btn-secondary">绑定/更换</div>
+										</a>
+									</div>
+								</div>
+
 								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">昵称</label>
 									<div class="am-form-content">
-										<input type="text" id="nick_name" placeholder="nickname">
+										<input type="text" id="nick_name" placeholder="nickname" value="${user.nickName }">
 
 									</div>
 								</div>
@@ -106,40 +118,31 @@
 								<div class="am-form-group">
 									<label class="am-form-label">性别</label>
 									<div class="am-form-content sex">
+										
+										
+										<c:if test="${user.userSex ==1}">
 										<label class="am-radio-inline">
-											<input type="radio" name="radio_sex" value="1" checked="checked"> 男
-										</label>
+										    <input type="radio" name="radio_sex" value="1" checked>  男
+										    </label>	
+										    <label class="am-radio-inline">
+											<input type="radio" name="radio_sex" value="0" >  女
+											</label>	
+										</c:if>
+										
+										<c:if test="${user.userSex==0 }">
 										<label class="am-radio-inline">
-											<input type="radio" name="radio_sex" value="0" data-am-ucheck> 女
+										    <input type="radio" name="radio_sex" value="1" >  男
+										    </label>	
+										    <label class="am-radio-inline">
+											<input type="radio" name="radio_sex" value="0" checked>  女
+											</label>	
+										</c:if>
+										
 										</label>										
 									</div>
 								</div>
 
-								<div class="am-form-group">
-									<label for="user-birth" class="am-form-label">生日</label>
-									<div class="am-form-content birth">
-										<div class="birth-select">
-											<select data-am-selected>
-												<option value="a">2015</option>
-												<option value="b">1987</option>
-											</select>
-											<em>年</em>
-										</div>
-										<div class="birth-select2">
-											<select data-am-selected>
-												<option value="a">12</option>
-												<option value="b">8</option>
-											</select>
-											<em>月</em></div>
-										<div class="birth-select2">
-											<select data-am-selected>
-												<option value="a">21</option>
-												<option value="b">23</option>
-											</select>
-											<em>日</em></div>
-									</div>
-							
-								</div>
+								
 								
 								<div class="am-form-group">
 									<label for="user-email" class="am-form-label">电子邮件</label>

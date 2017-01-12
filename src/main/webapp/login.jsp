@@ -48,15 +48,17 @@
                  			
               			</form>
            			</div>  
-           			<!--           
+           			          
             		<div class="login-links">
                 		<label for="remember-me"><input id="remember-me" type="checkbox">记住密码</label>
 								<a href="#" class="am-fr">忘记密码</a>
-								<a href="register.jsp" class="zcnext am-fr am-btn-default">注册</a>
+								<!--  <a href="${path }/user_web/user/register.do" class="zcnext am-fr am-btn-default">注册</a>-->
 								<br />
-            		</div>--> 
+            		</div>
 					<div class="am-cf">
 						<input type="button" name="login" value="登 录" onclick="login()" class="am-btn am-btn-primary am-btn-sm" ></div>
+					<div class="am-cf">
+						<input type="button" name="reg" value="注册" onclick="window.location.href='${path }/user_web/user/register.do'" class="am-btn am-btn-primary am-btn-sm" ></div>	
 						<!-- 
 						<div class="partner">		
 								<h3>合作账号</h3>
@@ -83,7 +85,7 @@
 									},function(data){
 										if(data.msg){
 											
-                            				window.location.href="${path}/login_web/share.do";
+                            				window.location.href="${path }/asset_web/usercenter.do";
 										}else{
 											layer.msg('账户密码有误!',{icon:5,time:1500});
 										}

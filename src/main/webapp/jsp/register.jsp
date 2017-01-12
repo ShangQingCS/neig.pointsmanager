@@ -188,7 +188,7 @@
 									<div class="am-cf">
 										<input type="button" name="" id="btn_submit" value="注册" class="am-btn am-btn-primary am-btn-sm am-fl"  />
 									</div>									
-									<hr>
+									
 									
 								</div>
 								

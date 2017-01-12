@@ -47,12 +47,14 @@ public class AssetWebController extends basicInfo{
 	public String coupon(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
-		List<NsUserCoupon> myCouponList= couponService.selectByUserId(Long.valueOf(1), null);
+		List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+		System.err.println(myCouponList.size()+"---------------");
+		
 		
 		model.addAttribute("myCouponList", myCouponList);
 		
-		List<NsUserCoupon> expireCouponList= couponService.selectByUserId(Long.valueOf(1), "1");
-		
+		List<NsUserCoupon> expireCouponList= couponService.selectByUserId(user.getId(), "1");
+		System.err.println(expireCouponList.size()+"---------------");
 		model.addAttribute("expireCouponList", expireCouponList);
 		
 		return "/jsp/person/coupon";
@@ -110,14 +112,31 @@ public class AssetWebController extends basicInfo{
 		}
 		return "/jsp/person/myteam";
 	}
+	@RequestMapping("/vip")
 	public String vip(HttpServletRequest request,HttpServletResponse response,Model model){
+		NsUser user=(NsUser) request.getAttribute("user");
 		List<NsUserGrade> gradeList= couponService.selectUserGrade();
+		
 		request.setAttribute("gradeList", gradeList);
 		
 		return "/jsp/person/vip";
 	}
 	
-	
+	@RequestMapping("/usercenter")
+	public String usercenter(HttpServletRequest request,HttpServletResponse response,Model model){
+		
+		
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
+		if(user!=null){
+		List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+		int numCoupon=myCouponList.size();
+		request.setAttribute("numCoupon", numCoupon);
+		return "/jsp/person/usercenter";
+		}else{
+		return "/login";
+		}
+	}
 	
 	
 	

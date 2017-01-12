@@ -79,8 +79,8 @@ a.i-trigger { cursor: pointer;position: relative; z-index: 2;display: block;colo
 
 /*安全、地址*/
 .vip1{width:112px ;margin: 0px auto;}
-.vip1 span,.vip1 em{display:block;float: left;color:#fff ;line-height:22px ;}
-.vip1:after{ content:"."; display:block; height:0; visibility:hidden; clear:both;}
+.vip1 span,.vip1 em{display:block;float: left;color:#fff ;line-height:22px ;margin-left:15px}
+.vip1:after{ content:"."; display:block; height:0; visibility:hidden; clear:both}
 .safeText{display: block;color: #fff;margin-top:15px ;position: relative;text-align:left ;}
 .safeText a{margin-left: 20px; color:#fff ;}
 .progressBar{width: 190px;height: 8px;background:url(../images/icon_bar.png) no-repeat;margin:5px auto;position: relative;overflow: hidden;border-radius: 5px}

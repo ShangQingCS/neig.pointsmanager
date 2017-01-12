@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.controller.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.po.NsUserCoupon;
 import cn.sqhl.neig.pointsmanager.service.UserService;
 import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
 import cn.sqhl.neig.pointsmanager.utils.CheckUserUtils;
@@ -72,11 +75,11 @@ public class LoginController {
 		
 		return "/jsp/share";
 	}
-	@RequestMapping("/usercenter")
-	public String usercenter(HttpServletRequest request,HttpServletResponse response,Model model){
-		
-		
-		return "/jsp/person/usercenter";
+	@RequestMapping("/loginout")
+	public String loginout(HttpServletRequest request,HttpServletResponse response,Model model){
+		request.getSession().invalidate();
+		request.getSession().setAttribute("user", null);
+		return "/login";
 	}
 	
 }

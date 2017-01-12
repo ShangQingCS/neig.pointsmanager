@@ -48,8 +48,8 @@
 						-->
 						<div class="pointlist am-tabs" data-am-tabs>
 							<ul class="am-avg-sm-3 am-tabs-nav am-nav am-nav-tabs">
-								<li class="am-active"><a href="#tab1">全部</a></li>
-								<!-- 
+								<!--<li class="am-active"><a href="#tab1">全部</a></li>
+								 
 								<li><a href="#tab2">获得</a></li>
 								<li><a href="#tab3">支出</a></li>
 								 --> 
@@ -57,7 +57,17 @@
 							<div class="am-tabs-bd">
 								<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 									<table>
-										<b></b>
+										<b>
+											<div class="info-main">
+							<form class="am-form am-form-horizontal">
+								<div class="am-form-group">
+								通过下面的分享链接注册的用户，充值/消费成功后为您的团队成员。
+									<input type="text" id="content"  value="http://localhost:8080/pointsmanager/jsp/register.jsp?userPid=${user.id}" style="float:left" >
+										<input type="button" name="" onclick="jsCopy()" id="btn_copy" value="复制链接" class="am-btn am-btn-primary am-btn-sm am-fl" style="width=50px;margin-top:10px" />			
+								</div>
+								</form>
+								</div>
+										</b>
 										<thead>
 											<tr>												
 												<th class="th1" style="width:50%">姓名</th>
