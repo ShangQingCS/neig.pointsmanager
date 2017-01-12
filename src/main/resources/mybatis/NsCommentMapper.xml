@@ -152,11 +152,11 @@
     id, goodsid, comment, create_time, score, userid, ishidden,gname,gimg,username,orderid 
   </sql>
   <select id="queryCommentList" parameterType="java.util.Map" resultMap="cmResultMap">
-    select 
+     select 
     id, goodsid, comment, DATE_FORMAT(create_time,"%Y-%m-%d %T") as create_time, score, userid, ishidden,(select  AVG(b.score) from ns_comment b
     	where b.flag=1 and a.goodsid=b.goodsid
     )as avgscore,
-    (select b.username from ns_user b where b.flag=1 and b.userid=a.userid) as username,
+    (select b.user_name from ns_user b where b.user_status=1 and b.id=a.userid) as username,
     (select b.gname from ns_goods b where b.id=a.goodsid) as gname,
     (select b.goodimg from ns_goods b where b.id=a.goodsid) as gimg,
     a.orderid 
@@ -179,7 +179,7 @@
     id, goodsid, comment, DATE_FORMAT(create_time,"%Y-%m-%d %T") as create_time, score, userid, ishidden,(select  AVG(b.score) from ns_comment b
     	where b.flag=1 and a.goodsid=b.goodsid
     )as avgscore,
-    (select b.username from ns_user b where b.flag=1 and b.userid=a.userid) as username,
+    (select b.user_name from ns_user b where b.user_status=1 and b.id=a.userid) as username,
     (select b.gname from ns_goods b where b.id=a.goodsid) as gname,
     (select b.goodimg from ns_goods b where b.id=a.goodsid) as gimg,
     a.orderid 
