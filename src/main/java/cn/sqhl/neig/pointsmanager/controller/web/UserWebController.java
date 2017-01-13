@@ -25,7 +25,6 @@ import cn.sqhl.neig.pointsmanager.po.NsAddress;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.service.UserService;
-import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
 import cn.sqhl.neig.pointsmanager.utils.CheckUserUtils;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.MD5Util;
@@ -223,17 +222,19 @@ public class UserWebController extends basicInfo{
 	public JSONObject saveUser(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="username",required=false) String username,
 			@RequestParam(value="loginPwd",required=false) String loginPwd,
-			@RequestParam(value="tel",required=false) String tel
+			@RequestParam(value="tel",required=false) String tel,
+			@RequestParam(value="mobileCode",required=false) String mobileCode
 			) throws Exception{
 		//获取推荐人ID
-		//request.getParameter("pid");
+		
 		int result=0;
 		
-		if(CheckUserUtils.checkUser(userService, username, tel)){
+		if(CheckUserUtils.checkUser(userService, username, tel)&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
 			NsUser user= new NsUser();
 			user.setUserName(username);
 			user.setLoginPwd(MD5Util.MD5(loginPwd));	
 			user.setUserPhone(tel);
+			user.setUserPid(Long.valueOf(request.getParameter("userPid")));
 			result=userService.addObj(user);	
 		}
 		JSONObject rsJson = new JSONObject();
@@ -329,20 +330,20 @@ public class UserWebController extends basicInfo{
 	@ResponseBody
 	@RequestMapping("/bindphonejson")
 	public JSONObject bindphonejson(HttpServletRequest request,HttpServletResponse response,Model model,
-			@RequestParam(value="truename",required=false) String trueName,
-			@RequestParam(value="IDcard",required=false) String IDcard,
-			@RequestParam(value="issuing",required=false) String issuing,
-			@RequestParam(value="IDCardValidity",required=false) String idCardValidity
+			
+			@RequestParam(value="tel",required=false) String tel,
+			@RequestParam(value="mobileCode",required=false) String mobileCode
 			) throws Exception{
-			int result=0;	
+			int result=0;
+	
 			NsUser user=(NsUser) request.getSession().getAttribute("user");
 			if(user!=null){
-				user.setTrueName(trueName);
-				user.setIdentityCard(IDcard);	
-				user.setIdentityIssuing(issuing);
-				user.setIdentityCardValidity(new Date());
-				user.setIdentityStatus(1);
-				result=userService.updateByIDcard(user);	
+				if(CheckUserUtils.checkUser(userService, null, tel)&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+					NsUser nsuser=new NsUser();
+					nsuser.setId(user.getId());
+					nsuser.setUserPhone(tel);
+					result=userService.updateObj(nsuser);
+				}	
 			}
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);

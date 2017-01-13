@@ -46,7 +46,7 @@
 										</a>
 										<div class="m-info">
 											<em class="s-name">${user.userName} </em>
-											<div class="vip1"><a href="#"><span>会员等级</span><em><c:if test="${user.userGrade ==null}">0</c:if>${user.userGrade }</em></a></div>
+											<div class="vip1"><span>会员等级</span><em>VIP<c:if test="${user.userGrade ==null}">0</c:if>${user.userGrade }</em></div>
 											<div class="safeText"><a href="${path }/asset_web/vip.do"><span style="margin-left:45px">查看会员等级说明</span></a>
 												<div class="progressBar"><span style="left: 0px" class="progress"></span></div>
 											</div>

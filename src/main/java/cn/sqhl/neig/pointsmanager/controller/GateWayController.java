@@ -1,6 +1,7 @@
 package cn.sqhl.neig.pointsmanager.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.po.NsUserCoupon;
+import cn.sqhl.neig.pointsmanager.po.NsUserGrade;
+import cn.sqhl.neig.pointsmanager.service.CouponService;
+import cn.sqhl.neig.pointsmanager.service.impl.CouponServiceImpl;
 import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
 import cn.sqhl.neig.pointsmanager.utils.DataSecret;
 import cn.sqhl.neig.pointsmanager.utils.DateHelper;
@@ -29,6 +34,8 @@ public class GateWayController extends ContextInfo {
 	
 	@Autowired
 	private UserServiceImpl userService;
+	@Autowired
+	private CouponServiceImpl couponService;
 
 	private final String ver = "v1.0"; // 接口版本
 
@@ -132,7 +139,11 @@ public class GateWayController extends ContextInfo {
 								
 								
 								//修改手机号码 分支
-								
+								if(user_phone!=null){
+									nsUser.setUserPhone(user_phone);
+									userService.updateObj(nsUser);
+									
+								}
 								
 								
 								
@@ -168,14 +179,17 @@ public class GateWayController extends ContextInfo {
 								
 							break;	
 							case "user_getcouponlist"://优惠券查询接口（人、分页）
-								
+//								List<NsUserCoupon> couponlist=couponService.selectByUserId(nsUser.getId(), "1");
+//								dataParams =couponlist;
+//								outParams.put("data", dataParams);
 								//username coupon
 							
 							break;
 							
 							case "user_getgradelist"://会员分级查询接口
-							
-								
+								List<NsUserGrade> gradeList= couponService.selectUserGrade();
+								dataParams =gradeList;
+								outParams.put("data", dataParams);
 							break;	
 							
 							case "user_getuserinfo"://用户信息查询

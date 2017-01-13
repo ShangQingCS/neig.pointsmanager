@@ -105,7 +105,7 @@
 							<div class="am-form-group">
 								<label for="user-IDcard" class="am-form-label" style="width:110px">身份证有效期</label>
 								<div class="am-form-content">
-									<input type="tel" id="issuing" placeholder="请输入身份证发证有效日期" value="${user.identityCardValidity }">
+									<input type="tel" id="issuing" placeholder="请输入身份证发证有效日期" value="<fmt:formatDate value="${user.identityCardValidity }" type="date"/>">
 								</div>
 							</div>
 							

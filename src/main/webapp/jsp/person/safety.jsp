@@ -119,10 +119,10 @@
 									<i class="i-safety-iphone"></i>
 									<div class="m-left">
 										<div class="fore1">手机验证</div>
-										<div class="fore2"><small>您验证的手机：186XXXXXXXX 若已丢失或停用，请立即更换</small></div>
+										<div class="fore2"><small>您验证的手机：<span style="font-weight:600;color:#F69954">${user.userPhone}</span> </small></div>
 									</div>
 									<div class="fore3">
-										<a href="bindphone.html">
+										<a href="${path }/user_web/user/bindphone.do">
 											<div class="am-btn am-btn-secondary">换绑</div>
 										</a>
 									</div>

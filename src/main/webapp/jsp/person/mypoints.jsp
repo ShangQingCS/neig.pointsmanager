@@ -46,8 +46,8 @@
 					<hr>
 					<div class="finance">
 						<div class="financeText">
-							<p>可用余额:<span>${user.userKyBalance }</span></p>
-							<p>分红:<span>${user.userFxBalance }</span></p>
+							
+							<p>可用积分:<span>${user.userJfBalance }</span></p>
 							<p>账户状态:<span>
 							<c:choose>
 								<c:when test="${user.userStatus=='0'}">注销</c:when>
@@ -55,7 +55,7 @@
 								<c:otherwise>冻结</c:otherwise>
 							</c:choose>
 							</span></p>
-							<p>可用积分:<span>${user.userJfBalance }</span></p>
+							
 						</div>
 					</div>
 
@@ -78,12 +78,12 @@
 					<div class="walletList">
 
 						<div class="walletTitle">
-							<li class="time">创建时间</th>
+							<li class="time">操作时间</th>
 								<li class="time">钱包类型</th>
 								<li class="time">来源/去向</th>
 								<li class="time">详情</th>
-									<li class="amount">金额</th>
-										<li class="balance">余额</th>
+									<li class="amount">积分数</th>
+										<li class="balance">剩余积分</th>
 						</div>
 						<div class="clear"></div>
 						<div class="walletCont">

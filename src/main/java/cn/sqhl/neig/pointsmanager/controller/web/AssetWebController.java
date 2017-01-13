@@ -47,16 +47,12 @@ public class AssetWebController extends basicInfo{
 	public String coupon(HttpServletRequest request,HttpServletResponse response,Model model){
 		
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
-		List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
-		System.err.println(myCouponList.size()+"---------------");
-		
-		
-		model.addAttribute("myCouponList", myCouponList);
-		
-		List<NsUserCoupon> expireCouponList= couponService.selectByUserId(user.getId(), "1");
-		System.err.println(expireCouponList.size()+"---------------");
-		model.addAttribute("expireCouponList", expireCouponList);
-		
+		if(user!=null){
+			List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+			model.addAttribute("myCouponList", myCouponList);
+			List<NsUserCoupon> expireCouponList= couponService.selectByUserId(user.getId(), "1");
+			model.addAttribute("expireCouponList", expireCouponList);
+		}
 		return "/jsp/person/coupon";
 	}
 	

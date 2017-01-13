@@ -47,7 +47,7 @@
 					<div class="finance">
 						<div class="financeText">
 							<p>可用余额:<span>${user.userKyBalance }</span></p>
-							<p>分红:<span>${user.userFxBalance }</span></p>
+							
 							<p>账户状态:<span>
 							<c:choose>
 								<c:when test="${user.userStatus=='0'}">注销</c:when>
@@ -55,8 +55,8 @@
 								<c:otherwise>冻结</c:otherwise>
 							</c:choose>
 							</span></p>
-							<p>可用积分:<span>${user.userJfBalance }</span></p>
-							<p><span>账户充值</span></p>
+							
+							<input type="button" onclick="window.location.href='${path }/user_web/user/safety.do'" value="账户充值"  class="am-btn am-btn-secondary" style="margin-left:15px;line-height:0.8;margin-top:-5px;padding-top:9px">
 						</div>
 					</div>
 

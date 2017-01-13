@@ -17,9 +17,27 @@
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js" type="text/javascript"></script>
 		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
 		<link href="${path }/css/point.css" rel="stylesheet" type="text/css">
+		<style type="text/css">
+			.input_url{
+				width:60%;
+				height:30px;
+				border:0px solid #eeeeee;
+				font-size: 15px;
+				
+			}
+		</style>
+		<script>
+			 function jsCopy(){
+        		var e=document.getElementById("content");//对象是content
+       			e.select(); //选择对象
+        		document.execCommand("Copy"); //执行浏览器复制命令
+       			layer.msg('链接复制成功!',{icon:5,time:1500}); 
+    		 }
 		
+		</script>
 	</head>
 
 	<body>
@@ -36,16 +54,10 @@
 					<div class="points">
 						<!--标题 -->
 						<div class="am-cf am-padding">
-							<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">我的团队</strong> / <small>My&nbsp;Point</small></div>
+							<div class="am-fl am-cf"><strong class="am-text-danger am-text-lg">我的团队</strong> / <small>My&nbsp;Team</small></div>
 						</div>
 						<hr/>
-						<!--  
-						<div class="pointsTitle">
-						   <div class="usable">可用积分<span>120</span></div>
-						   <div class="pointshop"><a href="#"><i><img src="${path }/images/u5.png" /></i>积分商城</a></div>
-						   <div class="signIn"><a href="#"><i class="am-icon-calendar"></i><em>+5</em>每日签到</a></div>
-						</div>
-						-->
+						
 						<div class="pointlist am-tabs" data-am-tabs>
 							<ul class="am-avg-sm-3 am-tabs-nav am-nav am-nav-tabs">
 								<!--<li class="am-active"><a href="#tab1">全部</a></li>
@@ -56,19 +68,20 @@
 							</ul>
 							<div class="am-tabs-bd">
 								<div class="am-tab-panel am-fade am-in am-active" id="tab1">
-									<table>
-										<b>
-											<div class="info-main">
-							<form class="am-form am-form-horizontal">
-								<div class="am-form-group">
-								通过下面的分享链接注册的用户，充值/消费成功后为您的团队成员。
-									<input type="text" id="content"  value="http://localhost:8080/pointsmanager/jsp/register.jsp?userPid=${user.id}" style="float:left" >
-										<input type="button" name="" onclick="jsCopy()" id="btn_copy" value="复制链接" class="am-btn am-btn-primary am-btn-sm am-fl" style="width=50px;margin-top:10px" />			
-								</div>
-								</form>
-								</div>
-										</b>
+									<table style="border-top-color: #fff">
+										
 										<thead>
+											<tr>												
+												<th class="th1" style="" colspan="2">			
+														<input type="text" id="content"  value="http://localhost:8080/pointsmanager/jsp/register.jsp?userPid=${user.id}" class="input_url" />
+														<input type="button" name="" onclick="jsCopy()" id="btn_copy" value="复制链接" class="am-btn am-btn-primary am-btn-sm am-fl" style="float:right;margin-right:80px" />																	
+												</th>
+											</tr>
+											<tr>
+												<th class="th1" style="color:red" colspan="2">
+														通过以上分享链接注册的用户，充值/消费成功后成为您的团队成员!	
+												</th>
+											</tr>
 											<tr>												
 												<th class="th1" style="width:50%">姓名</th>
 												<th class="th2">账户</th>
@@ -86,75 +99,13 @@
 										</tbody>
 									</table>
 								</div>
-								<!-- 
-								<div class="am-tab-panel am-fade" id="tab2">
-									<table>
-										<b></b>
-										<thead>
-											<tr>												
-												<th class="th1">积分详情</th>
-												<th class="th2">获取积分</th>
-												<th class="th3">日期</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="pointType">订单号7745926347132商品评论</td>
-												<td class="pointNum">+2</td>
-												<td class="pointTime">2016-03-12&nbsp09:32</td>
-											</tr>
-											<tr>
-												<td class="pointType">每日签到</td>
-												<td class="pointNum">+5</td>
-												<td class="pointTime">2016-03-12&nbsp07:32</td>
-											</tr>
-											<tr>
-												<td class="pointType">每日签到</td>
-												<td class="pointNum">+5</td>
-												<td class="pointTime">2016-03-11&nbsp12:24</td>
-											</tr>
-											<tr>
-												<td class="pointType">邮箱验证</td>
-												<td class="pointNum">+50</td>
-												<td class="pointTime">2016-03-10&nbsp16:18</td>
-											</tr>
-											<tr>
-												<td class="pointType">手机绑定</td>
-												<td class="pointNum">+100</td>
-												<td class="pointTime">2016-03-10&nbsp15:27</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-								<div class="am-tab-panel am-fade" id="tab3">
-									<table>
-										<b></b>
-										<thead>
-											<tr>												
-												<th class="th1">积分详情</th>
-												<th class="th2">消耗积分</th>
-												<th class="th3">日期</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td class="pointType">积分兑换</td>
-												<td class="pointNum">-300</td>
-												<td class="pointTime">2016-03-10&nbsp15:27</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-
--->
+								
 							</div>
 
 						</div>
 					</div>
 				</div>
-
-
-				
+		
 		<!--底部-->
 				<jsp:include page="/common/footer.jsp"></jsp:include>
 			</div>

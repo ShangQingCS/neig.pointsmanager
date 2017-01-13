@@ -1,18 +1,6 @@
 package cn.sqhl.neig.pointsmanager.utils;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.servlet.http.HttpSession;
-
 import org.apache.commons.lang.StringUtils;
-
-
-
-
-
 import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.UserService;
 

@@ -47,7 +47,13 @@
 				});
 			});
 		</script>
-		
+		<style type="text/css">
+			.user_div{
+				height:30px;
+				margin-top:10px;
+				margin-left:85px
+			}
+		</style>
 	</head>
 
 	<body>
@@ -73,40 +79,32 @@
 						<!--个人信息 -->
 						<div class="info-main">
 							<form class="am-form am-form-horizontal">
-
-                                 <div class="am-form-group">
+								
+								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">用户名</label>
-									<div class="am-form-content">
-										${user.userName }
+									<div class="user_div">
+										<span>${user.userName } </span>
 
 									</div>
 								</div>
-								
 								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">真实姓名</label>
-									<div class="am-form-content">
-										${user.trueName }      
-									</div>
-									<div class="fore3">
-										<a href="${path }/user_web/user/idcard.do">
+									<div  style="height:30px;margin-top:5px;margin-left:85px">
+										<span>${user.trueName } </span>
+										<a href="${path }/user_web/user/idcard.do" style="margin-left:15px">
 											<div class="am-btn am-btn-secondary">认证</div>
 										</a>
 									</div>
 								</div>
-								
 								<div class="am-form-group">
-									<label for="user-name2" class="am-form-label">手机</label>
-									<div class="am-form-content">
-										${user.userPhone }
-
-									</div>
-									<div class="fore3">
-										<a href="bindphone.html">
+									<label for="user-name2" class="am-form-label">手机号</label>
+									<div  style="height:30px;margin-top:5px;margin-left:85px">
+										<span>${user.userPhone } </span>
+										<a href="${path }/user_web/user/bindphone.do" style="margin-left:15px">
 											<div class="am-btn am-btn-secondary">绑定/更换</div>
 										</a>
 									</div>
 								</div>
-
 								<div class="am-form-group">
 									<label for="user-name2" class="am-form-label">昵称</label>
 									<div class="am-form-content">
@@ -147,7 +145,7 @@
 								<div class="am-form-group">
 									<label for="user-email" class="am-form-label">电子邮件</label>
 									<div class="am-form-content">
-										<input id="user_mail" placeholder="Email" type="email">
+										<input id="user_mail" placeholder="Email" type="email" value="${user.userMail }">
 
 									</div>
 								</div>
