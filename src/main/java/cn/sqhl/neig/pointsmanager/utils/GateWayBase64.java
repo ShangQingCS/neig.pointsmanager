@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class GateWayBase64 {
 
-	private static final char[] legalChars = "ghijk67stuJKLM89rvwxyzAlmnOUV+/abcdefPQRSTopqCDEFG012345BHINWXYZ"
+	private static final char[] legalChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 
 	.toCharArray();// 字典内顺序任意更改，只要内容保证不缺就行
 
