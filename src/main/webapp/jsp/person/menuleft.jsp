@@ -24,10 +24,10 @@
 					<li class="person">
 						<!--<p><i class="am-icon-balance-scale"></i>我的交易</p>-->
 						<ul>
-							<li name="objorder"><a href="${path }/order_web/search.do">未付款订单</a></li>
-							<li name="objorder"><a href="${path }/order_web/search.do">已付款订单</a></li>
-							<li name="objorder"><a href="${path }/order_web/search.do">已发货订单</a></li>
-							<li name="objorder"><a href="${path }/order_web/search.do">已收货订单</a></li>
+							<li name=""><a href="${path }/order_web/search.do">未付款订单</a></li>
+							<li name=""><a href="${path }/order_web/search.do">已付款订单</a></li>
+							<li name=""><a href="${path }/order_web/search.do">已发货订单</a></li>
+							<li name="objaddress"><a href="${path }/order_web/search.do">已收货订单</a></li>
 							<!-- <li> <a href="change.html">退款售后</a></li> -->
 						</ul>
 					</li>

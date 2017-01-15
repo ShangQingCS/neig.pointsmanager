@@ -28,46 +28,46 @@ public class AdEventServiceImpl implements AdEventService{
 	@Autowired
 	private NsDictionariesMapper nsDictionariesMapper; 
 	
-	@Override
+	 
 	public Eventsinfo queryEvent(Map<String, Object> map) {
 		return nsEventsinfoMapper.selectById(Long.parseLong(map.get("eventsid")+""));
 	}
 	
-	@Override
+	 
 	public List<EventGoods> queryGoodsList(PageCond page,Object id) {
 		return nsEventsinfoMapper.queryList(page,Long.parseLong(id+""));
 	}
 
-	@Override
+	 
 	public List<Advertise> queryAD(PageCond page, Object obj) {
 		return nsAdvertiseMapper.queryByMap(page, (Map<String, Object>)obj);
 	}
 
-	@Override
+	 
 	public List<Object> queryObj(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	 
 	public int addObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	 
 	public int removeObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	 
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	 
 	public List<Dictionaries> queryDictionary(Map map) {
 		return nsDictionariesMapper.selectDictionaries(map);
 	}

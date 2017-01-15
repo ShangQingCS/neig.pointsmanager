@@ -1,6 +1,9 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
+import java.util.List;
+
 import cn.sqhl.neig.pointsmanager.po.NsCoupon;
+import cn.sqhl.neig.pointsmanager.po.NsUserGrade;
 
 public interface NsCouponMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,6 @@ public interface NsCouponMapper {
     int updateByPrimaryKeySelective(NsCoupon record);
 
     int updateByPrimaryKey(NsCoupon record);
+    
+   
 }

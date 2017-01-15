@@ -27,27 +27,27 @@ public class OrderServiceImpl implements OrderService{
 	@Autowired
 	private NsOrderDetailMapper nsOrderDetailMapper;
 	
-	@Override
+	
 	public List<Order> queryOrder(PageCond page, Map<String, Object> obj) {
 		return nsOrderMapper.queryOrder(page,obj);
 	}
 	
-	@Override
+	
 	public List<Object> queryObj(Map<String, Object> map) {
 		return nsOrderMapper.selectOrder(map);
 	}
 
-	@Override
+	
 	public int addObj(Object obj) {
 		return nsOrderMapper.insertSelective((NsOrder)obj);
 	}
 
-	@Override
+	
 	public int removeObj(Object obj) {
 		return nsOrderMapper.deleteByPrimaryKey(Long.parseLong(obj.toString()));
 	}
 
-	@Override
+	
 	public int updateObj(Object obj) {
 		return nsOrderMapper.updateByPrimaryKeySelective((NsOrder)obj);
 	}

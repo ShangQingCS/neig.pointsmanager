@@ -76,7 +76,8 @@
 	function login(){
 				var username=$('#username').val();
 				var loginPwd=$('#loginPwd').val();
-				$.post(
+				if(username!=''&&loginPwd!=''){
+						$.post(
 									_basePath+"/login_web/loginjson.do",
 									{ 
 										"username":username,
@@ -92,6 +93,10 @@
 									},"json"
 								);
 			
+				}else{
+					layer.msg('输入信息不能为空!',{icon:5,time:1500});
+				}
+				
 			}
 			
       

@@ -17,35 +17,39 @@ public class UserPurseServiceImpl implements UserPurseService{
 	@Autowired
 	private NsUserPurseMapper nsUserPurseMapper;
 	
-	@Override
+	
 	public List<Object> queryObj(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public int addObj(Object obj) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
+	
 
-	@Override
+	
 	public int removeObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public List<NsUserPurse> selectByUserId(Long UserId, 
 			Date beforeTime) {
 		
 		return nsUserPurseMapper.selectByUserId(UserId,new Date() , beforeTime);
+	}
+
+
+	
+	public int addObj(Object obj) {
+		// TODO Auto-generated method stub
+		return nsUserPurseMapper.insert(obj);
 	}
 
 	

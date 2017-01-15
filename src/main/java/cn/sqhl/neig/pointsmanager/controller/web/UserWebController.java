@@ -1,9 +1,11 @@
 package cn.sqhl.neig.pointsmanager.controller.web;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.mapper.NsUserPurseMapper;
+import cn.sqhl.neig.pointsmanager.pay.IPay;
+import cn.sqhl.neig.pointsmanager.pay.util.UtilOther;
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.po.NsUserGrade;
+import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
+import cn.sqhl.neig.pointsmanager.service.CouponService;
+import cn.sqhl.neig.pointsmanager.service.UserPurseService;
 import cn.sqhl.neig.pointsmanager.service.UserService;
 import cn.sqhl.neig.pointsmanager.utils.CheckUserUtils;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
@@ -42,6 +51,12 @@ public class UserWebController extends basicInfo{
 	private AddressService addressServices;
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private CouponService couponService ;
+	
+	@Autowired
+	private UserPurseService userPurseService;
 	
 	@RequestMapping("/user/main")
 	public String Main(HttpServletRequest request,HttpServletResponse response,Model model){
@@ -229,7 +244,7 @@ public class UserWebController extends basicInfo{
 		
 		int result=0;
 		
-		if(CheckUserUtils.checkUser(userService, username, tel)&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())){
+		if(CheckUserUtils.checkUser(userService, username, tel)&&CheckUserUtils.checkMobileCode(mobileCode, request.getSession())&&CheckUserUtils.isNum(tel)){
 			NsUser user= new NsUser();
 			user.setUserName(username);
 			user.setLoginPwd(MD5Util.MD5(loginPwd));	
@@ -348,6 +363,238 @@ public class UserWebController extends basicInfo{
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);
 		return rsJson;
+		
+	}
+	
+	@RequestMapping("/user/tixian")
+	public String tixian(HttpServletRequest request,HttpServletResponse response){
+		
+NsUser user=(NsUser) request.getSession().getAttribute("user"); //获取到session中的用户对象
+		
+		user = userService.queryByPrimaryKey(Integer.valueOf(user.getId().toString())); //对用户钱包操作，必须每次重新从数据库加载最新数据，放到session
+		
+		long userGradeId = user.getUserGrade();
+		
+		NsUserGrade userGrade = couponService.selectUserGradebyID(userGradeId);
+		request.setAttribute("userGrade", userGrade);
+		request.getSession().setAttribute("user",user);
+			
+		
+		
+		
+		return "/jsp/person/tixian";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/tixianjson")
+	public JSONObject tixianjson(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="trade_amount",required=false) String trade_amount,
+			@RequestParam(value="pay_account",required=false) String pay_account,
+			@RequestParam(value="paypwd",required=false) String paypwd,
+			@RequestParam(value="pay_open_bank",required=false) String pay_open_bank,
+			@RequestParam(value="trade_type",required=false) String trade_type,
+			@RequestParam(value="gradeTxBalance",required=false) String gradeTxBalance){
+				
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
+		JSONObject rsJson = new JSONObject();
+		
+		paypwd = MD5Util.MD5(paypwd.trim());//接收的支付密码加密
+		String pay_pwd = user.getPayPwd();//支付密码
+		String payaccount = pay_account.trim();//支付账号
+		String payopenbank = pay_open_bank.trim();//开户行
+		String tradetype = trade_type;
+		
+		BigDecimal fxBalance = user.getUserFxBalance();           //用户分红可用金额
+		BigDecimal tradeamount = new BigDecimal(trade_amount);    //提现金额
+		BigDecimal gradeBalance = new BigDecimal(gradeTxBalance); // 等级提现限制金额
+		
+		String result = null;
+		
+		if(payaccount.equals("")){
+			result = "提现账号不能为空";
+		}else if(tradetype.equals("3") && payopenbank.equals("")){
+			result = "银联开户行不能为空";
+		}else if(tradeamount.compareTo(gradeBalance)==1){
+			result = "单笔可提现"+gradeTxBalance+"元";
+		}else if(tradeamount.compareTo(fxBalance)==1){
+			result = "分红可用余额不足";
+		}else if(!paypwd.equals(pay_pwd)){
+			result = "支付密码错误";
+		}else{
+			
+//			user_id
+//			option_type 操作类型 0-increase 增加  1-decrease 减少
+//			trade_sn 生成流水号
+//			trade_state 1 冻结
+//			purse_type 1-分销
+			
+			int state = 0;
+			
+			user.setTixianStatus(1); //设置提现状态 申请中
+			user.setUserDjBalance(tradeamount); //冻结金额
+			user.setUserFxBalance(fxBalance.subtract(tradeamount)); //剩余金额
+			//数据库操作
+			// 更新 nsuser
+			
+			state = userService.updateObj(user);
+			
+			// 写入 pruse
+			
+			String tradeSn = FormatUtils.getOrderIdByUUId();
+			
+			tradeSn = "S"+tradeSn; //充值单唯一对账编号
+			
+			if(tradetype.equals("1")){//支付宝
+				tradeSn = "Z"+tradeSn;
+			} else if(tradetype.equals("2")){//微信
+				tradeSn = "W"+tradeSn;
+			} else if(tradetype.equals("3")){//银联
+				tradeSn = "U"+tradeSn;
+				
+			}
+			
+			NsUserPurse nsUserPurse=new NsUserPurse();
+			nsUserPurse.setOptionType("1");
+			nsUserPurse.setTradeSn(tradeSn);
+			nsUserPurse.setPurseStatus(user.getUserStatus().toString());
+			nsUserPurse.setTradeType(tradetype);
+			nsUserPurse.setTradeState("1");
+			nsUserPurse.setPurseType(1);
+			nsUserPurse.setOptionAdminid(0l);
+			nsUserPurse.setCreateTime(new Date());
+			nsUserPurse.setTradeAmount(tradeamount);
+			nsUserPurse.setUserAmount(user.getUserFxBalance());
+			nsUserPurse.setUserId(user.getId());			
+			state = userPurseService.addObj(nsUserPurse);
+			
+			request.getSession().setAttribute("user",user);
+			
+			if(state>0){
+				
+				result = "申请成功";
+				
+			}else{
+				
+				result = "服务器错误,请重新提交";
+			}
+			
+			
+			
+		}
+		
+		
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	@RequestMapping("/user/chongzhi")
+	public String chongzhi(HttpServletRequest request,HttpServletResponse response){
+		
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		user = userService.queryByPrimaryKey(Integer.valueOf(user.getId().toString())); //对用户钱包操作，必须每次重新从数据库加载最新数据，放到session
+
+		long userGradeId = user.getUserGrade();
+		
+		NsUserGrade userGrade = couponService.selectUserGradebyID(userGradeId);
+		request.setAttribute("userGrade", userGrade);
+		request.getSession().setAttribute("user",user);
+		
+		return "/jsp/person/chongzhi";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/user/chongzhijson")
+	public JSONObject chongzhijson(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="trade_amount",required=false) String trade_amount,
+			@RequestParam(value="trade_type",required=false) String trade_type){
+				
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
+		JSONObject rsJson = new JSONObject();
+
+		String tradetype = trade_type;
+		BigDecimal tradeamount = new BigDecimal(trade_amount);    //充值金额
+		
+		String tradeSn = FormatUtils.getOrderIdByUUId(); //充值单唯一对账编号
+		
+		String result = null;
+		
+
+		//支付接口初始化
+		IPay ipay = IPay.getInstance();
+		String requestString = null;
+		
+		if(tradetype.equals("1")){//支付宝
+			tradeSn = "Z"+tradeSn;
+			
+			// zfb调用统一下单
+			result = ipay.createPay("aliPay", "pc", UtilOther.yuanToFen(tradeamount), tradeSn,"贝翔商城"+trade_amount+"元储值卡");
+			//System.out.println(requestString);
+			// zfb调用发送请求
+			//result = ipay.httpsPayRequest("aliPay", "pc", requestString);
+			System.out.println(result);
+			
+		} else if(tradetype.equals("2")){//微信
+			tradeSn = "W"+tradeSn;
+			
+			// 微信调用统一下单
+			requestString = ipay.createPay("wechatPay", "pc", UtilOther.yuanToFen(tradeamount), tradeSn,"贝翔商城"+trade_amount+"元储值卡");
+			// 微信调用发送请求
+			result = ipay.httpsPayRequest("wechatPay", "pc", requestString);
+			// 生成二维码
+			result = ipay.getQRCodeImge(tradeSn, result,request.getSession().getServletContext().getRealPath("/")+"/upload/qrcode/");
+			
+			result = result.replace(request.getSession().getServletContext().getRealPath("/"), "");
+		}
+			
+//			user_id
+//			option_type 操作类型 0-increase 增加  1-decrease 减少
+//			trade_sn 生成流水号    UUID uuid = UUID.randomUUID()
+//			trade_state 1 冻结
+//			purse_type 1-分销
+		
+		
+			// 写入 pruse
+			int state=0;
+			NsUserPurse nsUserPurse=new NsUserPurse();
+			nsUserPurse.setOptionType("0");
+			nsUserPurse.setTradeSn(tradeSn);
+			nsUserPurse.setTradeState("1");
+			nsUserPurse.setPurseType(0);
+			nsUserPurse.setTradeType(tradetype);
+			nsUserPurse.setTradeAmount(tradeamount);
+			nsUserPurse.setCreateTime(new Date());
+			nsUserPurse.setOptionAdminid(0l);
+			nsUserPurse.setPurseStatus(user.getUserStatus().toString());
+			nsUserPurse.setUserId(user.getId());
+			nsUserPurse.setUserAmount(user.getUserKyBalance());
+			state = userPurseService.addObj(nsUserPurse);
+			request.getSession().setAttribute("user",user);
+			
+			//result = "申请成功";
+		
+		
+		rsJson.put("msg", result);
+		return rsJson;
+	}
+	
+	
+	@RequestMapping("/user/alichongzhi")
+	public String alichongzhi(HttpServletRequest request,HttpServletResponse response){
+		
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
+		
+		return "/jsp/person/alipay";
+	}
+	
+	@RequestMapping("/user/wxchongzhi")
+	public String wxchongzhi(HttpServletRequest request,HttpServletResponse response){
+		
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
+		
+		return "/jsp/person/wxpay";
 	}
 		
 }

@@ -19,7 +19,6 @@ public class AddressServiceImpl implements AddressService{
 	@Autowired
 	private NsAddressMapper nsAddressMapper;
 	
-	@Override
 	public List<Address> queryObj(Map<String, Object> map) {
 		
 		List<Address> adds= nsAddressMapper.selectAddress(map);
@@ -27,7 +26,6 @@ public class AddressServiceImpl implements AddressService{
 		return adds;
 	}
 
-	@Override
 	public int addObj(NsAddress address) throws Exception{
 		Map map=new HashMap();
 		map.put("userid", address.getUerid());
@@ -57,12 +55,10 @@ public class AddressServiceImpl implements AddressService{
 		return k;
 	}
 
-	@Override
 	public int removeObj(NsAddress address) {
 		return nsAddressMapper.deleteByPrimaryKey(address.getId());
 	}
 
-	@Override
 	@Transactional
 	public int updateObj(NsAddress address) throws Exception{
 		int i=0;
@@ -78,7 +74,6 @@ public class AddressServiceImpl implements AddressService{
 		return i;
 	}
 
-	@Override
 	public NsAddress queryByPrimaryKey(Long id) {
 		return  nsAddressMapper.selectByPrimaryKey(id);
 	}

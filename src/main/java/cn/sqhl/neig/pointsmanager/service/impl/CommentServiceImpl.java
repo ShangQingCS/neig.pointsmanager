@@ -23,23 +23,23 @@ public class CommentServiceImpl implements CommentService{
 	}
 	
 
-	@Override
+	
 	public List<Object> queryObj(Map<String, Object> map) {
 		return  nsCommentMapper.selectCommentList(map);
 	}
 
-	@Override
+	
 	public int addObj(Object obj) {
 		return nsCommentMapper.insertSelective((NsComment)obj);
 	}
 
-	@Override
+	
 	public int removeObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;

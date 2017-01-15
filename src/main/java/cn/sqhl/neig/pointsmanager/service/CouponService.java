@@ -10,4 +10,8 @@ public interface CouponService extends BaseService{
 	
 	public List<NsUserGrade> selectUserGrade();
 	
+	public NsUserGrade selectUserGradebyID(long userGradeId);
+	
+	
+
 }

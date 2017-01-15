@@ -39,10 +39,12 @@
 									layer.msg('修改信息成功',{icon:5,time:1500},function(){
                             				window.location.reload();});		
 								}else{
-									layer.msg('修改信息失败',{icon:5,time:1500});
+									layer.msg('输入信息不能为空!',{icon:5,time:1500});
 								}
 							},"json"
 						);
+					}else{
+					
 					}
 				});
 			});
@@ -91,9 +93,15 @@
 									<label for="user-name2" class="am-form-label">真实姓名</label>
 									<div  style="height:30px;margin-top:5px;margin-left:85px">
 										<span>${user.trueName } </span>
+										
+										<c:if test="${user.identityStatus==2 }"><div class="am-btn am-btn-secondary">已认证</div></c:if>
+										<c:if test="${user.identityStatus==1 }"><div class="am-btn am-btn-secondary">认证中</div></c:if>
+										<c:if test="${user.identityStatus==0 }">
 										<a href="${path }/user_web/user/idcard.do" style="margin-left:15px">
-											<div class="am-btn am-btn-secondary">认证</div>
+											<div class="am-btn am-btn-secondary">去认证</div>
 										</a>
+										</c:if>
+										
 									</div>
 								</div>
 								<div class="am-form-group">

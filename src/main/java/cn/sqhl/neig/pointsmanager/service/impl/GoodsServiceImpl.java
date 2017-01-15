@@ -44,31 +44,31 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	@Autowired
 	private NsFreazesLogMapper nsFreazesLogMapper; 
 	
-	@Override
+	
 	public List<Object> queryObj(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public int addObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int removeObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public Goods queryObj(Long id) {
 		NsGoods nsgoods =nsGoodsMapper.selectByPrimaryKey(id);
 		if(nsgoods!=null){
@@ -88,21 +88,21 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 		}
 	}
 
-	@Override
+	
 	public List<Goods> queryPageByParentID(PageCond page, Object obj) {
 		return nsGoodsMapper.queryListPageByParentID(page, (Map<String, Object>)obj);
 	}
-	@Override
+	
 	public List<Goods> queryPageByLike(PageCond page, Object obj) {
 		return nsGoodsMapper.queryListPageByLike(page, (Map<String, Object>)obj);
 	}
 
-	@Override
+	
 	public List<GoodsCategory> queryGoodsCategory(PageCond page, Object obj) {
 		return nsGoodsCategoryMapper.queryByParentId(page,(Map<String, Object>)obj);
 	}
 
-	@Override
+	
 	public List<GoodsCategory> queryAllCategory() {
 		return nsGoodsCategoryMapper.queryAll();
 	}

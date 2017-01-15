@@ -18,40 +18,47 @@ public class CouponServiceImpl implements CouponService{
 	private NsUserCouponMapper nsUserCouponMapper;
 	@Autowired
 	private NsUserGradeMapper nsUserGradeMapper ;
-	@Override
+	
 	public List<Object> queryObj(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public int addObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int removeObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public int updateObj(Object obj) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
+	
 	public List<NsUserCoupon> selectByUserId(Long userId, String status) {
 		// TODO Auto-generated method stub
 		return nsUserCouponMapper.selectByUserId(userId,status);
 	}
 
-	@Override
+	
 	public List<NsUserGrade> selectUserGrade() {
 		// TODO Auto-generated method stub
 		return nsUserGradeMapper.selectUserGrade();
+	}
+
+	
+	public NsUserGrade selectUserGradebyID(long userGradeId) {
+		// TODO Auto-generated method stub
+		return nsUserGradeMapper.selectByPrimaryKey(userGradeId);
+
 	}
 
 	

@@ -56,7 +56,7 @@
 							</c:choose>
 							</span></p>
 							<span>
-								<input type="button" onclick="window.location.href='${path }/user_web/user/safety.do'" value="申请提现"  class="am-btn am-btn-secondary" style="margin-left:15px;line-height:0.8;margin-top:-5px;padding-top:9px">
+								<input type="button" onclick="window.location.href='${path }/user_web/user/tixian.do'" value="申请提现"  class="am-btn am-btn-secondary" style="margin-left:15px;line-height:0.8;margin-top:-5px;padding-top:9px">
 							</span>
 						</div>
 					</div>

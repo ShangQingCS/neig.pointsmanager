@@ -130,7 +130,7 @@
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>
 			-->
-			<table tableName="ns_user_grade" domainObjectName="NsUserGrade"
+			<table tableName="ns_user_grade1" domainObjectName="NsUserGrade1"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			selectByExampleQueryId="false"></table>		

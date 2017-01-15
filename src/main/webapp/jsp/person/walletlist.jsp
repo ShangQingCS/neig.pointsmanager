@@ -56,7 +56,7 @@
 							</c:choose>
 							</span></p>
 							
-							<input type="button" onclick="window.location.href='${path }/user_web/user/safety.do'" value="账户充值"  class="am-btn am-btn-secondary" style="margin-left:15px;line-height:0.8;margin-top:-5px;padding-top:9px">
+							<input type="button" onclick="window.location.href='${path }/user_web/user/chongzhi.do'" value="账户充值"  class="am-btn am-btn-secondary" style="margin-left:15px;line-height:0.8;margin-top:-5px;padding-top:9px">
 						</div>
 					</div>
 

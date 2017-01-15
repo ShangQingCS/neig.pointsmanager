@@ -10,7 +10,7 @@ import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 public interface NsUserPurseMapper {
     int deleteByPrimaryKey(Long id);
 
-    int insert(NsUserPurse record);
+    int insert(Object record);
 
     int insertSelective(NsUserPurse record);
 

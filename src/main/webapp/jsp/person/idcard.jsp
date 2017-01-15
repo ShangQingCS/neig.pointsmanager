@@ -25,7 +25,8 @@
 				var IDcard=$('#IDcard').val();
 				var issuing=$('#issuing').val();
 				var IDCardValidity=$('#issuing').val();
-				$.post(
+				if(truename!=''&&IDcard!=''&&issuing!=''&&IDCardValidity!=''){
+					$.post(
 							_basePath+"/user_web/user/idcardjson.do",
 							{ 
 								"truename":truename,
@@ -41,8 +42,13 @@
 									
 								}
 							},"json"
-						);
+					);
 			
+				}else{
+					layer.msg('输入信息不能为空!',{icon:5,time:1500});
+				}
+				
+				
 			
 			}	
 			
@@ -99,7 +105,7 @@
 							<div class="am-form-group">
 								<label for="user-IDcard" class="am-form-label" style="width:110px" >发证机关</label>
 								<div class="am-form-content">
-									<input type="tel" id="issuing" placeholder="请输入身份证发证机关" value="${identityIssuing }">
+									<input type="tel" id="issuing" placeholder="请输入身份证发证机关" value="${user.identityIssuing }">
 								</div>
 							</div>
 							<div class="am-form-group">

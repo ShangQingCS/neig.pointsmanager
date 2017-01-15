@@ -26,8 +26,10 @@
 				var isEnable1=false;
 				var isEnable2=false;
 				var checkpwd=false;
+				var mobileCode;
 				
 				$('#username').focus(function(){
+					
                     $('#msg').text('');
                 }).blur(function(){
                 	username=$('#username').val();
@@ -104,6 +106,7 @@
                    	loginPwd=$('#loginPwd').val();
 					username=$('#username').val();
 					tel=$('#tel').val();
+					mobileCode=$('#mobile_code').val();
 					if(isEnable1 && isEnable2&&checkpwd){
 							$.post(
 									_basePath+"/user_web/user/registerjson.do?pid=<%=request.getParameter("pid")%>",
@@ -117,7 +120,7 @@
                             				window.location.href="${path}/login_web/login.do"});
 											
 										}else{
-										layer.msg('手机或用户名已注册!',{icon:5,time:1500});
+										layer.msg('输入有误或手机,用户名已注册,!',{icon:5,time:1500});
 											
 										}
 									},"json"

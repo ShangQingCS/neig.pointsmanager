@@ -120,17 +120,18 @@ public class AssetWebController extends basicInfo{
 	
 	@RequestMapping("/usercenter")
 	public String usercenter(HttpServletRequest request,HttpServletResponse response,Model model){
-		
-		
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
-		
 		if(user!=null){
-		List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
-		int numCoupon=myCouponList.size();
-		request.setAttribute("numCoupon", numCoupon);
-		return "/jsp/person/usercenter";
+			long userGradeId = user.getUserGrade();
+			NsUserGrade userGrade = couponService.selectUserGradebyID(userGradeId);
+				
+			List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+			int numCoupon=myCouponList.size();
+			request.setAttribute("numCoupon", numCoupon);
+			request.setAttribute("userGrade", userGrade);
+			return "/jsp/person/usercenter";
 		}else{
-		return "/login";
+			return "/login";
 		}
 	}
 	

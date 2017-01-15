@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.sqhl.neig.pointsmanager.core.pay.alipay.alipayUtil;
 import cn.sqhl.neig.pointsmanager.po.NsAddress;
 import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
@@ -348,7 +347,7 @@ public class OrderController extends ContextInfo{
 						int status=Integer.parseInt(resultmap.get("status")+"");
 						if(status == 0){
 							//调用支付交易订单申请接口
-							String tradeno=alipayUtil.getOutTradeNo();
+						//	String tradeno=alipayUtil.getOutTradeNo();
 							String exchangeorderinfo="";
 							if(type.equals("alipay")){
 ////								AppBusinessParameter abp=new AppBusinessParameter();
@@ -373,7 +372,7 @@ public class OrderController extends ContextInfo{
 								message="生成成功";
 								logger.log(INFO, message);
 								map.put("alipayOrderinfo", exchangeorderinfo);
-								map.put("tradeno", tradeno);
+								//map.put("tradeno", tradeno);
 								data=map;
 							}else{
 								result="1";

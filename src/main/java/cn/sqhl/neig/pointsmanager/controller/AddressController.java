@@ -37,7 +37,7 @@ public class AddressController extends ContextInfo{
 
 	@Autowired
 	private AddressService addressServices;
-	
+	 
 //	@Value("${ns.version}")
 //	protected String ver;
 //	protected String result;

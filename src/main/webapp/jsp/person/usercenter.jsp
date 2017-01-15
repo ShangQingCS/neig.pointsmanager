@@ -46,7 +46,7 @@
 										</a>
 										<div class="m-info">
 											<em class="s-name">${user.userName} </em>
-											<div class="vip1"><span>会员等级</span><em>VIP<c:if test="${user.userGrade ==null}">0</c:if>${user.userGrade }</em></div>
+											<div class="vip1"><span>会员等级</span><em>${userGrade.gradeName}</em></div>
 											<div class="safeText"><a href="${path }/asset_web/vip.do"><span style="margin-left:45px">查看会员等级说明</span></a>
 												<div class="progressBar"><span style="left: 0px" class="progress"></span></div>
 											</div>
@@ -112,7 +112,7 @@
 										</a>
 									</p>
 									<p class="m-big squareL">
-										<a href="#">
+										<a href="${path }/user_web/user/chongzhi.do">
 											<i><img src="${path }/images/profit.png"/></i>
 											<span class="m-title">账户充值</span>
 										</a>
