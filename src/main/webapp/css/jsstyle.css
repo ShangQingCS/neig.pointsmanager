@@ -47,7 +47,7 @@ color: #FFF;}
 
 .pay-way span.title{float: left;margin-top:10px ;margin-right: 10px;}
 .logistics .pay-list li {float: left;cursor: pointer;width:32% ;}
-.pay img {display: inline-block;width: 54px;height: 36px;overflow: hidden;margin: 5px auto;}
+.pay img {display: inline-block;width: 36px;height: 36px;overflow: hidden;margin: 10px;}
 
 /*订单界面改写*/
 .td.td-item {padding-left:0px;}

@@ -138,6 +138,7 @@
 										addressid:id,
 										isuse:"0",
 										type:"2",
+										uerid:${user.id}
 									},function(data){
 										if(data.result == 0){
 											$("").html("");
@@ -160,8 +161,9 @@
 									{ 
 										addressid:id,
 										type:"1",
+										uerid:${user.id}
 									},function(data){
-										if(data.result == 0){
+										if(data.result == 1){
 											$("").html("");
 										}else{
 											$(this).parents(".user-addresslist").remove();

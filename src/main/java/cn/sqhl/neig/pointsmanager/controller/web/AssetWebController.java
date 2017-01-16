@@ -52,8 +52,12 @@ public class AssetWebController extends basicInfo{
 			model.addAttribute("myCouponList", myCouponList);
 			List<NsUserCoupon> expireCouponList= couponService.selectByUserId(user.getId(), "1");
 			model.addAttribute("expireCouponList", expireCouponList);
+			return "/jsp/person/coupon";
+		}else{
+			return "/login";
+			
 		}
-		return "/jsp/person/coupon";
+		
 	}
 	
 	
@@ -62,41 +66,46 @@ public class AssetWebController extends basicInfo{
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
 		List<NsUserPurse> walletList=new ArrayList<NsUserPurse>();
 		String dateCode=request.getParameter("dateCode");
-		if(StringUtils.isNotEmpty(dateCode)&&user!=null){
-			if(dateCode.equals("0")){
-				//查当天
-				Date beforeTime=new  Date();
-				String time=DateHelper.sdfd.format(beforeTime);
-				try {
-					beforeTime=DateHelper.sdfd.parse(time);
-				} catch (ParseException e) {
-					e.printStackTrace();
+		if(user!=null){
+			if(StringUtils.isNotEmpty(dateCode)){
+				if(dateCode.equals("0")){
+					//查当天
+					Date beforeTime=new  Date();
+					String time=DateHelper.sdfd.format(beforeTime);
+					try {
+						beforeTime=DateHelper.sdfd.parse(time);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					walletList=userPurseService.selectByUserId(user.getId(),beforeTime);
+				}else if(dateCode.equals("1")){	
+					//一个星期
+					request.setAttribute("dateCode", dateCode);
+					walletList=userPurseService.selectByUserId(user.getId(),DateHelper.getBeforeDate(-7));	
+				}else if(dateCode.equals("2")){
+					walletList=userPurseService.selectByUserId(user.getId(),DateHelper.getDateByInterval(Calendar.MONTH, -1));
+					request.setAttribute("dateCode", dateCode);	
+				}else{	
+					walletList=userPurseService.selectByUserId(user.getId(),DateHelper.getDateByInterval(Calendar.MONTH, -3));
+					request.setAttribute("dateCode", dateCode);
 				}
-				
-				walletList=userPurseService.selectByUserId(user.getId(),beforeTime);
-			}else if(dateCode.equals("1")){	
-				//一个星期
-				request.setAttribute("dateCode", dateCode);
-				walletList=userPurseService.selectByUserId(user.getId(),DateHelper.getBeforeDate(-7));	
-			}else if(dateCode.equals("2")){
-				walletList=userPurseService.selectByUserId(user.getId(),DateHelper.getDateByInterval(Calendar.MONTH, -1));
-				request.setAttribute("dateCode", dateCode);	
-			}else{	
-				walletList=userPurseService.selectByUserId(user.getId(),DateHelper.getDateByInterval(Calendar.MONTH, -3));
-				request.setAttribute("dateCode", dateCode);
 			}
-		}
-		model.addAttribute("walletList", walletList);
-		
-		
-		if(request.getParameter("type").equals("0")){
-			return "/jsp/person/walletlist";
-		}else if(request.getParameter("type").equals("1")){
+			model.addAttribute("walletList", walletList);
 			
-			return "/jsp/person/mypoints";
+			
+			if(request.getParameter("type").equals("0")){
+				return "/jsp/person/walletlist";
+			}else if(request.getParameter("type").equals("1")){
+				
+				return "/jsp/person/mypoints";
+			}else{
+				
+				return "/jsp/person/bonus";
+			}
 		}else{
 			
-			return "/jsp/person/bonus";
+			return "/login";
 		}
 	}
 	@RequestMapping("/myteam")
@@ -105,17 +114,27 @@ public class AssetWebController extends basicInfo{
 		if(user!=null){
 			List<NsUser> userList=userService.queryByUserPid(user.getId());
 			request.setAttribute("userList", userList);
+			return "/jsp/person/myteam";
+		}else{
+			
+			return "/login";
 		}
-		return "/jsp/person/myteam";
+		
 	}
 	@RequestMapping("/vip")
 	public String vip(HttpServletRequest request,HttpServletResponse response,Model model){
 		NsUser user=(NsUser) request.getAttribute("user");
-		List<NsUserGrade> gradeList= couponService.selectUserGrade();
+		if(user!=null){
+			List<NsUserGrade> gradeList= couponService.selectUserGrade();
+			
+			request.setAttribute("gradeList", gradeList);
+			
+			return "/jsp/person/vip";
+			
+		}else{
+			return "/login";
+		}
 		
-		request.setAttribute("gradeList", gradeList);
-		
-		return "/jsp/person/vip";
 	}
 	
 	@RequestMapping("/usercenter")

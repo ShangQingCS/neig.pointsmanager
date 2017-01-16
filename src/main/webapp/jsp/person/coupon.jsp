@@ -78,13 +78,12 @@
 													<div class="c-range">
 														<div class="range-all">
 															<div class="range-item">
-																<span class="label">券&nbsp;编&nbsp;号：</span>
-																<span class="txt">35730144</span>
+																
 															</div>
 														</div>
 													</div>
 													<div class="op-btns">
-														<a href="#" class="btn"><span class="txt">立即使用</span><b></b></a>
+														<a href="${path }/index_web/home.do" class="btn"><span class="txt">立即使用</span><b></b></a>
 													</div>
 												</div>
 											</div>	
@@ -113,7 +112,7 @@
 													<div class="c-limit">
 														【消费满&nbsp;${expireCoupon.couponXfBalance}元&nbsp;可用】
 													</div>
-													<div class="c-time"><span>使用期限</span>2015-12-21--2015-12-31</div>
+													<div class="c-time"><span>使用期限</span><fmt:formatDate value="${expireCoupon.couponCreatdate}" type="date"/>--<fmt:formatDate value="${expireCoupon.couponExpirydate}" type="date"/></div>
 													<div class="c-type-top"></div>
 
 													<div class="c-type-bottom"></div>
@@ -123,8 +122,7 @@
 													<div class="c-range">
 														<div class="range-all">
 															<div class="range-item">
-																<span class="label">券&nbsp;编&nbsp;号：</span>
-																<span class="txt">35730144</span>
+																
 															</div>
 														</div>
 													</div>

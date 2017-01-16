@@ -9,7 +9,7 @@
 		<jsp:include page="/common/include.jsp"></jsp:include>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
-		<title>商品页面</title>
+		<title>贝翔商城--商品详情</title>
 		<link href="${path }/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css" />
 		<link href="${path }/AmazeUI-2.4.2/assets/css/amazeui.css" rel="stylesheet" type="text/css" />
 		<link href="${path }/basic/css/demo.css" rel="stylesheet" type="text/css" />
@@ -23,6 +23,7 @@
 		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
 		<script type="text/javascript" src="${path }/js/jspage.js"></script>
 		<link type="text/css" href="${path }/css/headnav.css" rel="stylesheet" />
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 	</head>
 
 	<body>
@@ -176,9 +177,8 @@
 										<a href="javascript:;" title="关闭" class="close">×</a>
 									</div>
 									<div class="theme-popbod dform">
-										<form class="theme-signin" name="loginform" action="" method="post">
-											<input type="hidden" name="goodsid" value="${goods.id} "/>
-											<input type="hidden" name="userid" value="${userid}"/>
+										<form class="theme-signin" name="loginform" id="buyform" action="${path }/shopcar_web/pay.do" method="post">
+											<input type="hidden" id="goodsid" name="goodsid" value="${goods.id} "/>
 											<div class="theme-signin-left">
 
 												<div class="theme-options">
@@ -226,12 +226,12 @@
 						</div>
 						<li>
 							<div class="clearfix tb-btn tb-btn-buy theme-login">
-								<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="${path }/jsp/pay.jsp">立即购买</a>
+								<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="jascript:void(0);" onclick="document.getElementById('buyform').submit();return false;">立即购买</a>
 							</div>
 						</li>
 						<li>
 							<div class="clearfix tb-btn tb-btn-basket theme-login">
-								<a id="LikBasket" title="加入购物车" href="${path }/jsp/shopcart.jsp"><i></i>加入购物车</a>
+								<a id="LikBasket" title="加入购物车" href="jascript:void(0);" onclick="addCart();"><i></i>加入购物车</a>
 							</div>
 						</li>
 					</div>
@@ -492,7 +492,7 @@
 			$("li").on("click","#LikBasket",function(){
 				var form=$("form[name='loginform']");
 				var goodsid=$("input[name='goodsid']").val();
-				var userid=$("input[name='userid']").val();
+				var userid=${user.id};
 				var buynumb=$("input[name='buynumb']").val();
 				$.post(
 					"${path}/shopcar/manager.do", {
@@ -502,13 +502,22 @@
 						type:"0"
 					},
 					function(data) {
-						data.data;
+						
+						if(data.result=="1"){
+							layer.msg(data.message,{icon:5,time:1500},function(){
+									 loaction.href=_basePath+"/login.jsp"; //刷新当前页面
+							});	
+						}else{
+							layer.msg(data.message,{icon:6,time:1500});
+						}
 
 					}, "json"
 
 				);
 			});
 		});
+		
+	
 	</script>
 
 </html>

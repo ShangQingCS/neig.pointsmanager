@@ -97,12 +97,12 @@
 								<!--我的钱包-->
 								<div class="wallet">
 									<div class="s-bar">
-										<i class="s-icon"></i>快捷设置
+										<i class="s-icon"></i>快捷入口
 									</div>
 									<p class="m-big squareS">
-										<a href="${path }/order_web/search.do">
+										<a href="${path }/index_web/home.do">
 											<i><img src="${path }/images/shopping.png"/></i>
-											<span class="m-title">我的订单</span>
+											<span class="m-title">我要购物</span>
 										</a>
 									</p>
 									<p class="m-big squareA">
@@ -215,6 +215,7 @@
 								Android扫码下载
 							</div>
 							<div class="s-box">
+								<img src="${path }/images/app1.jpg" />
 								
 							</div>					
 						</div>
@@ -224,6 +225,7 @@
 								IOS扫码下载
 							</div>
 							<div class="s-box">
+								<img src="${path }/images/app1.jpg" />
 								
 							</div>
 							

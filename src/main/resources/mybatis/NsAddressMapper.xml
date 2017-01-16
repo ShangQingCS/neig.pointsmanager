@@ -23,6 +23,7 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ns_address
     where id = #{id,jdbcType=BIGINT}
+    
   </delete>
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsAddress">
     insert into ns_address (id, uerid, address, 

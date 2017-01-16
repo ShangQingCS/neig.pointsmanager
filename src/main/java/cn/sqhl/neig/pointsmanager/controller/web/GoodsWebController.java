@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
 import cn.sqhl.neig.pointsmanager.vo.web.ErrorInfo;
@@ -29,11 +30,12 @@ public class GoodsWebController extends basicInfo{
 			@PathVariable String goodsid){
 		
 		Goods goods=goodsService.queryObj(Long.parseLong(goodsid));
-		if(goods!=null){
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		if(user!=null && goods!=null){
 			model.addAttribute("goods", goods);
 			model.addAttribute("baseimg", baseimg);
 			
-			model.addAttribute("userid", "4002");
+			model.addAttribute("userid", user.getId());
 			return "/jsp/goods/introduction";
 		}else{
 			ErrorInfo ef=new ErrorInfo();
@@ -41,7 +43,7 @@ public class GoodsWebController extends basicInfo{
 			ef.setMessage("查询失败");
 			ef.setCause("无对应商品~");
 			model.addAttribute("result", ef);
-			return "/jsp/error/info";
+			return "/login";
 		}
 	}
 	

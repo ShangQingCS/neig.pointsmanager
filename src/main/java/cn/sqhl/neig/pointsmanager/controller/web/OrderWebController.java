@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
@@ -39,22 +40,32 @@ public class OrderWebController extends basicInfo{
 	@RequestMapping("/search")
 	public String queryGoods(HttpServletRequest request,
 			HttpServletResponse response,Model model) throws IOException{
-		model.addAttribute("baseimg", baseimg);
-		return "/jsp/order/order";
+		
+		if(request.getSession().getAttribute("user")!=null){	
+			model.addAttribute("baseimg", baseimg);
+			request.setAttribute("ordetype", request.getParameter("typeCode"));
+			return "/jsp/order/order";
+		}else{
+			return "/login";
+		}
+			
 	}
 	
 	@ResponseBody
 	@RequestMapping("/order/search")
 	public JSONObject GetOrder(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value="type",required=false) String type,
+			
 			@RequestParam(value="pagesize",required=false) String pagesize,
 			@RequestParam(value="nowpage",required=false) String nowpage){
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
 		JSONObject rsJson = new JSONObject();
 		String result="";
 		String message="";
 		Object data="";
 		
-		Long userid=Long.parseLong("4002");
+		Long userid=user.getId();
 		
 		if(StringUtils.isBlank(pagesize)){
 			pagesize="15";
@@ -65,14 +76,13 @@ public class OrderWebController extends basicInfo{
 		
 		Map map=new HashMap();
 		if(StringUtils.isNotBlank(type)){
-			map.put("orderstatus", type);
-		}else{
-			map.put("orderstatus", "1");
+			map.put("status", type);
 		}
 		
 		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize),Integer.parseInt(pagesize));
 		
 		map.put("userid", userid);
+		System.err.println(type+"-----------------");
 		List<Order> obj=orderService.queryOrder(page, map);
 		
 		if(obj!=null){

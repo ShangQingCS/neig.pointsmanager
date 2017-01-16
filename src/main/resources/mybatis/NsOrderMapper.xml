@@ -365,6 +365,9 @@
     	<if test="map.userid != null">
     		and userid=#{map.userid,jdbcType=BIGINT}
     	</if>
+    	<if test="map.status != null">
+    		and orderstatus=#{map.status,jdbcType=VARCHAR}
+    	</if>
     </where>
   </select>
   

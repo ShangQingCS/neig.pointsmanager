@@ -137,38 +137,52 @@ public class AddressController extends ContextInfo{
 			if(StringUtils.isEmpty(uerid)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"uerid",requestString);
 			}else{
-				address.setUerid(uerid);
+				if(!StringUtils.isEmpty(uerid)){
+					address.setUerid(uerid);
+				}
 			}
 			if(StringUtils.isEmpty(name)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"name",requestString);
 			}else{
+				if(!StringUtils.isEmpty(name)){
 				address.setName(name);
+				}
 			}
 			if(StringUtils.isEmpty(post)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"post",requestString);
 			}else{
+				if(!StringUtils.isEmpty(post)){
 				address.setPost(post);
+				}
 			}
 			if(StringUtils.isEmpty(phonenumb)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"phonenumb",requestString);
 			}else{
+				if(!StringUtils.isEmpty(phonenumb)){
 				address.setPhonenumb(phonenumb);
+				}
 			}
 			if(StringUtils.isEmpty(telnumb)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"telnumb",requestString);
 			}else{
+				if(!StringUtils.isEmpty(telnumb)){
 				address.setTelnumb(telnumb);
+				}
 			}
 			
 			if(StringUtils.isEmpty(isuse)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"isuse",requestString);
 			}else{
+				if(!StringUtils.isEmpty(isuse)){
 				address.setIsuse(isuse);
+				}
 			}
 			if(StringUtils.isEmpty(adds)&&!StringUtils.isEmpty(requestString)){
 				address=(NsAddress)autoLoad(address,"address",requestString);
 			}else{
+				if(!StringUtils.isEmpty(adds)){
 				address.setAddress(adds);
+				}
 			}
 		    
 		    

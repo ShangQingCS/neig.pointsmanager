@@ -45,6 +45,7 @@
 								<div class="am-tab-panel am-fade am-in am-active" id="tab1">
 									<div class="order-top">
 										<div class="th th-item">
+											<input type="hidden" id="orde_type" value="${ordetype}">
 											<td class="td-inner">商品</td>
 										</div>
 										<div class="th th-price">
@@ -158,7 +159,7 @@
 						</li>
 						<li class="td td-change">
 							<div class="am-btn am-btn-danger anniu">
-								{{if orderstatus == 0}} 删除订单 {{else orderstatus == 3}} 确认收货 {{else orderstatus == 1}} 立即付款 {{else orderstatus == 4}} 评价 {{else}} {{/if}}
+								{{if orderstatus == 2}} 等待发货 {{else orderstatus == 3}} 确认收货 {{else orderstatus == 1}} 立即付款 {{else orderstatus == 4}} 评价 {{else}} {{/if}}
 							</div>
 						</li>
 					</div>
@@ -194,10 +195,12 @@
 		}
 
 		function getorder(now_, pagesize_) {
+			var ordetype=$("#orde_type").val();
 			$.post(
 				_basePath + "/order_web/order/search.do", {
 					nowpage: now_,
-					pagesize: pagesize_
+					pagesize: pagesize_,
+					type:ordetype
 				},
 				function(data) {
 					if(data.result == 0) {

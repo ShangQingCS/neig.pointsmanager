@@ -18,8 +18,8 @@
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.min.js"></script>
 		<style type="text/css">
-			div .slideall:hover > div #guide_2{ display:block; }
-			div #guide_2 { display:none; }
+			//div .slideall:hover > div #guide_2{ display:block; }
+			//div #guide_2 { display:none; } 
 		</style>
 	</head>
 
