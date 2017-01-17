@@ -21,6 +21,31 @@
 		<link href="${path }/css/addstyle.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
+		<script>
+			$(document).ready(function() {
+				$(".new-option-r").click(function() {
+								$(this).parent('.user-addresslist').addClass("defaultAddr").siblings().removeClass("defaultAddr");
+								$(this).html("<i class='am-icon-check-circle'></i>默认地址").parent('.user-addresslist').siblings().find(".new-option-r").html("<i class='am-icon-check-circle'></i>设为默认")
+								alert(id);
+								$.post(
+									_basePath+"address/manager.do",
+									{ 
+										addressid:id,
+										isuse:"0",
+										type:"2",
+										uerid:${user.id}
+									},function(data){
+										if(data.result == 0){
+											$("").html("");
+										}else{
+											
+										}
+									},"json"
+								);
+							});
+			
+			})
+		</script>
 	</head>
 
 	<body>
@@ -47,10 +72,16 @@
 							<div class="per-border"></div>
 							<c:forEach items="${ads }" var="address">
 							<li class="user-addresslist <c:if test="${address.isuse == 0 }">defaultAddr</c:if>">
-								<span class="new-option-r"><i class="am-icon-check-circle"></i><c:if test="${address.isuse == 0 }">默认地址</c:if><c:if test="${address.isuse == 1 }">设为默认</c:if></span>
+							    <input name="addressid" type="hidden" value="${address.id }">
+								<span class="new-option-r">
+								<i class="am-icon-check-circle"></i>
+								<c:if test="${address.isuse == 0 }">默认地址</c:if>
+								<c:if test="${address.isuse == 1 }">设为默认</c:if>
+								</span>
 								<p class="new-tit new-p-re">
 									<span class="new-txt" name="name">${address.name }</span>
 									<span class="new-txt-rd2" name="phonenumb">${address.phonenumb }</span>
+									
 								</p>
 								<div class="new-mu_l2a new-p-re">
 									<p class="new-mu_l2cw">
@@ -58,9 +89,9 @@
 										<span class="street" name="address">${address.address }</span></p>
 								</div>
 								<div class="new-addr-btn">
-									<a href="javascript:void(0);" class="edit" ><i class="am-icon-edit"></i>编辑</a>
-									<span class="new-addr-bar">|</span>
-									<a href="javascript:void(0);" name="${address.id }" class="delete"><i class="am-icon-trash"></i>删除</a>
+									<a href="${path }/user_web/user/address.do" class="edit" ><i class="am-icon-edit"></i>编辑</a>
+								<!--  	<span class="new-addr-bar">|</span>
+									<a href="javascript:void(0);" name="${address.id }" class="delete"><i class="am-icon-trash"></i>删除</a> -->
 								</div>
 							</li>
 							</c:forEach>
@@ -110,20 +141,25 @@
 							</div>
 							<div class="clear"></div>
 
+                            <form id="gotoPay" name="gotoPay" action="${path }/shopcar_web/gotopay.do" method="post">
 							<tr class="item-list">
 								<div class="bundle  bundle-last">
 
 									<div class="bundle-main">
+									
+									<c:forEach items="${goodList}" var="goodlist">
+									    <input type="hidden" name="goodsid" values="${goodlist.goods.id }" />
+									
 										<ul class="item-content clearfix">
 											<div class="pay-phone">
 												<li class="td td-item">
 													<div class="item-pic">
 														<a href="#" class="J_MakePoint">
-															<img src="${path }/images/kouhong.jpg_80x80.jpg" class="itempic J_ItemImg"></a>
+															<img src="${baseimg }${goodlist.goods.goodimg }" class="itempic J_ItemImg" width="80px" height="80px"></a>
 													</div>
 													<div class="item-info">
 														<div class="item-basic-info">
-															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">美康粉黛醉美唇膏 持久保湿滋润防水不掉色美康粉黛醉美唇膏 持久保湿滋润防水不掉色美康粉黛醉美唇膏 持久保湿滋润防水不掉色</a>
+															<a href="#" class="item-title J_MakePoint" data-point="tbcart.8.11">${goodlist.goods.gname }</a>
 														</div>
 													</div>
 												</li>
@@ -137,7 +173,7 @@
 												<li class="td td-price">
 													<div class="item-price price-promo-promo">
 														<div class="price-content">
-															<em class="J_Price price-now">39.00</em>
+															<em class="J_Price price-now">${goodlist.goods.price }</em>
 														</div>
 													</div>
 												</li>
@@ -148,7 +184,7 @@
 														<span class="phone-title">购买数量</span>
 														<div class="sl">
 															<input class="min am-btn" name="" type="button" value="-" />
-															<input class="text_box" name="" type="text" value="3" style="width:30px;" />
+															<input class="text_box" name="paynumb" type="text" value="${goodlist.shuliang }" style="width:30px;" />
 															<input class="add am-btn" name="" type="button" value="+" />
 														</div>
 													</div>
@@ -156,7 +192,7 @@
 											</li>
 											<li class="td td-sum">
 												<div class="td-inner">
-													<em tabindex="0" class="J_ItemSum number">117.00</em>
+													<em tabindex="0" class="J_ItemSum number">${goodlist.shuliang* goodlist.goods.price}</em>
 												</div>
 											</li>
 											<li class="td td-oplist">
@@ -170,7 +206,9 @@
 
 										</ul>
 										<div class="clear"></div>
-
+										</c:forEach>
+										
+										
 									</div>
 							</tr>
 							<div class="clear"></div>
@@ -185,7 +223,7 @@
 								<div class="order-user-info">
 									<div id="holyshit257" class="memo">
 										<label>买家留言：</label>
-										<input type="text" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
+										<input type="text" name="remark" title="选填,对本次交易的说明（建议填写已经和卖家达成一致的说明）" placeholder="选填,建议填写和卖家达成一致的说明" class="memo-input J_MakePoint c2c-text-default memo-close">
 										<div class="msg hidden J-msg">
 											<p class="error">最多输入500个字符</p>
 										</div>
@@ -245,7 +283,7 @@
 						</ul>
 					</div>
 					<div class="clear"></div>
-
+					</form>
 							<!--信息 -->
 							<div class="order-go clearfix">
 								<div class="pay-confirm clearfix">
@@ -258,7 +296,7 @@
 
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
-											<a id="J_Go" href="${path }/jsp/success.jsp" class="btn-go" tabindex="0" title="点击此按钮，提交订单">确认提交</a>
+											<a id="J_Go" href="${path }/shopcar_web/gotopay.do" class="btn-go" tabindex="0" title="点击此按钮，提交订单">确认提交</a>
 										</div>
 									</div>
 									<div class="clear"></div>

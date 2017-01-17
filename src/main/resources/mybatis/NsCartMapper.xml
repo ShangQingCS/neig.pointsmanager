@@ -30,6 +30,9 @@
       	<if test="map.goodsid != null" >
         	and goodsid = #{map.goodsid,jdbcType=BIGINT}
       	</if>
+      	<if test="map.cartid != null" >
+        	and id = #{map.cartid,jdbcType=BIGINT}
+      	</if>
     </where>
   </select>
   

@@ -185,7 +185,7 @@ public class AddressController extends ContextInfo{
 				}
 			}
 		    
-		    
+		    System.err.println("--------000---------");
 			String userid=address.getUerid().toString();
 			if(!StringUtils.isEmpty(userid)){
 				if(!StringUtils.isEmpty(type)){// 1 删除 2修改 0新增

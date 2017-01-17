@@ -5,6 +5,7 @@ import java.util.Map;
 
 
 public interface BaseService {
+	
 	public List<Object> queryObj(Map<String, Object> map);
 	
 	public int addObj(Object obj);

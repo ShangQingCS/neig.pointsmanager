@@ -177,7 +177,7 @@
 										<a href="javascript:;" title="关闭" class="close">×</a>
 									</div>
 									<div class="theme-popbod dform">
-										<form class="theme-signin" name="loginform" id="buyform" action="${path }/shopcar_web/pay.do" method="post">
+										<form class="theme-signin" name="loginform" id="buyform" action="#" method="post">
 											<input type="hidden" id="goodsid" name="goodsid" value="${goods.id} "/>
 											<div class="theme-signin-left">
 
@@ -226,12 +226,12 @@
 						</div>
 						<li>
 							<div class="clearfix tb-btn tb-btn-buy theme-login">
-								<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="jascript:void(0);" onclick="document.getElementById('buyform').submit();return false;">立即购买</a>
+								<a id="LikBuy" title="点此按钮到下一步确认购买信息" href="jascript:void(0);" onclick="nowBuy();return false; ">立即购买</a>
 							</div>
 						</li>
 						<li>
 							<div class="clearfix tb-btn tb-btn-basket theme-login">
-								<a id="LikBasket" title="加入购物车" href="jascript:void(0);" onclick="addCart();"><i></i>加入购物车</a>
+								<a id="LikBasket" title="加入购物车" href="jascript:void(0);" ><i></i>加入购物车</a>
 							</div>
 						</li>
 					</div>
@@ -517,6 +517,35 @@
 			});
 		});
 		
+	    function nowBuy(){
+	    var goodsid = $('#goodsid').val();
+	    var buynumb=$('#text_box').val();
+	    
+	    $.post(
+					"${path}/shopcar_web/addShopCar.do", {
+						goodsid: goodsid,
+						buynumb: buynumb
+					},
+					function(data) {
+						
+						if(data.msg==2){
+							layer.msg("用户超时，跳转到登录页面",{icon:6,time:1500},function(){
+									 location.href=_basePath+"/"; 
+							});	
+						}else if(data.msg==1){
+							layer.msg("跳转到支付页面",{icon:6,time:1500},function(){
+									 location.href=_basePath+"/shopcar_web/pay.do?cartid="+data.cartId; 
+							});	
+						}else{
+							layer.msg("购买失败，稍后再试",{icon:5,time:1500});
+						}
+
+					}, "json"
+
+				);
+	    
+	    
+	    }
 	
 	</script>
 

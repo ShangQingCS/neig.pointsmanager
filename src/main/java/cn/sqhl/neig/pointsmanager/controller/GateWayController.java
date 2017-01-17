@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.controller;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +20,10 @@ import com.alibaba.fastjson.JSONObject;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.po.NsUserCoupon;
 import cn.sqhl.neig.pointsmanager.po.NsUserGrade;
+import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 import cn.sqhl.neig.pointsmanager.service.CouponService;
 import cn.sqhl.neig.pointsmanager.service.impl.CouponServiceImpl;
+import cn.sqhl.neig.pointsmanager.service.impl.UserPurseServiceImpl;
 import cn.sqhl.neig.pointsmanager.service.impl.UserServiceImpl;
 import cn.sqhl.neig.pointsmanager.utils.DataSecret;
 import cn.sqhl.neig.pointsmanager.utils.DateHelper;
@@ -36,6 +40,8 @@ public class GateWayController extends ContextInfo {
 	private UserServiceImpl userService;
 	@Autowired
 	private CouponServiceImpl couponService;
+	@Autowired
+	private UserPurseServiceImpl purseService;
 
 	private final String ver = "v1.0"; // 接口版本
 
@@ -144,11 +150,12 @@ public class GateWayController extends ContextInfo {
 									userService.updateObj(nsUser);
 									
 								}
-								
-								
-								
-								
+
 								//提现分支
+								if(tixian_status!=null){
+									nsUser.setTixianStatus(Integer.parseInt(tixian_status));
+									nsUser.setUserDjBalance(new BigDecimal(user_dj_balance));
+								}
 							
 								dataParams = nsUser;
 								//返回单个对象
@@ -172,17 +179,18 @@ public class GateWayController extends ContextInfo {
 								
 							break;	
 							
-							case "user_getpurselist"://钱包流水查询接口  类型： 积分、分红、可用余额（分页）
+							case "user_getpurselist"://钱包流水查询接口  类型： 积分、分红、可用余额
 								
-								//username purse_type  最新10条   一个月内   三个月内
-								
+								List<NsUserPurse> purseList = purseService.selectByUserId(nsUser.getId(), new Date());
+								dataParams =purseList;
+								outParams.put("data", dataParams);
 								
 							break;	
-							case "user_getcouponlist"://优惠券查询接口（人、分页）
-//								List<NsUserCoupon> couponlist=couponService.selectByUserId(nsUser.getId(), "1");
-//								dataParams =couponlist;
-//								outParams.put("data", dataParams);
-								//username coupon
+							case "user_getcouponlist"://优惠券查询接口
+								List<NsUserCoupon> couponlist=couponService.selectByUserId(nsUser.getId(), "1");
+								dataParams =couponlist;
+								outParams.put("data", dataParams);
+								
 							
 							break;
 							
@@ -193,9 +201,9 @@ public class GateWayController extends ContextInfo {
 							break;	
 							
 							case "user_getuserinfo"://用户信息查询
-								
-								//username
-								
+								nsUser = userService.queryByUserName(userName, null);
+								dataParams =nsUser;
+								outParams.put("data", dataParams);
 								
 							break;	
 							case "user_getuserlist"://团队成员查询接口
