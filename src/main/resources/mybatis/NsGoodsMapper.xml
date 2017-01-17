@@ -43,6 +43,7 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from ns_goods
     where id = #{id,jdbcType=BIGINT}
+    
   </delete>
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsGoods">
     insert into ns_goods (id, gname, price, 

@@ -279,7 +279,7 @@
 
 									<div id="holyshit269" class="submitOrder">
 										<div class="go-btn-wrap">
-											<a id="J_Go" href="${path }/shopcar_web/gotopay.do" class="btn-go" tabindex="0" title="点击此按钮，提交订单">确认提交</a>
+											<a id="J_Go" href="javascript:void(0);" onclick="submitBuy();" class="btn-go" tabindex="0" title="点击此按钮，提交订单">确认提交</a>
 										</div>
 									</div>
 									<div class="clear"></div>

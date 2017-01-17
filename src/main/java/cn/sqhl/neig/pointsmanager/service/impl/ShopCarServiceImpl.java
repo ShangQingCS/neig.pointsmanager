@@ -65,5 +65,12 @@ public class ShopCarServiceImpl implements ShopCarService{
 			}
 		return k;
 	}
+
+
+	@Override
+	public int removeByUserId(Long id, Long userid) {
+		// TODO Auto-generated method stub
+		return nsCartMapper.deleteByUserId(id, userid);
+	}
 	
 }

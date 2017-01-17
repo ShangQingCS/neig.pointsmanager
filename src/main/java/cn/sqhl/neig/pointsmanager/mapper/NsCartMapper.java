@@ -12,6 +12,8 @@ import cn.sqhl.neig.pointsmanager.vo.Cart;
 
 public interface NsCartMapper {
     int deleteByPrimaryKey(Long id);
+    
+    int deleteByUserId(@Param("id")Long id,@Param("userid")Long userid);
 
     int insert(NsCart record);
 

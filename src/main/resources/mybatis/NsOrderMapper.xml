@@ -53,6 +53,9 @@
     	<if test="map.status != null">
     		and orderstatus=#{map.status,jdbcType=VARCHAR}
     	</if>
+    	<if test="map.name != null">
+    		and name=#{map.name,jdbcType=VARCHAR}
+    	</if>
     </where>
   </select>
   

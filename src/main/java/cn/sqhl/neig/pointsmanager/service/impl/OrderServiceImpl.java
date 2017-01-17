@@ -78,4 +78,11 @@ public class OrderServiceImpl implements OrderService{
 	public NsOrder queryByPrimaryKey(Long id){
 		return nsOrderMapper.selectByPrimaryKey(id);
 	}
+
+
+	@Override
+	public int insertOrderDetail(NsOrderDetail record) {
+		// TODO Auto-generated method stub
+		return nsOrderDetailMapper.insert(record);
+	}
 }

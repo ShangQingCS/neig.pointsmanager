@@ -41,6 +41,15 @@
     delete from ns_cart
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  
+  
+  <delete id="deleteByUserId" parameterType="java.lang.Long">
+    delete from ns_cart
+    where id = #{id,jdbcType=BIGINT}
+    <if test="userid != null" >
+       and userid = #{userid,jdbcType=BIGINT}
+    </if>
+  </delete>
   <insert id="insert" parameterType="cn.sqhl.neig.pointsmanager.po.NsCart">
     insert into ns_cart (id, userid, goodsid, 
       count, create_time)
