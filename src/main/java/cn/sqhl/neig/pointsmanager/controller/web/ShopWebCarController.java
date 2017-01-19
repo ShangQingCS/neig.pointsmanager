@@ -28,10 +28,14 @@ import cn.sqhl.neig.pointsmanager.po.NsGoods;
 import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.po.NsUserCoupon;
+import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
+import cn.sqhl.neig.pointsmanager.service.CouponService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
 import cn.sqhl.neig.pointsmanager.service.ShopCarService;
+import cn.sqhl.neig.pointsmanager.service.UserPurseService;
 import cn.sqhl.neig.pointsmanager.service.UserService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.vo.Address;
@@ -54,6 +58,10 @@ public class ShopWebCarController extends basicInfo{
 	private AddressService addressServices;
 	@Autowired
 	private OrderService orderService;
+	@Autowired
+	private CouponService couponService;
+	@Autowired
+	private UserPurseService userPurseService;
 	
 	@RequestMapping("/search")
 	public String queryShopCar(HttpServletRequest request,
@@ -61,6 +69,7 @@ public class ShopWebCarController extends basicInfo{
 		ErrorInfo einfo;
 		List list;
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		System.out.println("----用户余额为"+user.getUserKyBalance());
 		if(user!=null){
 			
 			
@@ -74,6 +83,9 @@ public class ShopWebCarController extends basicInfo{
 			
 			
 			list=shopCarService.selectList(map);
+			//查询优惠券
+			List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+			model.addAttribute("myCouponList", myCouponList);
 			model.addAttribute("baseimg", baseimg);
 			model.addAttribute("cartlist", list);
 			model.addAttribute("userid", user.getId());
@@ -157,6 +169,8 @@ public class ShopWebCarController extends basicInfo{
 			
 			map.put("id", cartid);
 			list=shopCarService.selectList(map);
+			
+			
 			model.addAttribute("baseimg", baseimg);
 			model.addAttribute("cartlist", list);
 			model.addAttribute("userid", user.getId());
@@ -278,9 +292,8 @@ public class ShopWebCarController extends basicInfo{
 			    
 			    //goodsList.add(goodsMap);
 				}
-				//判断是否交易成功
-				boolean flag=false;
-				//判断用户可用余减去订单总额大于等于0 购买成功
+				System.out.println("总额为"+sumbalance+"----用户余额为"+user.getUserKyBalance());
+				//判断用户可用余额减去订单总额大于等于0 购买成功
 				int r=user.getUserKyBalance().subtract(sumbalance).compareTo(BigDecimal.ZERO);
 				
 				if(r==0||r==1){
@@ -291,22 +304,43 @@ public class ShopWebCarController extends basicInfo{
 					int code=0;
 					code=userServices.updateObj(nsuser);
 					if(code>0){
-						flag=true;
+						//修改成功
 						System.out.println("扣钱成功------------");
 						//修改订单状态为已付款
-						
 						nsOrder.setOrderstatus("2");
 						orderService.updateObj(nsOrder);
 						
+						
+						//从购物车中删除这条记录  根据 userid  goodsid
+						for (int i = 0; i < cardids.length; i++) {
+							shopCarService.removeByUserId(Long.valueOf(cardids[i]), user.getId());	
+						}
+						//写钱包流水日志
+					
+						NsUserPurse purse=new NsUserPurse();
+						purse.setTradeType("1");
+						purse.setTradeAmount(sumbalance);
+						purse.setTradeSn(orderSn);
+						purse.setTradeState("2");
+						purse.setOptionType("1");
+						purse.setUserAmount(user.getUserKyBalance().subtract(sumbalance));
+						purse.setUserId(user.getId());
+						purse.setPurseType(0);
+						purse.setPurseStatus(user.getUserStatus().toString());
+						purse.setCreateTime(new Date());
+						purse.setOptionAdminid(Long.valueOf("1"));
+						userPurseService.addObj(purse);
+						System.out.println("流水日志------------");
+						//刷新Session
+						request.getSession().setAttribute("user", userServices.queryByUserPhone(user.getUserPhone(), null));
+						
+						
+					}else{
+						//余额不足跳转充值页面
+						
 					}	
 				}
-				if(flag){
-					//成功
-					//从购物车中删除这条记录  根据 userid  goodsid
-					for (int i = 0; i < cardids.length; i++) {
-						shopCarService.removeByUserId(Long.valueOf(cardids[i]), user.getId());	
-					}   	
-				}
+				
 				 request.setAttribute("baseimg",  baseimg);  
 				 request.setAttribute("goodList", goodsList);
 				//sucess页面显示订单结果

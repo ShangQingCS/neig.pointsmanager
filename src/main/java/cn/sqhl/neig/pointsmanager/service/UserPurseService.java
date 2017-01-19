@@ -9,5 +9,5 @@ public interface UserPurseService extends BaseService{
 
 	public List<NsUserPurse> selectByUserId(Long userId,Date beforeTime);
 	
-	
+	public List<NsUserPurse> queryByUserId(Long id, String pursetype, Date date);
 }

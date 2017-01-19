@@ -52,6 +52,15 @@ public class UserPurseServiceImpl implements UserPurseService{
 		return nsUserPurseMapper.insert(obj);
 	}
 
+
+
+
+
+	public List<NsUserPurse> queryByUserId(Long id, String pursetype, Date date) {
+		// TODO 自动生成的方法存根
+		return nsUserPurseMapper.queryByUserId(id,  pursetype,  date);
+	}
+
 	
 
 }

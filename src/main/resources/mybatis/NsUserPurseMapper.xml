@@ -37,10 +37,21 @@
     <include refid="Base_Column_List" />
     from ns_user_purse
     where user_id = #{userId,jdbcType=BIGINT}
-    and trade_state=2
+    and trade_state=2 
     and create_time between #{beforeTime,jdbcType=TIMESTAMP}  and  #{createTime,jdbcType=TIMESTAMP} 
   </select>
   
+  <select id="queryByUserId"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_purse
+    where user_id = #{userId,jdbcType=BIGINT}
+    and purse_type = #{pursetype,jdbcType=INTEGER}
+    and trade_state=2 
+    and create_time between #{beforeTime,jdbcType=TIMESTAMP}  and  #{createTime,jdbcType=TIMESTAMP} 
+  </select>
+  
+   
   
   
   

@@ -123,7 +123,7 @@ public class AssetWebController extends basicInfo{
 	}
 	@RequestMapping("/vip")
 	public String vip(HttpServletRequest request,HttpServletResponse response,Model model){
-		NsUser user=(NsUser) request.getAttribute("user");
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
 		if(user!=null){
 			List<NsUserGrade> gradeList= couponService.selectUserGrade();
 			

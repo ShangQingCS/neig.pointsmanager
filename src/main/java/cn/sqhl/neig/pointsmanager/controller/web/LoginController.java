@@ -52,6 +52,7 @@ public class LoginController {
 			NsUser user=userService.queryByUserPhone(username, MD5Util.MD5(loginPwd));
 			
 			if(user !=null){
+				System.out.println(user.getUserPhone()+"-----"+user.getUserKyBalance());
 				flag=true;	
 				session.setAttribute("user", user);
 			}		
@@ -60,7 +61,7 @@ public class LoginController {
 			
 			if(user !=null){
 				flag=true;
-				
+				System.out.println(user.getUserPhone()+"-----"+user.getUserKyBalance());
 				session.setAttribute("user", user);
 			}	
 		}

@@ -23,4 +23,6 @@ public interface NsUserPurseMapper {
     
     
     List<NsUserPurse> selectByUserId(@Param(value="userId")Long UserId,@Param(value="createTime")Date createTime,@Param(value="beforeTime")Date beforeTime);
+
+	List<NsUserPurse> queryByUserId(Long id, String pursetype, Date date);
 }

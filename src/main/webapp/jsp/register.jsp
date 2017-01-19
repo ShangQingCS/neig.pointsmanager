@@ -114,6 +114,7 @@
 										"tel":tel,
 										"username":username,
 										"loginPwd":loginPwd,
+										"mobileCode":mobileCode
 									},function(data){
 										if(data.msg >0){
 										layer.msg('注册成功!',{icon:5,time:1500},function(){

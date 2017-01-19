@@ -13,7 +13,7 @@
 		<link href="${path }/basic/css/demo.css" rel="stylesheet" type="text/css" />
 		<link href="${path }/css/cartstyle.css" rel="stylesheet" type="text/css" />
 		<link href="${path }/css/optstyle.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="${path }/js/jquery-1.7.2.min.js"></script>
+		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<link type="text/css" href="${path }/css/headnav.css" rel="stylesheet" />
 		<link href="${path }/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
@@ -24,6 +24,7 @@
 	</head>
 
 	<body>
+		<!--顶部导航条 -->
 		<jsp:include page="/common/header.jsp"></jsp:include>
 		<!--悬浮搜索框-->
 		<jsp:include page="/common/searchbar.jsp"></jsp:include>
@@ -236,23 +237,16 @@
 												【选择使用优惠卷】
 											</div>
 										</option>
-									
-										<option value="a">
+										<c:forEach items="${myCouponList}" var="mycoupon">
+										<option value="${mycoupon.couponBlance}">
 											<div class="c-price">
-												<strong>￥8</strong>
+												<strong>￥${mycoupon.couponBlance}</strong>
 											</div>
 											<div class="c-limit">
-												【消费满95元可用】
+												【消费满${mycoupon.couponXfBalance}元可用】
 											</div>
 										</option>
-										<option value="b" selected>
-											<div class="c-price">
-												<strong>￥3</strong>
-											</div>
-											<div class="c-limit">
-												【无使用门槛】
-											</div>
-										</option>
+										</c:forEach>
 									</select>
 								</li>
 							</div>
@@ -261,8 +255,8 @@
 					<div class="logistics">
 						<h3>选择支付方式</h3>
 						<ul class="pay-list">
-							<li class="pay qq selected" style="margin-top:10px"> <img src="${path }/images/profit.png" /> 钱包(10000.00元)<span></span></li>
-							<li class="pay taobao" style="margin-top:10px"> <img src="${path }/images/profit.png"/> 分红(500.00元)<span></span></li>
+							<li class="pay qq selected" style="margin-top:10px"> <img src="${path }/images/profit.png" /> 钱包(${user.userKyBalance }元)<span></span></li>
+							<!--  <li class="pay taobao" style="margin-top:10px"> <img src="${path }/images/profit.png"/> 分红(500.00元)<span></span></li>-->
 						</ul>
 					</div>
 					<div class="clear"></div>
@@ -293,7 +287,9 @@
 				
 				<jsp:include page="/common/footer.jsp"></jsp:include>
 		
+		<script>
 			
+		</script>	
 	</body>
 	<script >
 	
@@ -302,12 +298,13 @@
 	    	
 	    	$('input[name="cartid"]:checked').each(function(){
                 $('#buyform').submit();
-                });
+                return false;
+            });
             
 	    	layer.msg("请选择支付的商品",{icon:5,time:1500},function(){
 
 		    });
-	    	return false;
+	    	
 	    }
 	
 		var totalprice;
@@ -360,6 +357,7 @@
 		}
 		
 		$(document).ready(function(){
+		
 			$("div").on("click","input.itemcheckbox",function(){
 				totalall();
 			});

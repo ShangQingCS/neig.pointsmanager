@@ -258,7 +258,9 @@ public class UserWebController extends basicInfo{
 			user.setUserName(username);
 			user.setLoginPwd(MD5Util.MD5(loginPwd));	
 			user.setUserPhone(tel);
-			user.setUserPid(Long.valueOf(request.getParameter("userPid")));
+			if(request.getParameter("userPid")!=null){
+				user.setUserPid(Long.valueOf(request.getParameter("userPid")));				
+			}
 			result=userService.addObj(user);	
 		}
 		JSONObject rsJson = new JSONObject();
