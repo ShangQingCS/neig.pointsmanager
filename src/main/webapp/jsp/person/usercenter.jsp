@@ -124,9 +124,10 @@
 
 							<!--订单 -->
 							<div class="m-order">
+							
 								<div class="s-bar">
-									<i class="s-icon"></i>我的订单
-									<a class="i-load-more-item-shadow" href="order.html">全部订单</a>
+									<i class="s-icon"></i>广告位
+									<a class="i-load-more-item-shadow" href="order.html">全部内容</a>
 								</div>
 								<ul>
 									<li><a href="javascript:;"><i><img src="${path }/images/pay.png"/></i><span>待付款</span></a></li>
@@ -135,6 +136,7 @@
 									<li><a href="javascript:;"><i><img src="${path }/images/comment.png"/></i><span>待评价<em class="m-num">3</em></span></a></li>
 									<li><a href="javascript:;"><i><img src="${path }/images/refund.png"/></i><span>退换货</span></a></li>
 								</ul>
+								<!-- 
 								<div class="orderContentBox">
 									<div class="orderContent">
 										<div class="orderContentpic">
@@ -184,7 +186,7 @@
 									</div>
 									<a href="javascript:void(0);" class="btnPay">再次购买</a>
 								</div>
-								
+								 -->
 							</div>
 							
 							

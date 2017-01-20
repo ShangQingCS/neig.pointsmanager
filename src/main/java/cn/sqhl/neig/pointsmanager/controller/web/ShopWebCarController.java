@@ -155,8 +155,6 @@ public class ShopWebCarController extends basicInfo{
 		
 		
 		String cartid = request.getParameter("cartid").trim(); 
-		
-		
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
 		if(user!=null){
 			
@@ -167,7 +165,7 @@ public class ShopWebCarController extends basicInfo{
 			List<Address> ads=addressServices.queryObj(map);
 			model.addAttribute("ads", ads);
 			
-			map.put("id", cartid);
+			map.put("cartid", cartid);
 			list=shopCarService.selectList(map);
 			
 			

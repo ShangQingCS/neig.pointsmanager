@@ -13,14 +13,14 @@
 		<link href="${path }/basic/css/demo.css" rel="stylesheet" type="text/css" />
 		<link href="${path }/css/cartstyle.css" rel="stylesheet" type="text/css" />
 		<link href="${path }/css/optstyle.css" rel="stylesheet" type="text/css" />
-		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
 		<link type="text/css" href="${path }/css/headnav.css" rel="stylesheet" />
 		<link href="${path }/AmazeUI-2.4.2/assets/css/admin.css" rel="stylesheet" type="text/css">
-		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 		<link href="${path }/css/jsstyle.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="${path }/js/address.js"></script>
 		<link href="${path }/css/addstyle.css" rel="stylesheet" type="text/css">
-		
+		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js" type="text/javascript"></script>
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
+		<script type="text/javascript" src="${path }/js/address.js"></script>
+		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
 	</head>
 
 	<body>
@@ -267,7 +267,7 @@
 									
 										<div tabindex="0" id="holyshit267" class="realPay"><em class="t">实付款：</em>
 											<span class="price g_price ">
-                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">244.00</em>
+                                    <span>¥</span> <em class="style-large-bold-red " id="J_ActualFee">0.00</em>
 											</span>
 										</div>
 
@@ -287,11 +287,7 @@
 				
 				<jsp:include page="/common/footer.jsp"></jsp:include>
 		
-		<script>
-			
-		</script>	
-	</body>
-	<script >
+<script >
 	
 	
 	    function submitBuy(){
@@ -328,6 +324,9 @@
 				totalprice=parseFloat(totalprice).toFixed(2);
 				var result=totalprice.split(".");
 				$("#J_Total").html(toThousands(result[0])+"."+result[1]);
+				$("#J_ActualFee").html(toThousands(result[0])+"."+result[1]);
+				
+				
 		}
 		function total(this_){
 			var ul=$(this_).parents("ul.cartrow");
@@ -357,6 +356,8 @@
 		}
 		
 		$(document).ready(function(){
+			
+			loadCategory();
 		
 			$("div").on("click","input.itemcheckbox",function(){
 				totalall();
@@ -449,5 +450,7 @@
 		});
 		
 	</script>
+	</body>
+	
 
 </html>

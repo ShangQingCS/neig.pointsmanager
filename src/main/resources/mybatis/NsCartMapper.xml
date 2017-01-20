@@ -179,9 +179,12 @@
 	ns_cart a left join ns_goods b on a.goodsid=b.id
 	<if test="map.userid != null">
 		<where>
-			a. userid=#{map.userid,jdbcType=BIGINT}
+			a.userid=#{map.userid,jdbcType=BIGINT}
 		</where>
 	</if>
+	<if test="map.cartid != null" >
+        	and a.id = #{map.cartid,jdbcType=BIGINT}
+      	</if>
     ) as carttmp order by create_time desc
   </select>
   

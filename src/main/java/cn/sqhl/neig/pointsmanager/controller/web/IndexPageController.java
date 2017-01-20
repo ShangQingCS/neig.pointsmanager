@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
@@ -47,8 +48,7 @@ public class IndexPageController extends basicInfo {
 	@RequestMapping("/home")
 	public String LoadPage(HttpServletRequest request,
 			HttpServletResponse response, Model model) {
-		// 所有分类、
-
+		if((NsUser) request.getSession().getAttribute("user")!=null){	
 		List<GoodsCategory> categorylist = goodsService.queryAllCategory();
 		List<GoodsCategory> leve1 = new ArrayList<GoodsCategory>();
 		List<GoodsCategory> leve2 = new ArrayList<GoodsCategory>();
@@ -84,7 +84,10 @@ public class IndexPageController extends basicInfo {
 		model.addAttribute("otherlist", adotherlist);
 		model.addAttribute("baseimg", baseimg);
 
-		return "/jsp/home";
+			return "/jsp/home";
+		}else{
+			return "/login";
+		}
 	}
 
 	@ResponseBody
@@ -154,9 +157,13 @@ public class IndexPageController extends basicInfo {
 			Model model,
 			@RequestParam(value = "index_none_header_sysc", required = true) String searchcode) {
 
+	if((NsUser) request.getSession().getAttribute("user")!=null){
 		model.addAttribute("index_none_header_sysc", searchcode);
 		model.addAttribute("baseimg", baseimg);
 		return "/jsp/goods/search";
+	}else{
+		return "/login";
+	}
 
 	}
 	@RequestMapping("/{parentid}/catagroygoodslist")
@@ -165,10 +172,13 @@ public class IndexPageController extends basicInfo {
 			HttpServletResponse response,
 			Model model,
 			@PathVariable String parentid) {
-
+		if((NsUser) request.getSession().getAttribute("user")!=null){
 		model.addAttribute("parentid", parentid);
 		model.addAttribute("baseimg", baseimg);
 		return "/jsp/goods/goodslist";
+		}else{
+			return "/login";
+		}
 
 	}
 	
@@ -179,9 +189,12 @@ public class IndexPageController extends basicInfo {
 			Model model,
 			@PathVariable String eventsid) {
 
+	if((NsUser) request.getSession().getAttribute("user")!=null){	
 		model.addAttribute("eventsid", eventsid);
 		model.addAttribute("baseimg", baseimg);
 		return "/jsp/goods/adlist";
-
+	}else{
+		return "/login";
+	}
 	}
 }

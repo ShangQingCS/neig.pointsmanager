@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
@@ -55,7 +56,6 @@ public class OrderWebController extends basicInfo{
 	@RequestMapping("/order/search")
 	public JSONObject GetOrder(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value="type",required=false) String type,
-			
 			@RequestParam(value="pagesize",required=false) String pagesize,
 			@RequestParam(value="nowpage",required=false) String nowpage){
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
@@ -110,11 +110,21 @@ public class OrderWebController extends basicInfo{
 			HttpServletResponse response,Model model,
 			@RequestParam(value="goodsid",required=false) Long goodsid,
 			@RequestParam(value="count",required=false) Integer count) throws IOException{
-		
-		
-		
-		
 		model.addAttribute("baseimg", baseimg);
 		return "/jsp/order/order";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/order/receipt")
+	public JSONObject receipt(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value="orderid",required=false) String id){		
+		JSONObject rsJson = new JSONObject();
+		System.out.println(id+"---------------");
+		
+		NsOrder order= orderService.queryByPrimaryKey(Long.parseLong(id));
+		order.setOrderstatus("4");
+		int i=orderService.updateObj(order);
+		rsJson.put("msg", i);
+		return rsJson;
 	}
 }

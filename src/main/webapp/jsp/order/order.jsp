@@ -16,6 +16,7 @@
 		<link href="${path }/css/orstyle.css" rel="stylesheet" type="text/css">
 		<script src="${path }/AmazeUI-2.4.2/assets/js/jquery.min.js"></script>
 		<script src="${path }/AmazeUI-2.4.2/assets/js/amazeui.js"></script>
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
 		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
 		
 		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
@@ -54,11 +55,9 @@
 										<div class="th th-number">
 											<td class="td-inner">数量</td>
 										</div>
-										<div class="th th-operation">
-											<td class="td-inner">商品操作</td>
-										</div>
-										<div class="th th-amount">
-											<td class="td-inner">合计</td>
+										
+										<div class="th th-amount" >
+											<td class="td-inner" style="padding-left:0px">合计</td>
 										</div>
 										<div class="th th-status">
 											<td class="td-inner">交易状态</td>
@@ -87,15 +86,16 @@
 			</div>
 			<jsp:include page="/jsp/person/menuleft.jsp"></jsp:include>
 		</div>
-
+	
 	</body>
 	<script id="order" type="text/x-jsrender">
 		<div class="order-status5">
 			<div class="order-title">
 				<div class="dd-num">订单编号：
-					<a href="javascript:;">{{:id}}</a>
+					<a href="javascript:;">{{:name}}</a>
 				</div>
 				<span>成交时间：{{:createTime}}</span>
+				{{if orderstatus == 3}}<span style="margin-left:18px">物流单号： {{> postcode}}</span>{{/if}}
 			</div>
 			<div class="order-content">
 				<div class="order-left orderdetail_{{:id}}">
@@ -126,11 +126,7 @@
 								<span>×</span>{{> count}}
 							</div>
 						</li>
-						<li class="td td-operation">
-							<div class="item-operation">
-
-							</div>
-						</li>
+						
 					</ul>
 
 					{{/for}}
@@ -138,29 +134,50 @@
 				<div class="order-right">
 					<li class="td td-amount">
 						<div class="item-amount">
-							合计： {{if total == 0 }} 0.00 {{else }} {{toFloat:total}} {{/if}}
+							<span >合计： {{if total == 0 }} 0.00 {{else }} {{toFloat:total}} {{/if}}</span>
 						</div>
 					</li>
 					<div class="move-right">
-						<li class="td td-status">
-							<div class="item-status">
+						<li class="td td-status" style="width:80px">
+							<div class="item-status" style="width:80px">
 								<p class="Mystatus">
 									{{if orderstatus == 1}} 待付款 {{else orderstatus == 2}} 买家已付款 {{else orderstatus == 3}} 卖家已发货 {{else orderstatus == 0}} 订单已取消 {{else orderstatus == 4}} 订单已完成 {{else}} {{/if}}
 								</p>
-								<p class="order-info">
-									<a href="orderinfo.html">订单详情</a>
-								</p>
+								
 								{{if orderstatus == 3}}
 								<p class="order-info">
-									<a href="logistics.html">查看物流</a>
+									<!--<a href="logistics.html">查看物流</a>
+                                   	   快递物流号：{{> postcoder}}-->
 								</p>
 								{{/if}}
 							</div>
 						</li>
-						<li class="td td-change">
-							<div class="am-btn am-btn-danger anniu">
-								{{if orderstatus == 2}} 等待发货 {{else orderstatus == 3}} 确认收货 {{else orderstatus == 1}} 立即付款 {{else orderstatus == 4}} 评价 {{else}} {{/if}}
+						<li class="td td-change" style="width:60px">
+							
+							{{if orderstatus == 2}}
+							<div class="am-btn am-btn-danger anniu" style="margin-left:25px">
+								 等待发货  </div> 
 							</div>
+							{{else orderstatus == 1}} 
+							<div oncick="">
+								<div class="am-btn am-btn-danger anniu" style="margin-left:25px">
+									 立即付款  </div> 
+								</div>
+							</div>
+							{{else orderstatus == 3}}<div onclick="receipt()" style="width:100%">
+							<div onclick="receipt({{> id}})">
+								
+								<div class="am-btn am-btn-danger anniu" style="margin-left:25px">
+									确认收货  </div> 
+								</div>
+							</div>
+
+							{{else orderstatus == 4}} 
+<!--
+							<div class="am-btn am-btn-danger anniu" style="margin-left:25px">
+								 
+							</div> -->
+							 {{else}} {{/if}}
 						</li>
 					</div>
 				</div>
@@ -210,7 +227,24 @@
 				}, "json"
 			);
 		}
-
+		
+		function receipt(id){
+			$.post(
+									_basePath+"/order_web/order/receipt.do",
+									{ 
+										"orderid":id	
+									},function(data){
+										if(data.msg>0){
+											layer.msg('操作成功!',{icon:6,time:1500},function(){
+                            				window.location.reload()});	
+										}else{
+											layer.msg('操作失败!',{icon:5,time:1500});
+										}
+									},"json"
+							);
+				
+		}
+		
 		$(document).ready(function() {
 			loadCategory();
 			setPersonMenu($("li[name='objorder']"));

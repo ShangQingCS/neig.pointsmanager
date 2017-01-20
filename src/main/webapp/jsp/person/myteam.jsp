@@ -34,7 +34,7 @@
         		var e=document.getElementById("content");//对象是content
        			e.select(); //选择对象
         		document.execCommand("Copy"); //执行浏览器复制命令
-       			layer.msg('链接复制成功!',{icon:5,time:1500}); 
+       			layer.msg('链接复制成功!',{icon:6,time:1500}); 
     		 }
 		
 		</script>
@@ -73,7 +73,7 @@
 										<thead>
 											<tr>												
 												<th class="th1" style="" colspan="2">			
-														<input type="text" id="content"  value="http://localhost:8080/pointsmanager/jsp/register.jsp?userPid=${user.id}" class="input_url" />
+														<input type="text" id="content"  value="${basePath}jsp/register.jsp?userPid=${user.id}" class="input_url" />
 														<input type="button" name="" onclick="jsCopy()" id="btn_copy" value="复制链接" class="am-btn am-btn-primary am-btn-sm am-fl" style="float:right;margin-right:80px" />																	
 												</th>
 											</tr>
