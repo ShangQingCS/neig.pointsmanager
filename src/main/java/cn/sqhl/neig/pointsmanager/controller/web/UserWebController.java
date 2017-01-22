@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.chat.IChat;
 import cn.sqhl.neig.pointsmanager.mapper.NsUserPurseMapper;
 import cn.sqhl.neig.pointsmanager.pay.IPay;
 import cn.sqhl.neig.pointsmanager.pay.util.UtilOther;
@@ -263,7 +264,14 @@ public class UserWebController extends basicInfo{
 			if(request.getParameter("userPid")!=null){
 				user.setUserPid(Long.valueOf(request.getParameter("userPid")));				
 			}
-			result=userService.addObj(user);	
+			result=userService.addObj(user);
+			
+			user = userService.queryByUserName(username, null);
+			
+			IChat ichat = IChat.getInstance();
+			ichat.reg(user);
+			
+			
 		}
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("msg", result);

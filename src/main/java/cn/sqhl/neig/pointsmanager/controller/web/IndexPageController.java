@@ -29,6 +29,7 @@ import cn.sqhl.neig.pointsmanager.service.AdEventService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
+import cn.sqhl.neig.pointsmanager.utils.PropKit;
 import cn.sqhl.neig.pointsmanager.vo.Advertise;
 import cn.sqhl.neig.pointsmanager.vo.Goods;
 import cn.sqhl.neig.pointsmanager.vo.GoodsCategory;
@@ -196,5 +197,20 @@ public class IndexPageController extends basicInfo {
 	}else{
 		return "/login";
 	}
+	}
+	@RequestMapping("/kefu")
+	public String kefu(HttpServletRequest request,HttpServletResponse response) {
+		
+		PropKit.use("config.properties");
+		
+		NsUser user = (NsUser) request.getSession().getAttribute("user");
+		
+		if((NsUser) request.getSession().getAttribute("user")!=null){
+			request.setAttribute("uid", "bxuserid_"+user.getId());
+			request.setAttribute("appkey", PropKit.get("alichat.appKey"));
+			return "/kefu";
+		}else{
+			return "/login";
+		}
 	}
 }

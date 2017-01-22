@@ -42,11 +42,6 @@ transform-origin: 95% 95%;-moz-transform-origin: 95% 95%;-ms-transform-origin: 9
 -moz-transform:scale(0.01);-ms-transform:scale(0.01);-o-transform:scale(0.01);-webkit-transform:scale(0.01);transition:all 1s;-moz-transition:all 1s;-ms-transition:all 1s;-o-transition:all 1s;-webkit-transition:all 1s;}
 </style>
 
-
-
-
-
-
 <!-- 代码部分begin -->
 <div class="toolbar">
    <a href="javascript:;" class="toolbar-item toolbar-item-weixin"><span class="toolbar-layer"></span></a>
@@ -56,14 +51,9 @@ transform-origin: 95% 95%;-moz-transform-origin: 95% 95%;-ms-transform-origin: 9
 </div>
 <!-- 代码部分end -->
 
-<!--[if lt IE 9]>
-<script src="//g.alicdn.com/aliww/ww/json/json.js"></script>
-<![endif]-->
-<script src="https://g.alicdn.com/aliww/??h5.openim.sdk/0.1.4/scripts/wsdk.js,h5.openim.kit/0.0.5/scripts/kit.js" charset="utf-8"></script>
-
 <script>
     document.getElementById('J_light').onclick = function(){
-        window.open('http://www.taobao.com/market/seller/openim/kit.php?uid=test0&to=test1&appkey=23018936&pwd=123456&fullscreen', 'webcall', 'toolbar=no, status=no,scrollbars=0,resizable=0,menubar＝0,location=0,width=700,height=500');
+        window.open('${path}/index_web/kefu.do', '贝翔商城-在线客服', 'toolbar=no, status=no,scrollbars=0,resizable=no,menubar＝0,location=0,width=716,height=516');
     };
 </script>
 
