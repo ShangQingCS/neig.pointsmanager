@@ -213,4 +213,21 @@ public class IndexPageController extends basicInfo {
 			return "/login";
 		}
 	}
+	@RequestMapping("/chatleft")
+	public String chatleft(HttpServletRequest request,HttpServletResponse response) {
+		
+		
+			return "/common/chatleft";
+		
+
+	}
+	@RequestMapping("/chatright")
+	public String chatright(HttpServletRequest request,HttpServletResponse response) {
+		
+		
+			return "/common/chatright";
+		
+
+	}
+
 }

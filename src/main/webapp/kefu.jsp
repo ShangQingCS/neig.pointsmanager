@@ -34,8 +34,8 @@
             credential: '123456',
             touid: '贝翔商城',
             theme: 'red',
-            pluginUrl: 'http://www.taobao.com/market/seller/openim/plugindemo.php',
-            customUrl: 'http://www.taobao.com/market/seller/openim/customdemo.php'
+            pluginUrl: '/index_web/chatleft.do',
+            customUrl: '/index_web/chatright.do'
         });
     }
 </script>
