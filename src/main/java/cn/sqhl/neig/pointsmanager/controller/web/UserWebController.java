@@ -72,8 +72,8 @@ public class UserWebController extends basicInfo{
 	public JSONObject information(HttpServletRequest request,HttpServletResponse response,Model model,
 			@RequestParam(value="nickName",required=false) String nickName,
 			@RequestParam(value="userSex",required=false) String userSex,
-			@RequestParam(value="userMail",required=false) String userMail,
-			@RequestParam(value="birthday",required=false) String birthday
+			@RequestParam(value="userMail",required=false) String userMail
+			
 			
 			) throws Exception{		
 		int result=0;
@@ -258,6 +258,8 @@ public class UserWebController extends basicInfo{
 			user.setUserName(username);
 			user.setLoginPwd(MD5Util.MD5(loginPwd));	
 			user.setUserPhone(tel);
+			user.setUserGrade(0l);
+			user.setUserSex(0);
 			if(request.getParameter("userPid")!=null){
 				user.setUserPid(Long.valueOf(request.getParameter("userPid")));				
 			}

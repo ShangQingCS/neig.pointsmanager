@@ -2,6 +2,7 @@ package cn.sqhl.neig.pointsmanager.controller;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.pay.IPay;
+import cn.sqhl.neig.pointsmanager.pay.util.UtilOther;
 import cn.sqhl.neig.pointsmanager.po.NsGoods;
 import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
@@ -27,6 +30,7 @@ import cn.sqhl.neig.pointsmanager.po.NsUserGrade;
 import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
+import cn.sqhl.neig.pointsmanager.service.UserPurseService;
 import cn.sqhl.neig.pointsmanager.service.impl.CouponServiceImpl;
 import cn.sqhl.neig.pointsmanager.service.impl.GoodsServiceImpl;
 import cn.sqhl.neig.pointsmanager.service.impl.OrderServiceImpl;
@@ -50,6 +54,8 @@ public class GateWayController extends ContextInfo {
 	@Autowired
 	private OrderService orderService;
 	@Autowired
+	private UserPurseService userPurseService;
+	@Autowired
 	private GoodsService goodsService;
 	
 	@Autowired
@@ -64,28 +70,35 @@ public class GateWayController extends ContextInfo {
 
 		
 		Map<String, Object> outParams = new HashMap<String, Object>();// 存储出流参数信息
-		
-
-		if (request.getRequestURL().indexOf("https://") == 0) {
+		outParams.put("ver", ver);
+		outParams.put("result", "0");
+		outParams.put("message", "连接接口成功");
 			
-			Object dataParams = null;// 存储出流data信息
 			
-			outParams.put("ver", ver);
-			outParams.put("result", "0");
-			outParams.put("message", "成功");
 			String params = request.getParameter("params"); // 获取输入流
 			
 			if (params != null && !params.isEmpty()) {// 解密
 				
-				System.out.println("解密后的字符串"+ DataSecret.decryptDES(params));
+
+                try{ //try catch 控制解密失败的处理
 				
 				Map<String, String> inParams = JSON.parseObject(DataSecret.decryptDES(params),Map.class);
+				
+				
+				/**
+				 * 返回用到的对象 
+				 */
+				NsUserPurse nsUserPurse = null;
+				NsUser nsUser = null;
+				Map map = new HashMap();
+				
+				
 
 					if (inParams != null && inParams.get("services") != null) {// 调用方法
 
 						String services = inParams.get("services");
 						
-						NsUser nsUser = new NsUser();
+						nsUser = new NsUser();
 						
 						//-------------必须参数-----------------
 						String userName = inParams.get("username");
@@ -121,6 +134,16 @@ public class GateWayController extends ContextInfo {
 						String order_status = inParams.get("order_status"); //订单状态
 						
 						
+						//------------------提现--充值----------------------
+						
+						String trade_type = inParams.get("trade_type"); //支付方式    0 系统1支付宝2微信3银联
+						String pay_account  = inParams.get("pay_account"); 
+						String pay_open_bank = inParams.get("pay_open_bank"); 
+						String trade_amount = inParams.get("trade_amount"); //金额
+						
+						String trade_sn = inParams.get("trade_sn"); //订单编号
+						
+						
 						switch (services) {
 						case "user_login":
 							
@@ -135,9 +158,8 @@ public class GateWayController extends ContextInfo {
 								}
 							}
 
-							dataParams = nsUser;
 							//返回单个对象
-							outParams.put("data", dataParams);
+							outParams.put("data", nsUser);
 							
 							break;
 							case "user_update"://用户更新
@@ -178,16 +200,9 @@ public class GateWayController extends ContextInfo {
 									userService.updateObj(nsUser);
 									
 								}
-
-								//提现分支
-								if(tixian_status!=null){
-									nsUser.setTixianStatus(Integer.parseInt(tixian_status));
-									nsUser.setUserDjBalance(new BigDecimal(user_dj_balance));
-								}
 							
-								dataParams = nsUser;
 								//返回单个对象
-								outParams.put("data", dataParams);
+								outParams.put("data", nsUser);
 							
 							break;	
 							case "phone_getcode"://获取手机验证码 必须参数 telphone
@@ -203,8 +218,7 @@ public class GateWayController extends ContextInfo {
 									jsonObject.put("getcode", getcode);
 									SmsHelper.sendSms(telphone, getcode);
 								}
-								dataParams = jsonObject;
-								outParams.put("data", dataParams);
+								outParams.put("data", jsonObject);
 								
 							break;	
 							
@@ -214,8 +228,7 @@ public class GateWayController extends ContextInfo {
 								 */
 								nsUser = userService.queryByUserName(userName, null);
 								List<NsUserPurse> purseList = purseService.queryByUserId(nsUser.getId(),purse_type, date_time);
-								dataParams =purseList;
-								outParams.put("data", dataParams);
+								outParams.put("data", purseList);
 								
 							break;	
 							case "user_getcouponlist"://优惠券查询接口
@@ -224,8 +237,7 @@ public class GateWayController extends ContextInfo {
 								 */
 								nsUser = userService.queryByUserName(userName, null);
 								List<NsUserCoupon> couponlist=couponService.selectByUserId(nsUser.getId(), coupon_status);
-								dataParams =couponlist;
-								outParams.put("data", dataParams);
+								outParams.put("data", couponlist);
 								
 							
 							break;
@@ -235,8 +247,7 @@ public class GateWayController extends ContextInfo {
 								 * 无必要参数
 								 */
 								List<NsUserGrade> gradeList= couponService.selectUserGrade();
-								dataParams =gradeList;
-								outParams.put("data", dataParams);
+								outParams.put("data", gradeList);
 							break;	
 							
 							case "user_getuserinfo"://用户信息查询
@@ -244,8 +255,7 @@ public class GateWayController extends ContextInfo {
 								 * 必要参数username
 								 */
 								nsUser = userService.queryByUserName(userName, null);
-								dataParams =nsUser;
-								outParams.put("data", dataParams);
+								outParams.put("data", nsUser);
 								
 							break;	
 							case "user_getuserlist"://团队成员查询接口
@@ -255,8 +265,7 @@ public class GateWayController extends ContextInfo {
 								nsUser = userService.queryByUserName(userName, null);
 								
 								List<NsUser> nsUsers = userService.queryByUserPid(nsUser.getId());
-								dataParams = nsUsers;
-								outParams.put("data", dataParams);
+								outParams.put("data", nsUsers);
 								
 							break;	
 							
@@ -266,12 +275,11 @@ public class GateWayController extends ContextInfo {
 									
 									nsUser = userService.queryByUserName(userName, null);
 									
-									Map map = new HashMap();
+									map = new HashMap();
 									map.put("userid", nsUser.getId());
 									map.put("status", order_status);
 									List orderList = orderService.queryObj(map) ;
-									dataParams = orderList;
-									outParams.put("data", dataParams);
+									outParams.put("data", orderList);
 									
 								break;	
 								
@@ -280,10 +288,157 @@ public class GateWayController extends ContextInfo {
 								   //必要参数 order id
 
 									List orderDetailList = null;
-									dataParams = orderDetailList;
-									outParams.put("data", dataParams);
+									
+									outParams.put("data", orderDetailList);
 									
 								break;	
+								
+							
+							case "user_tixian"://提现申请
+								
+								/*
+								 * 必要参数  username  tixian_status user_dj_balance trade_type  pay_account  pay_open_bank
+								 */
+								
+								nsUser = userService.queryByUserName(userName, null);
+								  
+								//提现分支
+								if(nsUser.getTixianStatus()==0){ //没有正在申请的提现 才可以提现
+									
+									
+									nsUser.setTixianStatus(1); //设置提现状态 申请中
+									nsUser.setUserDjBalance(new BigDecimal(user_dj_balance)); //冻结金额
+									nsUser.setUserFxBalance(nsUser.getUserFxBalance().subtract(new BigDecimal(user_dj_balance))); //剩余金额
+									//数据库操作
+									// 更新 nsuser
+									userService.updateObj(nsUser);
+									
+									
+									// 写入 pruse
+									
+									String tradeSn = FormatUtils.getOrderIdByUUId();
+									
+									tradeSn = "S"+tradeSn; //充值单唯一对账编号
+									
+									if(trade_type.equals("1")){//支付宝
+										tradeSn = "Z"+tradeSn;
+									} else if(trade_type.equals("2")){//微信
+										tradeSn = "W"+tradeSn;
+									} else if(trade_type.equals("3")){//银联
+										tradeSn = "U"+tradeSn;
+										
+									}
+									
+									nsUserPurse=new NsUserPurse();
+									nsUserPurse.setOptionType("1");
+									nsUserPurse.setTradeSn(tradeSn);
+									nsUserPurse.setPurseStatus(nsUser.getUserStatus().toString());
+									nsUserPurse.setTradeType(trade_type);
+									nsUserPurse.setTradeState("1");
+									nsUserPurse.setPurseType(1);
+									nsUserPurse.setPayAccount(pay_account);
+									nsUserPurse.setPayOpenBank(pay_open_bank);
+									nsUserPurse.setOptionAdminid(0l);
+									nsUserPurse.setCreateTime(new Date());
+									nsUserPurse.setTradeAmount(new BigDecimal(user_dj_balance));
+									nsUserPurse.setUserAmount(nsUser.getUserFxBalance());
+									nsUserPurse.setUserId(nsUser.getId());			
+									userPurseService.addObj(nsUserPurse);
+									
+									
+									List tradeList = new ArrayList();
+									tradeList.add(nsUserPurse);
+									tradeList.add(nsUser);
+									
+									outParams.put("data", tradeList);
+									
+								}else{
+									
+									outParams.put("data", "已有一笔提现申请");
+									
+								}
+								
+								break;	
+								
+								
+							  case "user_tochongzhi"://充值申请  返回充值流水
+								
+								nsUser = userService.queryByUserName(userName, null);
+								
+								/**
+								 * 用户名
+								 * 金额额
+								 * 充值类型  微信  支付宝
+								 */
+								  
+								   IPay ipay = IPay.getInstance();
+									// 写入 pruse
+								   
+								   String returnString = "";
+								   
+									String tradeSn = FormatUtils.getOrderIdByUUId();
+									
+									tradeSn = "S"+tradeSn; //充值单唯一对账编号
+									
+									if(trade_type.equals("1")){//支付宝
+										tradeSn = "Z"+tradeSn;
+										
+										returnString = ipay.createPayAPP("aliPay", "", UtilOther.yuanToFen(trade_amount), tradeSn,"贝翔商城"+trade_amount+"元储值卡");
+										
+									} else if(trade_type.equals("2")){//微信
+										tradeSn = "W"+tradeSn;
+										returnString = ipay.createPayAPP("wechatPay", "app", UtilOther.yuanToFen(trade_amount), tradeSn,"贝翔商城"+trade_amount+"元储值卡");
+										
+									} else if(trade_type.equals("3")){//银联
+										tradeSn = "U"+tradeSn;
+									}
+									
+									nsUserPurse=new NsUserPurse();
+									nsUserPurse.setOptionType("1");
+									nsUserPurse.setTradeSn(tradeSn);                           //充值唯一SN
+									nsUserPurse.setPurseStatus(nsUser.getUserStatus().toString());
+									nsUserPurse.setTradeType(trade_type);                      //支付方式
+									nsUserPurse.setTradeState("0");                            //充值状态 0 
+									nsUserPurse.setPurseType(1);                               //钱包类型  可用余额
+									nsUserPurse.setOptionAdminid(0l);
+									nsUserPurse.setCreateTime(new Date());
+									nsUserPurse.setTradeAmount(new BigDecimal(trade_amount));  //充值金额
+									nsUserPurse.setUserAmount(nsUser.getUserFxBalance());
+									nsUserPurse.setUserId(nsUser.getId());			
+									userPurseService.addObj(nsUserPurse);
+									
+									List tradeList = new ArrayList();
+									tradeList.add(nsUserPurse);
+									tradeList.add(returnString);
+
+									
+									outParams.put("data", tradeList);
+									
+								break;	
+								
+
+							  case "user_getchongzhi"://获取充值结果    
+								  
+								    /**
+								     * 必要参数： username  tradeSn 
+								     */
+		
+									nsUser = userService.queryByUserName(userName, null);
+									
+									map = new HashMap();
+									map.put("userid", nsUser.getId());
+									map.put("tradesn", trade_sn);
+									
+									nsUserPurse=(NsUserPurse)userPurseService.queryObj(map);
+									  
+									
+									outParams.put("data", nsUserPurse);
+									break;	
+								
+								
+								
+								
+								
 							
 						default:
 							outParams.put("result", "1");
@@ -293,10 +448,13 @@ public class GateWayController extends ContextInfo {
 
 						
 //						System.out.println(JSON.toJSONString(dataParams));
-//						
 //						outParams.put("data", JSON.toJSONString(dataParams));
 
 					}
+                }catch(Exception e){
+                	outParams.put("result", "1");
+    				outParams.put("message", "解密失败");
+                }
 
 			} else {
 				outParams.put("result", "1");
@@ -304,13 +462,6 @@ public class GateWayController extends ContextInfo {
 			}
 
 			
-
-		} else {
-			outParams.put("ver", ver);
-			outParams.put("result", "1");
-			outParams.put("message", "请使用https请求接口");
-
-		}
 
 
 		return DataSecret.encryptDES(JSON.toJSONString(outParams));

@@ -13,6 +13,8 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
+
 import cn.sqhl.neig.pointsmanager.pay.config.PayConfig;
 import cn.sqhl.neig.pointsmanager.pay.core.AlipayNotify;
 import cn.sqhl.neig.pointsmanager.pay.core.AlipaySubmit;
@@ -35,6 +37,83 @@ public class IPay {
     public static IPay getInstance() {
     	return ipay;
     }
+    
+    
+    /**
+	 * 创建预付费订单
+	 * 
+	 * @param payType
+	 *            支付类型 aliPay wechatPay unionPay
+	 * @param clientType
+	 *            客户端类型 pc app
+	 * @param payBalance
+	 *            支付金额 精确到分
+	 * @param tradeNo
+	 *            唯一订单编号
+	 * @param tradeName
+	 *            商品名称
+	 * @return
+	 */
+	public String createPayAPP(String payType, String clientType,
+			String payBalance, String tradeNo, String tradeName) {
+
+		if (UtilOther.notBlank(payType, clientType, payBalance, tradeNo,
+				tradeName)) {
+
+			if (payType.equals("aliPay")) {
+
+				// 把请求参数打包成数组
+				Map<String, String> sParaTemp = new HashMap<String, String>();
+				sParaTemp.put("service", PayConfig.service);
+				sParaTemp.put("partner", PayConfig.partner);
+				sParaTemp.put("seller_id", PayConfig.seller_id);
+				sParaTemp.put("_input_charset", PayConfig.input_charset);
+				sParaTemp.put("payment_type", PayConfig.payment_type);
+				sParaTemp.put("notify_url", PayConfig.notify_url);
+				sParaTemp.put("return_url", PayConfig.return_url);
+				sParaTemp.put("out_trade_no", tradeNo);
+				sParaTemp.put("subject", tradeName);
+				sParaTemp.put("total_fee", UtilOther.fenToYuan(payBalance));
+				sParaTemp.put("body", tradeName);
+
+				// 建立请求
+				return JSON.toJSONString(sParaTemp);
+
+			} else if (payType.equals("wechatPay")) {
+
+				SortedMap<Object, Object> parameters = new TreeMap<Object, Object>();
+				parameters.put("appid", PayConfig.APPID);
+				parameters.put("mch_id", PayConfig.MCH_ID);
+				if (clientType.equals("app")) {
+					parameters.put("trade_type", "APP");
+				} else {
+					parameters.put("trade_type", "NATIVE");
+				}
+				parameters.put("spbill_create_ip", UtilOther.getLocalIP());
+				parameters.put("product_id", tradeNo);
+				parameters.put("out_trade_no", tradeNo);
+				parameters.put("body", tradeName);
+				parameters.put("total_fee", payBalance);
+				parameters.put("notify_url", PayConfig.NOTIFY_URL);
+				parameters.put("nonce_str", WeChatUtil.CreateNoncestr());
+				parameters.put("sign",
+						WeChatUtil.createSign("UTF-8", parameters));
+				return JSON.toJSONString(parameters);
+
+			} else if (payType.equals("unionPay")) {
+
+				return null;
+			} else {
+				return "支付类型 aliPay wechatPay unionPay";
+			}
+
+		} else {
+
+			return "参数不能为空";
+		}
+
+	}
+    
 	
 
 	/**

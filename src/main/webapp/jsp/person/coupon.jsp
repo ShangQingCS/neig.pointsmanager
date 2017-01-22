@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -133,7 +133,7 @@
 												
 												<li class="td td-usestatus ">
 													<div class="item-usestatus ">
-														<span><img src="../images/gift_stamp_31.png"</span>
+														<span><img src="../images/gift_stamp_31.png"></span>
 													</div>
 												</li>												
 											</div>

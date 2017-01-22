@@ -51,6 +51,25 @@
     and create_time between #{beforeTime,jdbcType=TIMESTAMP}  and  #{createTime,jdbcType=TIMESTAMP} 
   </select>
   
+  
+  <select id="queryObj" parameterType="java.util.Map"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_purse
+    <where>
+    	1=1
+    	<if test="map.userid != null" >
+        	and user_id = #{map.userid,jdbcType=BIGINT}
+      	</if>
+      	<if test="map.pursetype != null" >
+        	and purse_type = #{map.pursetype,jdbcType=BIGINT}
+      	</if>
+      	<if test="map.tradesn != null" >
+        	and trade_sn = #{map.tradesn,jdbcType=VARCHAR}
+      	</if>
+    </where>
+  </select>
+  
    
   
   

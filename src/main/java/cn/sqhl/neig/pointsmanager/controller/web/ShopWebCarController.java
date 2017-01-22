@@ -69,7 +69,7 @@ public class ShopWebCarController extends basicInfo{
 		ErrorInfo einfo;
 		List list;
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
-		System.out.println("----用户余额为"+user.getUserKyBalance());
+		
 		if(user!=null){
 			
 			
@@ -193,6 +193,8 @@ public class ShopWebCarController extends basicInfo{
 		List list;
 		String[] cardids = request.getParameterValues("cartid");
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		//支付状态0失败1成功
+		int paystatus=0;
 		if(user!=null){
 			//根据用户查询收货地址
 				Map<String, Object> map = new HashMap<String, Object>();
@@ -328,17 +330,16 @@ public class ShopWebCarController extends basicInfo{
 						purse.setCreateTime(new Date());
 						purse.setOptionAdminid(Long.valueOf("1"));
 						userPurseService.addObj(purse);
-						System.out.println("流水日志------------");
+						
 						//刷新Session
 						request.getSession().setAttribute("user", userServices.queryByUserPhone(user.getUserPhone(), null));
+						//设置支付状态为1
+						paystatus=1;
 						
-						
-					}else{
-						//余额不足跳转充值页面
-						
-					}	
+					}
 				}
-				
+				 request.setAttribute("paystatus",  paystatus);
+				 request.setAttribute("sumbalance",  sumbalance); 	
 				 request.setAttribute("baseimg",  baseimg);  
 				 request.setAttribute("goodList", goodsList);
 				//sucess页面显示订单结果

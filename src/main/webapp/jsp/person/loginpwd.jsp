@@ -27,8 +27,7 @@
 				var mobilecode=$('#mobile_code').val();
  				var loginPwd=$('#user-password').val();
  				var confirmPwd=$('#user-confirm-password').val();
- 				
-	        	if(mobilecode==""||loginPwd==""||confirmPwd!=""){
+	        	if(mobilecode==""||loginPwd==""||confirmPwd==""){
 	        		$('#msg').text('*输入信息不能为空');
 	        	}else if(loginPwd!=confirmPwd){
 	        		$('#msg').text('*两次输入密码不一致');

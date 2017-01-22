@@ -19,8 +19,7 @@ public class UserPurseServiceImpl implements UserPurseService{
 	
 	
 	public List<Object> queryObj(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		return nsUserPurseMapper.queryObj(map);
 	}
 
 	
