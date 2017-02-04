@@ -82,7 +82,7 @@ public class OrderWebController extends basicInfo{
 		PageCond page=new PageCond(Integer.parseInt(nowpage)*Integer.parseInt(pagesize),Integer.parseInt(pagesize));
 		
 		map.put("userid", userid);
-		System.err.println(type+"-----------------");
+		
 		List<Order> obj=orderService.queryOrder(page, map);
 		
 		if(obj!=null){

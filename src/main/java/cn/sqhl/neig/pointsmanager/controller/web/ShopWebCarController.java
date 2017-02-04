@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,6 +194,8 @@ public class ShopWebCarController extends basicInfo{
 		List list;
 		String[] cardids = request.getParameterValues("cartid");
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		String couponid =request.getParameter("couponid");
+		System.out.println(couponid+"----------");
 		//支付状态0失败1成功
 		int paystatus=0;
 		if(user!=null){

@@ -229,22 +229,24 @@
 								<li class="td td-coupon">
 
 									<span class="coupon-title">优惠券</span>
-									<select data-am-selected>
+									<select data-am-selected id="s_coupon">
 									
-									    <option value="0">
+									    <option value="0,-1" name="start">
 											
 											<div class="c-limit">
 												【选择使用优惠卷】
 											</div>
 										</option>
 										<c:forEach items="${myCouponList}" var="mycoupon">
-										<option value="${mycoupon.couponBlance}">
+										<option  value="${mycoupon.couponBlance},${mycoupon.couponXfBalance}" name="${mycoupon.id}">											
 											<div class="c-price">
 												<strong>￥${mycoupon.couponBlance}</strong>
 											</div>
-											<div class="c-limit">
+											<div class="c-limit">	
 												【消费满${mycoupon.couponXfBalance}元可用】
+												
 											</div>
+											
 										</option>
 										</c:forEach>
 									</select>
@@ -293,6 +295,8 @@
 	    function submitBuy(){
 	    	
 	    	$('input[name="cartid"]:checked').each(function(){
+	    		var maxIndex=$("#s_coupon").find("option:selected").attr("name");
+	    		alert(maxIndex);
                 $('#buyform').submit();
                 return false;
             });
@@ -315,16 +319,37 @@
 		}
 		function totalall(){
 			var list=$(".itemcheckbox:checked");
+			var coupon=$("#s_coupon").val();
+			
+			var coupon=coupon.split(",");
+			var blance=coupon[0];
+			var xfBalance=coupon[1];
+			
 			totalprice=0.00;
 				for(var i=0;i<list.length;i++){
 					var count=$(list[i]).parents("ul.item-content").find("input.count").val();
 					var price=$(list[i]).parents("ul.item-content").find("em.price-now").attr("name");
 					totalprice=parseFloat(totalprice)+parseFloat(count)*parseFloat(price);
 				}
+				factprice=parseFloat(totalprice)-parseFloat(blance);
 				totalprice=parseFloat(totalprice).toFixed(2);
 				var result=totalprice.split(".");
 				$("#J_Total").html(toThousands(result[0])+"."+result[1]);
 				$("#J_ActualFee").html(toThousands(result[0])+"."+result[1]);
+				if(parseFloat(totalprice)>parseFloat(xfBalance)){
+					if(parseFloat(factprice)>0){
+						factprice=parseFloat(factprice).toFixed(2);
+						var resultFact=factprice.split(".");
+						$("#J_ActualFee").html(toThousands(resultFact[0])+"."+resultFact[1]);
+					}
+					
+				}else{
+					layer.msg("优惠券不可用",{icon:5,time:1500},function(){
+						$("#s_coupon").find("option[name='start']").attr("selected",true); 
+
+				    });
+					
+				}
 				
 				
 		}
@@ -341,8 +366,7 @@
 		function updatenumb(goodsid_,count_,id_){
 			$.post(
 					_basePath+"shopcar/manager.do",
-					{ 
-						id:id_,
+					{ 	id:id_,
 						count:count_,
 						goodsid:goodsid_,
 						userid:${user.id},
@@ -358,6 +382,36 @@
 		$(document).ready(function(){
 			
 			loadCategory();
+			
+			$("#s_coupon").change(function(){
+				var list=$(".itemcheckbox:checked");
+				var coupon=$("#s_coupon").val();
+				var coupon=coupon.split(",");
+				var blance=coupon[0];
+				var xfBalance=coupon[1];
+				
+				totalprice=0.00;
+				for(var i=0;i<list.length;i++){
+					var count=$(list[i]).parents("ul.item-content").find("input.count").val();
+					var price=$(list[i]).parents("ul.item-content").find("em.price-now").attr("name");
+					totalprice=parseFloat(totalprice)+parseFloat(count)*parseFloat(price);
+				}
+				if(parseFloat(totalprice)>parseFloat(xfBalance)){
+					factprice=parseFloat(totalprice)-parseFloat(blance);
+					if(parseFloat(factprice)>0){
+						factprice=parseFloat(factprice).toFixed(2);
+						var resultFact=factprice.split(".");
+						$("#J_ActualFee").html(toThousands(resultFact[0])+"."+resultFact[1]);
+					}	
+				}else{
+					
+					layer.msg("优惠券不可用",{icon:5,time:1500},function(){
+						$("#s_coupon").find("option[name='start']").attr("selected",true); 
+
+				    });
+				}
+				
+			});
 		
 			$("div").on("click","input.itemcheckbox",function(){
 				totalall();

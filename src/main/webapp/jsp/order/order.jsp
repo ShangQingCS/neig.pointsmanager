@@ -161,7 +161,7 @@
 							{{else orderstatus == 1}} 
 							<div oncick="">
 								<div class="am-btn am-btn-danger anniu" style="margin-left:25px">
-									 立即付款  </div> 
+									<a href="${path }/shopcar_web/search.do" style="color:#fff"> 立即付款</a>  </div> 
 								</div>
 							</div>
 							{{else orderstatus == 3}}<div onclick="receipt()" style="width:100%">
