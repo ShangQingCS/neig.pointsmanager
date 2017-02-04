@@ -23,6 +23,28 @@
 		<link href="${path }/css/infstyle.css" rel="stylesheet" type="text/css">
 		<script type="text/javascript" src="${path }/js/jsrender0.9.83.js"></script>
 		<link type="text/css" href="${path }/css/headnavperson.css" rel="stylesheet" />
+		<script src="${path }/AmazeUI-2.4.2/assets/js/layer/2.1/layer.js"></script>
+		<script>
+			function delCoupon(id){
+				
+				$.post(
+						_basePath+"/asset_web/delcoupon.do",
+						{ 
+							"id":id
+								
+						},function(data){
+							if(data.msg>0){
+								layer.msg('删除成功',{icon:5,time:1500},function(){
+                        				window.location.reload();});	 
+							}else{
+								layer.msg('删除失败',{icon:5,time:1500});
+									
+							}
+						},"json"
+				);
+				
+			}
+		</script>
 	</head>
 
 	<body>
@@ -127,7 +149,7 @@
 														</div>
 													</div>
 													<div class="op-btns c-del">
-														<a href="#" class="btn"><span class="txt">删除</span><b></b></a>
+														<a href="javascript:;" class="btn" onclick="delCoupon(${expireCoupon.id})"><span class="txt">删除</span></a>
 													</div>
 												</div>
 												

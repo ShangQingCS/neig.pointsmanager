@@ -12,6 +12,7 @@ public interface CouponService extends BaseService{
 	
 	public NsUserGrade selectUserGradebyID(long userGradeId);
 	
-	
+	public int deleteObj(Long id);
+		
 
 }

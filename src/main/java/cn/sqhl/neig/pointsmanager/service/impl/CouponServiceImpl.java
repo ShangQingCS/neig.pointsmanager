@@ -61,6 +61,15 @@ public class CouponServiceImpl implements CouponService{
 
 	}
 
+	@Override
+	public int deleteObj(Long id) {
+		// TODO 自动生成的方法存根
+		return nsUserCouponMapper.deleteByPrimaryKey(id);
+	}
+
+
+	
+
 	
 
 }

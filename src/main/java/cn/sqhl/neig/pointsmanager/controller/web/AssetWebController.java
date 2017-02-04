@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
@@ -60,6 +61,20 @@ public class AssetWebController extends basicInfo{
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("/delcoupon")
+	public JSONObject information(HttpServletRequest request,HttpServletResponse response,Model model,			
+			@RequestParam(value="id",required=false) String id
+			) throws Exception{		
+		int result=0;
+		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		if(user!=null){
+			result=couponService.deleteObj(Long.valueOf(id));
+		}		
+		JSONObject rsJson = new JSONObject();
+		rsJson.put("msg", result);
+		return rsJson;
+	}
 	
 	@RequestMapping("/walletlist")
 	public String myWalletlist(HttpServletRequest request,HttpServletResponse response,Model model){
