@@ -14,5 +14,5 @@ public interface GoodsService {
 	public List<Goods> queryPageByLike(PageCond page,Object obj);
 	public List<GoodsCategory> queryGoodsCategory(PageCond page,Object obj);
 	public List<GoodsCategory> queryAllCategory();
-	public Map freazesGoods(Long orderid) throws Exception;
+	public Map freazesGoods(Long orderid,Long userid) throws Exception;
 }

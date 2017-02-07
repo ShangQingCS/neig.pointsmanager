@@ -210,4 +210,13 @@
       option_remark = #{optionRemark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+   <select id="selectbyMap" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_user_coupon
+    where user_id = #{map.userid,jdbcType=BIGINT}
+    and id= #{map.id,jdbcType=BIGINT}
+  </select>
+  
 </mapper>

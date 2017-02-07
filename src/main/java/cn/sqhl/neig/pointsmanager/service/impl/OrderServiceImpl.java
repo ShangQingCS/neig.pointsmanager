@@ -1,5 +1,6 @@
 package cn.sqhl.neig.pointsmanager.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,10 @@ import com.alibaba.fastjson.JSONArray;
 
 import cn.sqhl.neig.pointsmanager.mapper.NsOrderDetailMapper;
 import cn.sqhl.neig.pointsmanager.mapper.NsOrderMapper;
+import cn.sqhl.neig.pointsmanager.mapper.NsUserCouponMapper;
 import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
+import cn.sqhl.neig.pointsmanager.po.NsUserCoupon;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.vo.Order;
@@ -26,6 +29,9 @@ public class OrderServiceImpl implements OrderService{
 	
 	@Autowired
 	private NsOrderDetailMapper nsOrderDetailMapper;
+	
+	@Autowired
+	private NsUserCouponMapper nsUserCouponMapper;
 	
 	
 	public List<Order> queryOrder(PageCond page, Map<String, Object> obj) {
@@ -53,7 +59,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Transactional
-	public int addObj(NsOrder order,Object goodslist) throws Exception{
+	public NsOrder addObj(NsOrder order,Object goodslist,String couponid,String userid) throws Exception{
 		 int value=0;
 		 int z=nsOrderMapper.insertOrder(order);
 			 if(z > 0 && !StringUtils.isEmpty(order.getId())){
@@ -65,14 +71,37 @@ public class OrderServiceImpl implements OrderService{
 					 if(k>0){
 						continue;
 					 }else{
+						order=null;
 						throw new RuntimeException("tansaction 异常 数据回滚");
 					 }
 				 }
-				 value=1;
+				 if(!StringUtils.isEmpty(couponid)){
+					 Map map=new HashMap();
+					 map.put("id", couponid);
+					 map.put("userid", userid);
+					 NsUserCoupon nucoupon =nsUserCouponMapper.selectbyMap(map);
+					 if(nucoupon!=null){
+					 int k=0;
+					 if(nucoupon.getCouponStatus().equals("0")){
+						 nucoupon.setCouponStatus("1");
+						 nucoupon.setOrderSn(order.getId()+"");
+						 k=nsUserCouponMapper.updateByPrimaryKeySelective(nucoupon);
+					 }
+					 if(k>0){
+						 value=1;
+					 }else{
+						order=null;
+						throw new RuntimeException("tansaction 优惠券不可使用");
+					 }}
+					 else{
+						order=null;
+						throw new RuntimeException("tansaction 无对应优惠券");
+					 }
+				 }
 			 }else{
-				 value=0;
+				 order=null;
 			 }
-			return value;
+			return order;
 	}
 	
 	public NsOrder queryByPrimaryKey(Long id){

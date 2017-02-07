@@ -12,7 +12,7 @@ public interface OrderService extends BaseService{
 
 	public List<Order> queryOrder(PageCond page,Map<String, Object> obj);
 	
-	public int addObj(NsOrder order,Object goodslist) throws Exception;
+	public NsOrder addObj(NsOrder order,Object goodslist,String couponid,String userid) throws Exception;
 	
 	public NsOrder queryByPrimaryKey(Long id);
 	

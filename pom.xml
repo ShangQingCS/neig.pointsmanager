@@ -256,6 +256,11 @@
 			<artifactId>aliyun-java-sdk-sms</artifactId>
 			<version>3.0.0-rc1</version>
 		</dependency>
+		<dependency>
+			<groupId>alipay</groupId>
+			<artifactId>Service_On-line</artifactId>
+			<version>20170122</version>
+		</dependency>
 
 		<!--end testjar <dependency> <groupId>sunchin</groupId> <artifactId>Integrated-payment-interface</artifactId> 
 			<version>0.0.1-SNAPSHOT</version> </dependency> -->

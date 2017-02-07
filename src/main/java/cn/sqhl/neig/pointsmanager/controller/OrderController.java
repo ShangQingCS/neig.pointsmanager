@@ -28,6 +28,7 @@ import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.service.AddressService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.service.OrderService;
+import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
 
 import com.alibaba.fastjson.JSONArray;
@@ -133,6 +134,7 @@ public class OrderController extends ContextInfo{
 			HttpServletResponse response,
 			@RequestParam(value="type",required=false) String type,
 			@RequestParam(value="orderid",required=false) Long orderid,
+			@RequestParam(value="couponid",required=false) String couponid,
 			NsOrder nsorder) throws IOException{
 		
 		JSONObject rsJson = new JSONObject();
@@ -149,6 +151,13 @@ public class OrderController extends ContextInfo{
 		int i=0;
 		if(StringUtils.isEmpty(type)&&requestString!=null){				
 			type=requestString.get("type")+"";
+		}
+		if(StringUtils.isEmpty(couponid)&&requestString!=null){	
+			if(!StringUtils.isEmpty(requestString.get("couponid"))){
+				couponid=requestString.get("couponid")+"";
+			}else{
+				couponid=null;
+			}
 		}
 		if(StringUtils.isEmpty(orderid)&&requestString!=null){
 			if(!StringUtils.isEmpty(requestString.get("orderid"))){
@@ -212,10 +221,17 @@ public class OrderController extends ContextInfo{
 				
 				if(nsorder!=null && go){
 					try{
-						i=orderService.addObj(nsorder,goodslist);
+						nsorder=orderService.addObj(nsorder,goodslist,couponid,nsorder.getUserid()+"");
+						if(nsorder!=null){
+							i=1;
+						}else{
+							i=0;
+						}
+						data=nsorder;	
 					}catch(Exception e){
 						logger.log(INFO, "数据插入失败~ 请确认传入参数后进行操作");
 						i=0;
+						data="";
 					}
 				}
 				
@@ -224,6 +240,7 @@ public class OrderController extends ContextInfo{
 					NsOrder order =orderService.queryByPrimaryKey(orderid);
 					order.setOrderstatus("0");
 					i=orderService.updateObj(order);
+					data="";
 				}else{
 					result="1";
 					message="操作失败  该类型对应传入数据为空";
@@ -247,7 +264,6 @@ public class OrderController extends ContextInfo{
 			result="0";
 			message="操作成功";
 			logger.log(INFO, message);
-			data="";
 		}else{
 			result="1";
 			message="操作失败 ";
@@ -262,20 +278,6 @@ public class OrderController extends ContextInfo{
 		return rsJson;
 	}
 	
-	/**
-	 * 交易订单确认
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws IOException
-	 */
-	@ResponseBody
-	@RequestMapping("/confirm")
-	public JSONObject confirmBill(HttpServletRequest request,
-			HttpServletResponse response) throws IOException{
-		return null;
-	}
-	
 	/***
 	 * 交易订单申请
 	 * @param request
@@ -284,14 +286,12 @@ public class OrderController extends ContextInfo{
 	 * @throws IOException
 	 */
 	@ResponseBody
-	@RequestMapping("/apply")
+	@RequestMapping("/pay")
 	public JSONObject applyBill(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="orderid",required=false) Long orderid,
-			@RequestParam(value="subject",required=false) String subject,
-			@RequestParam(value="body",required=false) String body,
-			@RequestParam(value="price",required=false) String price,
-			@RequestParam(value="type",required=false) String type) throws IOException{
+			@RequestParam(value="userid",required=false) Long userid
+		) throws IOException{
 		
 		JSONObject rsJson = new JSONObject();
 		rsJson.put("ver", ver);
@@ -308,32 +308,12 @@ public class OrderController extends ContextInfo{
 				orderid=Long.parseLong(requestString.get("orderid")+"");
 			}
 		}
-		
-		if(StringUtils.isEmpty(subject)&&requestString!=null){
-			if(!StringUtils.isEmpty(requestString.get("subject"))){
-				subject=requestString.getString("subject");
+		if(StringUtils.isEmpty(userid)&&requestString!=null){
+			if(!StringUtils.isEmpty(requestString.get("userid"))){
+				userid=Long.parseLong(requestString.get("userid")+"");
 			}
 		}
 		
-		if(StringUtils.isEmpty(body)&&requestString!=null){
-			if(!StringUtils.isEmpty(requestString.get("body"))){
-				body=requestString.getString("body");
-			}
-		}
-		
-		if(StringUtils.isEmpty(price)&&requestString!=null){
-			if(!StringUtils.isEmpty(requestString.get("price"))){
-				price=requestString.getString("price");
-			}
-		}
-		
-		if(StringUtils.isEmpty(type)&&requestString!=null){
-			if(!StringUtils.isEmpty(requestString.get("type"))){
-				type=requestString.getString("type");
-			}
-		}
-		
-		if(!StringUtils.isEmpty(price) && !StringUtils.isEmpty(body) && !StringUtils.isEmpty(subject)){
 		
 		if(!StringUtils.isEmpty(orderid)){
 			Map querymap=new HashMap();
@@ -341,45 +321,18 @@ public class OrderController extends ContextInfo{
 			querymap.put("status", "1");
 			List<Object> order=orderService.queryObj(querymap);
 			if(order!=null && order.size()>0){//该订单为待支付订单才可以被冻结
-				try {
-					Map resultmap=goodsService.freazesGoods(orderid);//冻结 保存冻结记录
+				try{
+					
+					Map resultmap=goodsService.freazesGoods(orderid,userid);//冻结 保存冻结记录
 					if(resultmap!=null && resultmap.size()>0){
 						int status=Integer.parseInt(resultmap.get("status")+"");
 						if(status == 0){
-							//调用支付交易订单申请接口
-						//	String tradeno=alipayUtil.getOutTradeNo();
-							String exchangeorderinfo="";
-							if(type.equals("alipay")){
-////								AppBusinessParameter abp=new AppBusinessParameter();
-//								abp.setBody(body);
-//								abp.setSubject(subject);
-//								abp.setTotal_amount(price);
-//								exchangeorderinfo=alipayHelp.getAppOrderInfo(abp);
-							}else if(type.equals("weipay")){
-//								weixinUtil.getOrderInfo(subject,body,price,tradeno);
-							}else if(type.equals("nspay")){
-								
-							}else{
-								result="1";
-								message="生成失败~支付类型有误~";
-								logger.log(INFO, message);
-								data="";
-							}
-//							orderService.addExchangeOrder(obj);
-							if(!StringUtils.isEmpty(exchangeorderinfo)){
-								Map map=new HashMap();
-								result="0";
-								message="生成成功";
-								logger.log(INFO, message);
-								map.put("alipayOrderinfo", exchangeorderinfo);
-								//map.put("tradeno", tradeno);
-								data=map;
-							}else{
-								result="1";
-								message="生成失败~";
-								logger.log(INFO, message);
-								data="";
-							}
+							//支付成功
+							Map map=new HashMap();
+							result="0";
+							message="支付成功";
+							logger.log(INFO, message);
+							data="";
 						}else{
 							result=status+"";
 							message=resultmap.get("msg")+"";
@@ -388,7 +341,7 @@ public class OrderController extends ContextInfo{
 						}
 					}else{
 						result="1";
-						message="冻结失败~";
+						message="操作失败~";
 						logger.log(INFO, message);
 						data="";
 					}
@@ -412,12 +365,6 @@ public class OrderController extends ContextInfo{
 			data="";
 		}
 		
-		}else{
-			result="1";
-			message="传入参数有误~ 请核对后重试";
-			logger.log(INFO, message);
-			data="";
-		}
 		rsJson.put("result", result);
 		rsJson.put("message", message);
 		rsJson.put("data", data);

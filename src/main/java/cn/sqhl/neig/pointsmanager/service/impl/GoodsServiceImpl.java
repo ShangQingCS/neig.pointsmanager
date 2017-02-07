@@ -1,5 +1,7 @@
 package cn.sqhl.neig.pointsmanager.service.impl;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +20,15 @@ import cn.sqhl.neig.pointsmanager.mapper.NsFreazesLogMapper;
 import cn.sqhl.neig.pointsmanager.mapper.NsGoodsCategoryMapper;
 import cn.sqhl.neig.pointsmanager.mapper.NsGoodsMapper;
 import cn.sqhl.neig.pointsmanager.mapper.NsOrderDetailMapper;
+import cn.sqhl.neig.pointsmanager.mapper.NsOrderMapper;
+import cn.sqhl.neig.pointsmanager.mapper.NsUserMapper;
+import cn.sqhl.neig.pointsmanager.mapper.NsUserPurseMapper;
 import cn.sqhl.neig.pointsmanager.po.NsFreazesLog;
 import cn.sqhl.neig.pointsmanager.po.NsGoods;
+import cn.sqhl.neig.pointsmanager.po.NsOrder;
 import cn.sqhl.neig.pointsmanager.po.NsOrderDetail;
+import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.po.NsUserPurse;
 import cn.sqhl.neig.pointsmanager.service.BaseService;
 import cn.sqhl.neig.pointsmanager.service.GoodsService;
 import cn.sqhl.neig.pointsmanager.utils.PageCond;
@@ -43,6 +51,16 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	
 	@Autowired
 	private NsFreazesLogMapper nsFreazesLogMapper; 
+	
+	@Autowired
+	private NsOrderMapper nsOrderMapper; 
+	
+	@Autowired
+	private NsUserMapper nsUserMapper; 
+	
+	@Autowired
+	private NsUserPurseMapper nsUserPurseMapper;
+	
 	
 	
 	public List<Object> queryObj(Map<String, Object> map) {
@@ -108,17 +126,71 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 	}
 
 	@Transactional
-	public Map freazesGoods(Long orderid)  throws Exception{
+	public Map freazesGoods(Long orderid,Long userid)  throws Exception{
 		Map returninfo=new HashMap();
+		
+		Map map=new HashMap();
+		map.put("orderid", orderid);
+		map.put("userid", userid);
+		map.put("status", "1");
+		List list=nsOrderMapper.selectOrder(map);
+		NsUser user=nsUserMapper.selectByPrimaryKey(userid);
+		if(list.size()>0){
+			NsOrder order=(NsOrder)list.get(0);
+			BigDecimal total=order.getTotal();
+			BigDecimal have=user.getUserKyBalance();
+			BigDecimal now = have.subtract(total);
+			if(now.doubleValue() < 0){
+				returninfo.put("status", 1);
+				returninfo.put("msg","可用余额不足");
+				return returninfo;
+			}else{
+				user.setUserKyBalance(now);//更新用户可用余额
+				
+				order.setOrderstatus("2");//订单修改为已付款
+				
+				NsUserPurse purse=new NsUserPurse();//消费流水
+				purse.setTradeType("1");
+				purse.setTradeAmount(total);
+				purse.setTradeSn(order.getName());
+				purse.setTradeState("2");
+				purse.setOptionType("1");
+				purse.setUserAmount(now);
+				purse.setUserId(user.getId());
+				purse.setPurseType(0);
+				purse.setPurseStatus(user.getUserStatus().toString());
+				purse.setCreateTime(new Date());
+				purse.setOptionAdminid(Long.valueOf("1"));
+				
+				int k=nsUserMapper.updateByPrimaryKeySelective(user);
+				int o=nsOrderMapper.updateByPrimaryKeySelective(order);
+				int p=nsUserPurseMapper.insertSelective(purse);
+				if(k<=0){
+					log.log(Level.INFO, "更新用户 "+user.getUserName()+" 的可用余额出错");
+					throw new RuntimeException("订单支付出错");
+				}if(o<=0){
+					log.log(Level.INFO, "更新订单 "+order.getId()+" 的状态出错");
+					throw new RuntimeException("订单支付出错");
+				}if(p<=0){
+					log.log(Level.INFO, "记录用户 "+user.getUserName()+" 的订单： "+order.getId()+" 时保存消费流水出错");
+					throw new RuntimeException("订单支付出错");
+				}
+			}
+		}else{
+			returninfo.put("status", 1);
+			returninfo.put("msg","无对应待支付订单");
+			return returninfo;
+		}
+		
 	    List<NsOrderDetail>  odlist=nsOrderDetailMapper.queryOrderDetail(orderid);
 		if(odlist!=null && odlist.size()>0){
 			for(int i=0;i<odlist.size();i++){
 				NsOrderDetail odt=odlist.get(i);
 				if(odt!=null){					
 					NsGoods goods=nsGoodsMapper.selectByPrimaryKey(odt.getGoodsid());
-					int storenumb=goods.getStorenumb();//商品实际可销售库存
+					int storenumb=goods.getSellnumb();//商品实际可销售库存
 					if(storenumb >= odt.getCount()){
-						goods.setStorenumb(storenumb-odt.getCount());
+						goods.setSellnumb(storenumb-odt.getCount());
 						goods.setFreazes(goods.getFreazes()+odt.getCount());
 						int k=nsGoodsMapper.updateByPrimaryKeySelective(goods);
 						if(k>0){
@@ -149,6 +221,7 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 			}
 			returninfo.put("status", 0);
 			returninfo.put("msg","所有商品成功冻结~");
+			
 		}else{
 			log.log(Level.INFO, "订单不存在商品");
 			throw new RuntimeException("无对应订单详情");
@@ -156,6 +229,5 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 		
 		return returninfo;
 	}
-	
-	
+
 }

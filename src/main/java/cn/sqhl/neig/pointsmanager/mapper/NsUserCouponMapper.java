@@ -1,6 +1,7 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,6 @@ public interface NsUserCouponMapper {
     int updateByPrimaryKey(NsUserCoupon record);
     
     public List<NsUserCoupon>selectByUserId(@Param(value="userId")Long userId,@Param(value="status")String status);
+    
+    public NsUserCoupon selectbyMap(@Param("map") Map<String, Object> map);
 }
