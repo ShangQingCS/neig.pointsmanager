@@ -38,9 +38,9 @@
 		       <h2>您已成功付款</h2>
 		       <li>付款金额<em>¥</em>${sumbalance}</li>
 		       <div class="user-info">
-		         <p>收货人：艾迪</p>
-		         <p>联系电话：15871145629</p>
-		         <p>收货地址：湖北省 武汉市 武昌区 东湖路75号众环大厦</p>
+		         <p>收货人：${userads.name}</p>
+		         <p>联系电话：${userads.phonenumb}</p>
+		         <p>${userads.address}</p>
 		       </div>  请认真核对您的收货信息，如有错误请联系客服                               
 		     </ul>
      		 <div class="option">
@@ -48,12 +48,17 @@
         		<a href="${path }/order_web/search.do?typeCode=2" class="J_MakePoint">查看<span>已买到的宝贝</span></a>
 			 </div>
 		 </div>
+		 </c:when>
+		 <c:when test="${paystatus==2}">
+		 	<ul>
+		       <h2 style="color:red">系统错误,优惠券不可用.</h2>		                                    
+		</ul>
 		 </c:when>		
 		<c:otherwise>
 		<ul>
 		       <h2>支付失败,账户可用余额不足.<a href="${path }/user_web/user/chongzhi.do" style="color:red;margin-left:10px;font-size:17px">点击前往充值</a></h2>
 		                                    
-		     </ul>
+		</ul>
 		</c:otherwise>						
      </c:choose>
   </div>

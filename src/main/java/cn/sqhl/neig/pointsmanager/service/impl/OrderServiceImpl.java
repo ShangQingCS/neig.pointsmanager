@@ -85,4 +85,11 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		return nsOrderDetailMapper.insert(record);
 	}
+
+
+	@Override
+	public NsOrder queryByUserId(Long id, Long userId) {
+		// TODO 自动生成的方法存根
+		return nsOrderMapper.selectByUserId(id, userId);
+	}
 }

@@ -37,8 +37,7 @@
 			<!--地址 -->
 				<div class="paycont">
 					<div class="address">
-						<h3>确认收货地址 </h3>
-						<div class="control">
+						<div class="control" style="margin-left: -5px">
 							<a href="${path }/user_web/user/address.do" target="_self"><div class="tc-btn createAddr theme-login am-btn am-btn-danger">添加新地址</div></a>
 						</div>
 						<div class="clear"></div>
@@ -46,7 +45,7 @@
 						<ul>
 							<div class="per-border"></div>
 							<c:forEach items="${ads }" var="address">
-							<li class="user-addresslist <c:if test="${address.isuse == 0 }">defaultAddr</c:if>">
+							<li class="user-addresslist <c:if test="${address.isuse == 0 }">defaultAddr</c:if>" onclick="adsclick(${address.id })">
 							    <input name="addressid" type="hidden" value="${address.id }">
 								<span class="new-option-r">
 								<i class="am-icon-check-circle"></i>
@@ -109,7 +108,14 @@
 						<div class="bundle  bundle-last ">
 							<div class="bundle-hd">
 							</div>
-							<div class="clear"></div>
+							<!-- 提交优惠劵ID 订单ID 地址ID-->
+							<div class="clear">
+								<input type="hidden" id="couponid" name="couponid"> 
+								 
+								<input type="hidden" id="addressid" name="addressid">
+							</div>
+							
+							
 							<div class="bundle-main cartlist">
 								<c:forEach items="${cartlist}" var="cart">
 								<ul class="item-content clearfix cartrow">
@@ -231,7 +237,7 @@
 									<span class="coupon-title">优惠券</span>
 									<select data-am-selected id="s_coupon">
 									
-									    <option value="0,-1" name="start">
+									    <option value="0,-1" name="0">
 											
 											<div class="c-limit">
 												【选择使用优惠卷】
@@ -290,13 +296,16 @@
 				<jsp:include page="/common/footer.jsp"></jsp:include>
 		
 <script >
-	
+		function adsclick(id){
+			$("#addressid").val(id);			
+		}
 	
 	    function submitBuy(){
 	    	
 	    	$('input[name="cartid"]:checked').each(function(){
-	    		var maxIndex=$("#s_coupon").find("option:selected").attr("name");
-	    		alert(maxIndex);
+	    		var couponid=$("#s_coupon").find("option:selected").attr("name");
+	    		$("#couponid").val(couponid); 
+	    		
                 $('#buyform').submit();
                 return false;
             });

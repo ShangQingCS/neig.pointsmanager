@@ -1,9 +1,15 @@
 package cn.sqhl.neig.pointsmanager.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.sms.model.v20160927.SingleSendSmsRequest;
 import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
+
+import net.sf.json.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.profile.DefaultProfile;
@@ -23,9 +29,15 @@ public class SmsHelper {
             IAcsClient client = new DefaultAcsClient(profile);
             SingleSendSmsRequest request = new SingleSendSmsRequest();
             
+            Map param = new HashMap();
+            param.put("name", "用户");
+            param.put("code", message);
+            
+            
             request.setSignName(PropKit.get("aliyun.sms.signName"));
             request.setTemplateCode(PropKit.get("aliyun.sms.templateCode"));
-            request.setParamString("{}");
+            System.out.println(JSONObject.fromObject(param).toString());
+            request.setParamString( JSONObject.fromObject(param).toString()  );
             request.setRecNum(phoneNum);
             
             SingleSendSmsResponse httpResponse = client.getAcsResponse(request);
@@ -39,5 +51,9 @@ public class SmsHelper {
             e.printStackTrace();
         }
     }
+	
+	public static void main(String[] args) {
+		SmsHelper.sendSms("15697313599", "623480");
+	}
 	
 }

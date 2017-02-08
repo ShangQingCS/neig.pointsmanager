@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.sqhl.neig.pointsmanager.po.NsAddress;
 import cn.sqhl.neig.pointsmanager.po.NsCart;
 import cn.sqhl.neig.pointsmanager.po.NsGoods;
 import cn.sqhl.neig.pointsmanager.po.NsOrder;
@@ -72,21 +73,18 @@ public class ShopWebCarController extends basicInfo{
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
 		
 		if(user!=null){
-			
-			
-			
 			//根据用户查询收货地址
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("userid", user.getId());
-			
+			map.put("uerid", user.getId());
 			List<Address> ads=addressServices.queryObj(map);
 			model.addAttribute("ads", ads);
-			
-			
 			list=shopCarService.selectList(map);
 			//查询优惠券
 			List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+			
 			model.addAttribute("myCouponList", myCouponList);
+				
 			model.addAttribute("baseimg", baseimg);
 			model.addAttribute("cartlist", list);
 			model.addAttribute("userid", user.getId());
@@ -153,23 +151,23 @@ public class ShopWebCarController extends basicInfo{
 	public String pay(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException{
 		ErrorInfo einfo;
 		List list;
-		
-		
 		String cartid = request.getParameter("cartid").trim(); 
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
+		
 		if(user!=null){
 			
 			//根据用户查询收货地址
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("userid", user.getId());
+			map.put("uerid", user.getId());
+			map.put("cartid", cartid);
+			list=shopCarService.selectList(map);
 			
 			List<Address> ads=addressServices.queryObj(map);
 			model.addAttribute("ads", ads);
 			
-			map.put("cartid", cartid);
-			list=shopCarService.selectList(map);
-			
-			
+			List<NsUserCoupon> myCouponList= couponService.selectByUserId(user.getId(), null);
+			model.addAttribute("myCouponList", myCouponList);
 			model.addAttribute("baseimg", baseimg);
 			model.addAttribute("cartlist", list);
 			model.addAttribute("userid", user.getId());
@@ -192,20 +190,19 @@ public class ShopWebCarController extends basicInfo{
 	public String paycar(HttpServletRequest request,HttpServletResponse response,Model model) throws IOException{
 		ErrorInfo einfo;
 		List list;
+		
 		String[] cardids = request.getParameterValues("cartid");
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
-		String couponid =request.getParameter("couponid");
-		System.out.println(couponid+"----------");
+				
 		//支付状态0失败1成功
 		int paystatus=0;
 		if(user!=null){
-			//根据用户查询收货地址
-				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("userid", user.getId());
-				
-//				List<Address> ads=addressServices.queryObj(map);
-//				model.addAttribute("ads", ads);
-
+			//根据优惠劵ID查询用户优惠券详情
+			 String couponid =request.getParameter("couponid");
+			 
+			 String addressid =request.getParameter("addressid");
+			 NsUserCoupon userCoupon=couponService.selectByPrimaryKey(Long.valueOf(couponid),user.getId());
+			
 			//根据用户查询优惠卷	
 			//根据商品ID查询商品对象 返回一个list
 				List<Map>  goodsList = new ArrayList<Map>();
@@ -214,133 +211,127 @@ public class ShopWebCarController extends basicInfo{
 				int sumcount = 0;//商品的总数量
 				
 				//for循环 根据 cartID获取当前记录
-				for(int i=0;i<cardids.length;i++){
-					
-					Map<String, Object> cartMap = new HashMap<String, Object>();
-					
+				for(int i=0;i<cardids.length;i++){					
+					Map<String, Object> cartMap = new HashMap<String, Object>();					
 					cartMap.put("id", cardids[i]);
-					cartMap.put("userid", user.getId());
-					
-				List cartList = shopCarService.queryObj(cartMap); 
-				NsCart nsCar = (NsCart)cartList.get(i);	
-			    Goods goods = goodsService.queryObj(nsCar.getGoodsid());
-			    System.err.println("购物车id为+"+cardids[i]+"---"+i);
-			    System.err.println("商品价格为+"+goods.getPrice()+"---"+i);
-			    System.err.println("商品数量为+"+nsCar.getCount()+"---"+i);
-			    sumbalance = sumbalance.add(goods.getPrice().multiply(new BigDecimal(nsCar.getCount())));	    
-			    sumcount += nsCar.getCount();
-			    
-			    
-			    
-			    System.out.println("第"+i+"个订单金额："+sumbalance);
-//			    Map goodsMap = new HashMap();
-//			    goodsMap.put("goods", goods);
-//			    goodsMap.put("shuliang", nsCar.getCount());
-			    
-			    //goodsList.add(goodsMap);
+					cartMap.put("userid", user.getId());					
+					List cartList = shopCarService.queryObj(cartMap); 
+					NsCart nsCar = (NsCart)cartList.get(i);	
+				    Goods goods = goodsService.queryObj(nsCar.getGoodsid());
+				    System.err.println("购物车id为+"+cardids[i]+"---"+i);
+				    System.err.println("商品价格为+"+goods.getPrice()+"---"+i);
+				    System.err.println("商品数量为+"+nsCar.getCount()+"---"+i);
+				    sumbalance = sumbalance.add(goods.getPrice().multiply(new BigDecimal(nsCar.getCount())));	    
+				    sumcount += nsCar.getCount();
+				    System.out.println("第"+i+"个订单金额："+sumbalance);
 				}
 				System.out.println("最后的商品价格："+sumbalance);
 				System.out.println("最后的商品总数："+ sumcount);
-				
-				//判断总额-账户余额 >0  执行下面方法：
-				
-				//生成订单  订单编号 更新订单金额 数量 支付金额 订单状态
-				String orderSn = FormatUtils.getOrderIdByUUId();
-				NsOrder nsOrder = new NsOrder();
-				nsOrder.setUserid(user.getId());
-				nsOrder.setName(orderSn);
-				nsOrder.setPaytype("1");
-				nsOrder.setAddress("地址");
-				nsOrder.setCreateTime(new Date());
-				nsOrder.setCounts(sumcount); //总数量
-				nsOrder.setTotal(sumbalance);   //总金额
-				nsOrder.setOrderstatus("1"); //待付款
-				nsOrder.setOutway("1");
-				nsOrder.setPaynumb(orderSn);
-				orderService.addObj(nsOrder);
-				
-				
-				//保存  根据 orderSn 查询出  order表的id
-				Map<String,Object> ordermap = new HashMap<String, Object>();
-				ordermap.put("name", orderSn);
-				List orderlist=orderService.queryObj(ordermap);
-				if (orderlist.size()>0) {
-					nsOrder=(NsOrder) orderlist.get(0);
-				}
-				
-				
-				
-				//for循环 根据 cartID获取当前记录
-				for(int i=0;i<cardids.length;i++){
-					
-					Map<String, Object> cartMap = new HashMap<String, Object>();
-					cartMap.put("id", cardids[i]);
-					cartMap.put("userid", user.getId());
-					
-				List cartList = shopCarService.queryObj(cartMap); 
-				
-				NsCart nsCar = (NsCart)cartList.get(i);	
-			    Goods goods = goodsService.queryObj(nsCar.getGoodsid());			    			    			    			    			    
-			    NsOrderDetail detail=new NsOrderDetail();
-			    detail.setCount(nsCar.getCount());
-			    detail.setGoodsid(nsCar.getGoodsid());
-			    detail.setOrderid(nsOrder.getId());
-			    detail.setPrice(goods.getPrice());
-			    orderService.insertOrderDetail(detail);
-			    
-			    System.out.println("数量"+nsCar.getCount()+"单价"+goods.getPrice());
-//			    Map goodsMap = new HashMap();
-//			    goodsMap.put("goods", goods);
-//			    goodsMap.put("shuliang", nsCar.getCount());
-			    
-			    //goodsList.add(goodsMap);
-				}
-				System.out.println("总额为"+sumbalance+"----用户余额为"+user.getUserKyBalance());
-				//判断用户可用余额减去订单总额大于等于0 购买成功
-				int r=user.getUserKyBalance().subtract(sumbalance).compareTo(BigDecimal.ZERO);
-				
-				if(r==0||r==1){
-					//扣钱
-					NsUser nsuser=new NsUser();
-					nsuser.setUserKyBalance(user.getUserKyBalance().subtract(sumbalance));
-					nsuser.setId(user.getId());
-					int code=0;
-					code=userServices.updateObj(nsuser);
-					if(code>0){
-						//修改成功
-						System.out.println("扣钱成功------------");
-						//修改订单状态为已付款
-						nsOrder.setOrderstatus("2");
-						orderService.updateObj(nsOrder);
-						
-						
-						//从购物车中删除这条记录  根据 userid  goodsid
-						for (int i = 0; i < cardids.length; i++) {
-							shopCarService.removeByUserId(Long.valueOf(cardids[i]), user.getId());	
-						}
-						//写钱包流水日志
-					
-						NsUserPurse purse=new NsUserPurse();
-						purse.setTradeType("1");
-						purse.setTradeAmount(sumbalance);
-						purse.setTradeSn(orderSn);
-						purse.setTradeState("2");
-						purse.setOptionType("1");
-						purse.setUserAmount(user.getUserKyBalance().subtract(sumbalance));
-						purse.setUserId(user.getId());
-						purse.setPurseType(0);
-						purse.setPurseStatus(user.getUserStatus().toString());
-						purse.setCreateTime(new Date());
-						purse.setOptionAdminid(Long.valueOf("1"));
-						userPurseService.addObj(purse);
-						
-						//刷新Session
-						request.getSession().setAttribute("user", userServices.queryByUserPhone(user.getUserPhone(), null));
-						//设置支付状态为1
-						paystatus=1;
-						
+				//判断优惠券是否可用
+				if(userCoupon!=null&&sumbalance.compareTo(userCoupon.getCouponXfBalance())==1||userCoupon==null){
+					if(userCoupon!=null){
+						sumbalance=sumbalance.subtract(userCoupon.getCouponBlance());
 					}
-				}
+					
+					//根据收货地址ID查询地址详情：
+					NsAddress userads=new NsAddress();
+					if(StringUtils.isEmpty(addressid)){
+						userads=addressServices.selectByUserId(user.getId(), 0);						
+					}else{						
+						userads= addressServices.queryByPrimaryKey(Long.valueOf(addressid));
+					}
+					 request.setAttribute("userads",  userads);
+
+					System.out.println("总额为"+sumbalance+"----用户余额为"+user.getUserKyBalance());
+					//判断用户可用余额减去订单总额大于等于0 购买成功
+					int r=user.getUserKyBalance().subtract(sumbalance).compareTo(BigDecimal.ZERO);
+					
+					if(r==0||r==1){
+					//  生成订单  订单编号 更新订单金额 数量 支付金额 订单状态
+						 	NsOrder nsOrder = new NsOrder();							
+							String orderSn = FormatUtils.getOrderIdByUUId();										
+								nsOrder.setUserid(user.getId());
+								nsOrder.setName(userads.getName());
+								nsOrder.setPaytype("1");
+								nsOrder.setAddress(userads.getAddress());
+								nsOrder.setCreateTime(new Date());
+								nsOrder.setCounts(sumcount); //总数量
+								nsOrder.setTotal(sumbalance);   //总金额
+								nsOrder.setOrderstatus("1"); //待付款
+								nsOrder.setOutway("1");
+								nsOrder.setPaynumb(orderSn);
+								orderService.addObj(nsOrder);
+								System.out.println("生成订单------------");
+								//保存  根据 orderSn 查询出  order表的id
+								Map<String,Object> ordermap = new HashMap<String, Object>();
+								ordermap.put("paynumb", orderSn);
+								List orderlist=orderService.queryObj(ordermap);
+								if (orderlist.size()>0) {
+									nsOrder=(NsOrder) orderlist.get(0);
+								}
+
+								//for循环 根据 cartID获取当前记录
+								for(int i=0;i<cardids.length;i++){
+									
+									Map<String, Object> cartMap = new HashMap<String, Object>();
+									cartMap.put("id", cardids[i]);
+									cartMap.put("userid", user.getId());						
+									List cartList = shopCarService.queryObj(cartMap); 					
+									NsCart nsCar = (NsCart)cartList.get(i);	
+								    Goods goods = goodsService.queryObj(nsCar.getGoodsid());
+								    //插入订单详情
+								    NsOrderDetail detail=new NsOrderDetail();
+								    detail.setCount(nsCar.getCount());
+								    detail.setGoodsid(nsCar.getGoodsid());
+								    detail.setOrderid(nsOrder.getId());
+								    detail.setPrice(goods.getPrice());
+								    orderService.insertOrderDetail(detail);
+								    System.out.println("数量"+nsCar.getCount()+"单价"+goods.getPrice());
+								}	
+								
+						//扣钱
+						NsUser nsuser=new NsUser();
+						nsuser.setUserKyBalance(user.getUserKyBalance().subtract(sumbalance));
+						nsuser.setId(user.getId());
+						int code=0;
+						code=userServices.updateObj(nsuser);
+						if(code>0){
+							//修改成功
+							System.out.println("扣钱成功------------");
+							//修改订单状态为已付款
+							nsOrder.setOrderstatus("2");
+							orderService.updateObj(nsOrder);
+							//从购物车中删除这条记录  根据 userid  goodsid
+							for (int i = 0; i < cardids.length; i++) {
+								shopCarService.removeByUserId(Long.valueOf(cardids[i]), user.getId());	
+							}
+							//写钱包流水日志					
+							NsUserPurse purse=new NsUserPurse();
+							purse.setTradeType("1");
+							purse.setTradeAmount(sumbalance);
+							purse.setTradeSn(orderSn);
+							purse.setTradeState("2");
+							purse.setOptionType("1");
+							purse.setUserAmount(user.getUserKyBalance().subtract(sumbalance));
+							purse.setUserId(user.getId());
+							purse.setPurseType(0);
+							purse.setPurseStatus(user.getUserStatus().toString());
+							purse.setCreateTime(new Date());
+							purse.setOptionAdminid(Long.valueOf("0"));
+							userPurseService.addObj(purse);
+							
+							//刷新Session
+							request.getSession().setAttribute("user", userServices.queryByUserPhone(user.getUserPhone(), null));
+							//设置支付状态为1
+							paystatus=1;
+							
+						}
+					}
+				
+				 }else{
+					//设置支付状态为2
+					 paystatus=2; 
+				 }
 				 request.setAttribute("paystatus",  paystatus);
 				 request.setAttribute("sumbalance",  sumbalance); 	
 				 request.setAttribute("baseimg",  baseimg);  

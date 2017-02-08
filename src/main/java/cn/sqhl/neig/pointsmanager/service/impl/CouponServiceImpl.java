@@ -68,6 +68,13 @@ public class CouponServiceImpl implements CouponService{
 	}
 
 
+	@Override
+	public NsUserCoupon selectByPrimaryKey(Long id,Long userId) {
+		// TODO 自动生成的方法存根
+		return nsUserCouponMapper.selectByPrimaryKey(id,userId);
+	}
+
+
 	
 
 	

@@ -141,7 +141,7 @@
 						<li class="td td-status" style="width:80px">
 							<div class="item-status" style="width:80px">
 								<p class="Mystatus">
-									{{if orderstatus == 1}} 待付款 {{else orderstatus == 2}} 买家已付款 {{else orderstatus == 3}} 卖家已发货 {{else orderstatus == 0}} 订单已取消 {{else orderstatus == 4}} 订单已完成 {{else}} {{/if}}
+									{{if orderstatus == 1}} 待付款 <a>删除</a>{{else orderstatus == 2}} 买家已付款 {{else orderstatus == 3}} 卖家已发货 {{else orderstatus == 0}} 订单已取消 {{else orderstatus == 4}} 订单已完成 {{else}} {{/if}}
 								</p>
 								
 								{{if orderstatus == 3}}

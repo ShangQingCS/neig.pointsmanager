@@ -27,4 +27,6 @@ public interface NsAddressMapper {
     
     public List<NsAddress> selectNsAddress(@Param("map") Map<String, Object> map);
     
+    NsAddress selectByUserId(@Param(value="userid")Long userid,@Param(value="isuse")Integer isuse);
+    
 }

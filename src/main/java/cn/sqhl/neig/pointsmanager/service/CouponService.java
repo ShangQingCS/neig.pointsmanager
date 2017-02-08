@@ -14,5 +14,5 @@ public interface CouponService extends BaseService{
 	
 	public int deleteObj(Long id);
 		
-
+	public NsUserCoupon selectByPrimaryKey(Long id,Long userId);
 }

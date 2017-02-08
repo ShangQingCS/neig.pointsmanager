@@ -16,5 +16,7 @@ public interface OrderService extends BaseService{
 	
 	public NsOrder queryByPrimaryKey(Long id);
 	
+	public NsOrder queryByUserId(Long id,Long userId);
+	
 	public int insertOrderDetail(NsOrderDetail record);
 }

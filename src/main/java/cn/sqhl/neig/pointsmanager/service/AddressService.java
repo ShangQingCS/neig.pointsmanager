@@ -17,4 +17,6 @@ public interface AddressService {
 	public int updateObj(NsAddress address) throws Exception;
 	
 	public NsAddress queryByPrimaryKey(Long id);
+	
+	public NsAddress selectByUserId(Long userid,Integer isuse);
 }

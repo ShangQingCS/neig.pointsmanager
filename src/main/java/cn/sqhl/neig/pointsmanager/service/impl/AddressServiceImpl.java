@@ -78,4 +78,10 @@ public class AddressServiceImpl implements AddressService{
 		return  nsAddressMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public NsAddress selectByUserId(Long userid, Integer isuse) {
+		// TODO 自动生成的方法存根
+		return nsAddressMapper.selectByUserId(userid, isuse);
+	}
+
 }

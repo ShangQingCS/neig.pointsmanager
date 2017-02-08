@@ -203,7 +203,7 @@ public class UserWebController extends basicInfo{
 		
 		String mobileCode=FormatUtils.getRandom();
 		System.err.println(tel+"------发送验证码------"+mobileCode);
-		//SmsHelper.sendSms(tel, mobileCode);
+		SmsHelper.sendSms(tel, mobileCode);
 		
 		HttpSession session=request.getSession();
 		session.setAttribute("mobileCode", mobileCode);	

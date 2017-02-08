@@ -18,6 +18,8 @@ public interface NsOrderMapper {
     int insertSelective(NsOrder record);
 
     NsOrder selectByPrimaryKey(Long id);
+    
+    NsOrder selectByUserId(@Param("id")Long id,@Param("userId")Long userId);
 
     int updateByPrimaryKeySelective(NsOrder record);
 

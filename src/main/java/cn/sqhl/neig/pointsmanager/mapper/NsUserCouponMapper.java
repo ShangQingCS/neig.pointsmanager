@@ -13,7 +13,7 @@ public interface NsUserCouponMapper {
 
     int insertSelective(NsUserCoupon record);
 
-    NsUserCoupon selectByPrimaryKey(Long id);
+    NsUserCoupon selectByPrimaryKey(@Param(value="id")Long id,@Param(value="userId")Long userId);
 
     int updateByPrimaryKeySelective(NsUserCoupon record);
 

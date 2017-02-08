@@ -38,6 +38,14 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
+  <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ns_order
+    where id = #{id,jdbcType=BIGINT}
+    and userid=#{userId,jdbcType=BIGINT}
+  </select>
+  
   <select id="selectOrder" parameterType="java.util.Map" resultMap="BaseResultMap">
     select 
     	<include refid="Base_Column_List" />
@@ -55,6 +63,9 @@
     	</if>
     	<if test="map.name != null">
     		and name=#{map.name,jdbcType=VARCHAR}
+    	</if>
+    	<if test="map.paynumb != null">
+    		and paynumb=#{map.paynumb,jdbcType=VARCHAR}
     	</if>
     </where>
   </select>

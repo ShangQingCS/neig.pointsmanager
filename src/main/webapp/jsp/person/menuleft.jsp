@@ -24,7 +24,7 @@
 					<li class="person">
 						<!--<p><i class="am-icon-balance-scale"></i>我的交易</p>-->
 						<ul>
-							<li name=""><a href="${path }/order_web/search.do?typeCode=1">未付款订单</a></li>
+							
 							<li name=""><a href="${path }/order_web/search.do?typeCode=2">已付款订单</a></li>
 							<li name=""><a href="${path }/order_web/search.do?typeCode=3">已发货订单</a></li>
 							<li name="objaddress"><a href="${path }/order_web/search.do?typeCode=4">已收货订单</a></li>
