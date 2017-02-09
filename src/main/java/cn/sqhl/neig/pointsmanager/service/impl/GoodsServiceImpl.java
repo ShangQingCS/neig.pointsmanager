@@ -160,7 +160,6 @@ public class GoodsServiceImpl implements GoodsService,BaseService{
 				purse.setPurseType(0);
 				purse.setPurseStatus(user.getUserStatus().toString());
 				purse.setCreateTime(new Date());
-				purse.setOptionAdminid(Long.valueOf("1"));
 				
 				int k=nsUserMapper.updateByPrimaryKeySelective(user);
 				int o=nsOrderMapper.updateByPrimaryKeySelective(order);
