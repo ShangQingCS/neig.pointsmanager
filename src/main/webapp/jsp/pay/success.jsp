@@ -40,7 +40,7 @@
 		       <div class="user-info">
 		         <p>收货人：${userads.name}</p>
 		         <p>联系电话：${userads.phonenumb}</p>
-		         <p>${userads.address}</p>
+		         <p>收货地址：${userads.address}</p>
 		       </div>  请认真核对您的收货信息，如有错误请联系客服                               
 		     </ul>
      		 <div class="option">

@@ -620,5 +620,195 @@ public class UserWebController extends basicInfo{
 		
 		return "/jsp/person/wxpay";
 	}
+	
+	
+
+	@RequestMapping("/alipay_notify")
+	public String alipay_notify(HttpServletRequest request,HttpServletResponse response){
 		
+		IPay ipay = IPay.getInstance();
+		String returnCode = "FAIL";
+		
+		Map<String, String> returnMap = ipay.httpsPayResponse("aliPay",request,response);
+		
+		if(returnMap.get("trade_status").equals("OK")){
+			//处理
+			String out_trade_no = returnMap.get("out_trade_no");  //订单编号
+			
+			Map map = new HashMap();
+			map.put("tradesn", out_trade_no);
+			
+			NsUserPurse nsUserPurse= new NsUserPurse();
+			
+			List list = userPurseService.queryObj(map);
+			if(list.size()>0){
+				nsUserPurse = (NsUserPurse)list.get(0);
+				
+				if(!nsUserPurse.getTradeState().equals("2")){
+					
+					nsUserPurse.setTradeState("2"); //成功
+					userPurseService.updateObj(nsUserPurse);
+					
+					NsUser user = userService.queryByPrimaryKey(nsUserPurse.getUserId().intValue());
+					
+					user.setUserKyBalance(user.getUserKyBalance().add(nsUserPurse.getTradeAmount()));
+					
+					userService.updateObj(user);
+					
+					
+				}
+				
+			}
+			
+			
+			returnCode = "OK";
+			
+		}
+		
+		request.setAttribute("returnCode", returnCode);
+		
+		return "/jsp/person/alipay_notify";
+	}
+	
+	@RequestMapping("/alipay_return")
+	public String alipay_return(HttpServletRequest request,HttpServletResponse response){
+		
+		String returnCode = "FAIL";
+		
+		IPay ipay = IPay.getInstance();
+		Map<String, String> returnMap = ipay.httpsPayResponse("aliPay",request,response);
+		
+		if(returnMap.get("trade_status").equals("OK")){
+			//处理
+			String out_trade_no = returnMap.get("out_trade_no");  //订单编号
+			
+			Map map = new HashMap();
+			map.put("tradesn", out_trade_no);
+			
+			NsUserPurse nsUserPurse= new NsUserPurse();
+			
+			List list = userPurseService.queryObj(map);
+			if(list.size()>0){
+				nsUserPurse = (NsUserPurse)list.get(0);
+				
+				if(!nsUserPurse.getTradeState().equals("2")){
+					
+					nsUserPurse.setTradeState("2"); //成功
+					userPurseService.updateObj(nsUserPurse);
+					
+					NsUser user = userService.queryByPrimaryKey(nsUserPurse.getUserId().intValue());
+					
+					user.setUserKyBalance(user.getUserKyBalance().add(nsUserPurse.getTradeAmount()));
+					
+					userService.updateObj(user);
+					
+					
+				}
+				
+			}
+			
+			
+			returnCode = "OK";
+			
+		}
+		
+		request.setAttribute("returnCode", returnCode);
+		
+		return "/jsp/person/alipay_return";
+		
+	}
+	
+	@RequestMapping("/wxpay_notify")
+	public String wxpay_notify(HttpServletRequest request,HttpServletResponse response){
+		
+		IPay ipay = IPay.getInstance();
+		String returnCode = "FAIL";
+		
+		Map<String, String> returnMap = ipay.httpsPayResponse("weichatPay",request,response);
+		
+		if(returnMap.get("trade_status").equals("OK")){
+			//处理
+			String out_trade_no = returnMap.get("out_trade_no");  //订单编号
+			
+			Map map = new HashMap();
+			map.put("tradesn", out_trade_no);
+			
+			NsUserPurse nsUserPurse= new NsUserPurse();
+			
+			List list = userPurseService.queryObj(map);
+			if(list.size()>0){
+				nsUserPurse = (NsUserPurse)list.get(0);
+				
+				if(!nsUserPurse.getTradeState().equals("2")){
+					
+					nsUserPurse.setTradeState("2"); //成功
+					userPurseService.updateObj(nsUserPurse);
+					
+					NsUser user = userService.queryByPrimaryKey(nsUserPurse.getUserId().intValue());
+					
+					user.setUserKyBalance(user.getUserKyBalance().add(nsUserPurse.getTradeAmount()));
+					
+					userService.updateObj(user);
+					
+					
+				}
+				
+			}
+			
+			
+			returnCode = "OK";
+			
+		}
+		
+		request.setAttribute("returnCode", returnCode);
+		
+		return "/jsp/person/wxpay_notify";
+	}
+	
+	@RequestMapping("/wxpay_return")
+	public String wxpay_return(HttpServletRequest request,HttpServletResponse response){
+		
+		IPay ipay = IPay.getInstance();
+		String returnCode = "FAIL";
+		
+		Map<String, String> returnMap = ipay.httpsPayResponse("weichatPay",request,response);
+		
+		if(returnMap.get("trade_status").equals("OK")){
+			//处理
+			String out_trade_no = returnMap.get("out_trade_no");  //订单编号
+			
+			Map map = new HashMap();
+			map.put("tradesn", out_trade_no);
+			
+			NsUserPurse nsUserPurse= new NsUserPurse();
+			
+			List list = userPurseService.queryObj(map);
+			if(list.size()>0){
+				nsUserPurse = (NsUserPurse)list.get(0);
+				
+				if(!nsUserPurse.getTradeState().equals("2")){
+					
+					nsUserPurse.setTradeState("2"); //成功
+					userPurseService.updateObj(nsUserPurse);
+					
+					NsUser user = userService.queryByPrimaryKey(nsUserPurse.getUserId().intValue());
+					
+					user.setUserKyBalance(user.getUserKyBalance().add(nsUserPurse.getTradeAmount()));
+					
+					userService.updateObj(user);
+					
+					
+				}
+				
+			}
+			
+			
+			returnCode = "OK";
+			
+		}
+		
+		request.setAttribute("returnCode", returnCode);
+		
+		return "/jsp/person/wxpay_return";
+	}
 }

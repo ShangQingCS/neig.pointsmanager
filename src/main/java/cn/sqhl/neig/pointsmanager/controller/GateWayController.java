@@ -407,12 +407,12 @@ public class GateWayController extends ContextInfo {
 									nsUserPurse.setUserId(nsUser.getId());			
 									userPurseService.addObj(nsUserPurse);
 									
-									List tradeList = new ArrayList();
-									tradeList.add(nsUserPurse);
-									tradeList.add(returnString);
+									//List tradeList = new ArrayList();
+									//tradeList.add(nsUserPurse);
+									//tradeList.add(returnString);
 
 									
-									outParams.put("data", tradeList);
+									outParams.put("data", nsUserPurse);
 									
 								break;	
 								
