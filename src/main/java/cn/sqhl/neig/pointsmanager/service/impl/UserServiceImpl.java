@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import cn.sqhl.neig.pointsmanager.mapper.NsUserMapper;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
 import cn.sqhl.neig.pointsmanager.service.UserService;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -91,9 +92,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	
-	public List<NsUser> queryByUserPid(Long id) {
+	public List<NsUser> queryByUserPid(PageCond page,Long id) {
 		// TODO Auto-generated method stub
-		return nsUserMapper.selectByUserPid(id);
+		return nsUserMapper.queryByUserPid(page,id);
 	}
 	
 	

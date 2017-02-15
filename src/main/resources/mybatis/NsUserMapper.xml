@@ -46,7 +46,7 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   
-  <select id="selectByUserPid" parameterType="java.lang.Long" resultMap="UserPidResultMap">
+  <select id="queryByUserPid" parameterType="java.lang.Long" resultMap="UserPidResultMap">
      select user_name,true_name 
      from ns_user where 
      user_pid in(select id FROM ns_user where user_pid=#{id,jdbcType=BIGINT}) 

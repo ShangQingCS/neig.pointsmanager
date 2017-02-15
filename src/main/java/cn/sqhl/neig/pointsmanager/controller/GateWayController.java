@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +41,7 @@ import cn.sqhl.neig.pointsmanager.utils.DataSecret;
 import cn.sqhl.neig.pointsmanager.utils.DateHelper;
 import cn.sqhl.neig.pointsmanager.utils.FormatUtils;
 import cn.sqhl.neig.pointsmanager.utils.MD5Util;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
 import cn.sqhl.neig.pointsmanager.utils.SmsHelper;
 
 @Controller
@@ -261,11 +263,52 @@ public class GateWayController extends ContextInfo {
 							case "user_getuserlist"://团队成员查询接口
 								
 							   //必要参数username
+								String nowpage = inParams.get("nowpage");
+								nsUser = userService.queryByUserName(userName, null);								
+								//每页显示10条数据
+								int pageCount=10;
+								Long userid=nsUser.getId();						
+								if(StringUtils.isBlank(nowpage)){
+									nowpage="0";
+								}								
+								PageCond page=new PageCond(Integer.parseInt(nowpage)*pageCount,pageCount);								
+								List<NsUser> nsUsers=userService.queryByUserPid(page,userid);
+								int p=0;//默认为第一页
+								if(!StringUtils.isBlank(nowpage)){
+									p=Integer.parseInt(nowpage);
+								}
+								//求出总页数
+								int sumPage=page.getTotalPage();
+									
+								//总记录数
+								int sumCount=page.getTotalRows();
+									
+								if(p>sumPage-1){
+									p=sumPage;
+										 
+								}else if(p<=0){
+									p=0;					 
+								}
+								//每页只需要10条数据多余的清除	
+								if(!page.isFirst()&&!page.isLast()||nsUsers.size()>pageCount){
+									
+									List<NsUser> list=new ArrayList<NsUser>();							
+									for (int i = 0; i <pageCount; i++) {
+										list.add(nsUsers.get(i));										
+										nsUsers.add(list.get(i));
+									}
+									nsUsers.removeAll(nsUsers);
+									for (int i = 0; i <pageCount; i++) {														
+										nsUsers.add(list.get(i));
+									}
+								}
+								JSONObject pageJson = new JSONObject();
+								pageJson.put("nsUsers", nsUsers);
+								pageJson.put("sumCount", sumCount);
+								pageJson.put("sumPage", sumPage);
+								pageJson.put("nowpage", nowpage);
 								
-								nsUser = userService.queryByUserName(userName, null);
-								
-								List<NsUser> nsUsers = userService.queryByUserPid(nsUser.getId());
-								outParams.put("data", nsUsers);
+								outParams.put("data", pageJson);
 								
 							break;	
 							

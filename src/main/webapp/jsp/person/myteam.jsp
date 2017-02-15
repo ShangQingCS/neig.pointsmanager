@@ -97,6 +97,11 @@
 											</tr>
 											</c:forEach>
 										</tbody>
+										<tbody>										
+											<tr>
+												<td  colspan="2"><jsp:include page="/common/fenye.jsp"></jsp:include></td>																							
+											</tr>											
+										</tbody>
 									</table>
 								</div>
 								

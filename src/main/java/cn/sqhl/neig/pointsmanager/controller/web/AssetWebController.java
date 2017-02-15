@@ -30,6 +30,7 @@ import cn.sqhl.neig.pointsmanager.service.CouponService;
 import cn.sqhl.neig.pointsmanager.service.UserPurseService;
 import cn.sqhl.neig.pointsmanager.service.UserService;
 import cn.sqhl.neig.pointsmanager.utils.DateHelper;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
 
 
 @Controller
@@ -126,12 +127,65 @@ public class AssetWebController extends basicInfo{
 	@RequestMapping("/myteam")
 	public String safety(HttpServletRequest request,HttpServletResponse response,Model model){
 		NsUser user=(NsUser) request.getSession().getAttribute("user");
-		if(user!=null){
-			List<NsUser> userList=userService.queryByUserPid(user.getId());
-			request.setAttribute("userList", userList);
-			return "/jsp/person/myteam";
-		}else{
+		if(user!=null){			
+			String nowpage=request.getParameter("nowpage");
+			//每页显示6条数据
+			int pageCount=6;
+			Long userid=user.getId();						
+			if(StringUtils.isBlank(nowpage)){
+				nowpage="0";
+			}
+		
+			System.out.println(nowpage+"-----------");
 			
+			PageCond page=new PageCond(Integer.parseInt(nowpage)*pageCount,pageCount);
+			
+			List<NsUser> userList=userService.queryByUserPid(page,user.getId());
+			
+			/**
+			 * 分页步骤
+			 * 实现方案:
+				总页数sumPage
+				当前页码nowpage
+				每页显示6条数据
+			 */
+			
+			int p=0;//默认为第一页
+			if(nowpage!=null||"".equals(nowpage)){
+				p=Integer.parseInt(nowpage);
+			}
+			//总记录数
+			int sumPage=page.getTotalRows();
+				
+			//求出总页数
+			int count=page.getTotalPage();
+				
+			if(p>count-1){
+				p=count;
+					 
+			}else if(p<=0){
+				p=0;					 
+			}
+				
+			if(!page.isFirst()&&!page.isLast()||userList.size()>pageCount){
+				
+				List<NsUser> list=new ArrayList<NsUser>();							
+				for (int i = 0; i <pageCount; i++) {
+					list.add(userList.get(i));										
+					userList.add(list.get(i));
+				}
+				userList.removeAll(userList);
+				for (int i = 0; i <pageCount; i++) {														
+					userList.add(list.get(i));
+				}
+			}								
+			request.setAttribute("userList", userList);
+			request.setAttribute("pageCount", pageCount);
+			request.setAttribute("sumPage", sumPage);
+			request.setAttribute("sumCount", count);
+			request.setAttribute("nowpage", p);	
+			return "/jsp/person/myteam";
+		}else{			
 			return "/login";
 		}
 		

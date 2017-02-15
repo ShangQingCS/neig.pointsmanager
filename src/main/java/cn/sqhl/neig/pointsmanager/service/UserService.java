@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
 
 public interface UserService extends BaseService{
 
@@ -23,6 +24,6 @@ public interface UserService extends BaseService{
     
 	public int  updateByPayPwd(NsUser user);
 	
-	public List<NsUser> queryByUserPid(Long id);
+	public List<NsUser> queryByUserPid(PageCond page,Long id);
 	
 }

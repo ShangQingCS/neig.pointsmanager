@@ -1,10 +1,14 @@
 package cn.sqhl.neig.pointsmanager.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.sqhl.neig.pointsmanager.core.PaginationInterceptor;
 import cn.sqhl.neig.pointsmanager.po.NsUser;
+import cn.sqhl.neig.pointsmanager.utils.PageCond;
+import cn.sqhl.neig.pointsmanager.vo.Order;
 
 public interface NsUserMapper {
     int deleteByPrimaryKey(Long id);
@@ -31,5 +35,5 @@ public interface NsUserMapper {
     
     NsUser selectByUserPhone(@Param(value="userPhone")String userPhone,@Param(value="loginPwd")String loginPwd);
     
-    List<NsUser> selectByUserPid(Long id);
+    List<NsUser> queryByUserPid(@Param(PaginationInterceptor.PAGE_PARAM_KEY) PageCond page,@Param("id")Long id);
 }
